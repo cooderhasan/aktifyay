@@ -1,2 +1,3 @@
 // English industries route - reexport from Turkish route
-export { default, generateMetadata } from "../sektorler/[slug]/page";
+export { default, generateMetadata } from "../../sektorler/[slug]/page";
+
