@@ -1,0 +1,236 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==================== USER MANAGEMENT ====================
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==================== PAGES ====================
+model Page {
+  id   String @id @default(cuid())
+  slug String @unique
+  type String @default("static") // static, product, industry
+
+  // Content - Turkish
+  titleTr       String
+  descriptionTr String? @db.Text
+  contentTr     String? @db.Text
+
+  // Content - English
+  titleEn       String
+  descriptionEn String? @db.Text
+  contentEn     String? @db.Text
+
+  // SEO - Turkish
+  metaTitleTr       String?
+  metaDescriptionTr String? @db.Text
+
+  // SEO - English
+  metaTitleEn       String?
+  metaDescriptionEn String? @db.Text
+
+  // SEO - General
+  canonical     String?
+  isIndexed     Boolean @default(true)
+  schemaEnabled Boolean @default(true)
+  ogImage       String?
+
+  // Status
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==================== PRODUCT CATEGORIES ====================
+model ProductCategory {
+  id   String @id @default(cuid())
+  slug String @unique
+
+  // Basic Info - Turkish
+  nameTr        String
+  descriptionTr String? @db.Text
+  longDescTr    String? @db.Text
+  usageAreasTr  String? @db.Text
+
+  // Basic Info - English
+  nameEn        String
+  descriptionEn String? @db.Text
+  longDescEn    String? @db.Text
+  usageAreasEn  String? @db.Text
+
+  // Technical Specs (JSON for flexibility)
+  technicalSpecs String? @db.Text
+
+  // SEO - Turkish
+  metaTitleTr       String?
+  metaDescriptionTr String? @db.Text
+
+  // SEO - English
+  metaTitleEn       String?
+  metaDescriptionEn String? @db.Text
+
+  // SEO - General
+  canonical     String?
+  isIndexed     Boolean @default(true)
+  schemaEnabled Boolean @default(true)
+  ogImage       String?
+
+  // Media
+  image      String?
+  gallery    String? @db.Text // JSON array of image URLs
+
+  // Relations
+  faqs FAQ[]
+
+  // Status
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==================== INDUSTRIES ====================
+model Industry {
+  id   String @id @default(cuid())
+  slug String @unique
+
+  // Basic Info - Turkish
+  nameTr        String
+  descriptionTr String? @db.Text
+  contentTr     String? @db.Text
+  solutionsTr   String? @db.Text
+
+  // Basic Info - English
+  nameEn        String
+  descriptionEn String? @db.Text
+  contentEn     String? @db.Text
+  solutionsEn   String? @db.Text
+
+  // SEO - Turkish
+  metaTitleTr       String?
+  metaDescriptionTr String? @db.Text
+
+  // SEO - English
+  metaTitleEn       String?
+  metaDescriptionEn String? @db.Text
+
+  // SEO - General
+  canonical     String?
+  isIndexed     Boolean @default(true)
+  schemaEnabled Boolean @default(true)
+  ogImage       String?
+
+  // Media
+  image   String?
+  icon    String?
+
+  // Relations
+  faqs FAQ[]
+
+  // Status
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==================== FAQ ====================
+model FAQ {
+  id String @id @default(cuid())
+
+  // Question & Answer - Turkish
+  questionTr String
+  answerTr   String @db.Text
+
+  // Question & Answer - English
+  questionEn String
+  answerEn   String @db.Text
+
+  // Relations
+  productCategory   ProductCategory? @relation(fields: [productCategoryId], references: [id], onDelete: Cascade)
+  productCategoryId String?
+  industry          Industry?        @relation(fields: [industryId], references: [id], onDelete: Cascade)
+  industryId        String?
+
+  // Status
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==================== QUOTE REQUESTS ====================
+model QuoteRequest {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  company   String?
+  product   String?
+  quantity  String?
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+// ==================== JOB APPLICATIONS ====================
+model JobApplication {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  position  String?
+  cvUrl     String?
+  message   String?  @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+// ==================== CONTACT MESSAGES ====================
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+// ==================== SITE SETTINGS ====================
+model Setting {
+  id      String @id @default(cuid())
+  key     String @unique
+  valueTr String @db.Text
+  valueEn String @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==================== MEDIA LIBRARY ====================
+model Media {
+  id       String  @id @default(cuid())
+  filename String
+  url      String
+  altTr    String?
+  altEn    String?
+  type     String  @default("image") // image, document
+  size     Int?
+
+  createdAt DateTime @default(now())
+}
