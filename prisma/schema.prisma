@@ -26,27 +26,36 @@ model Page {
 
   // Content - Turkish
   titleTr       String
+  h1Tr          String?
   descriptionTr String? @db.Text
   contentTr     String? @db.Text
 
   // Content - English
   titleEn       String
+  h1En          String?
   descriptionEn String? @db.Text
   contentEn     String? @db.Text
 
   // SEO - Turkish
   metaTitleTr       String?
   metaDescriptionTr String? @db.Text
+  ogTitleTr         String?
+  ogDescriptionTr   String? @db.Text
 
   // SEO - English
   metaTitleEn       String?
   metaDescriptionEn String? @db.Text
+  ogTitleEn         String?
+  ogDescriptionEn   String? @db.Text
 
   // SEO - General
   canonical     String?
   isIndexed     Boolean @default(true)
+  isFollowed    Boolean @default(true)
   schemaEnabled Boolean @default(true)
   ogImage       String?
+  imageAltTr    String?
+  imageAltEn    String?
 
   // Status
   isActive  Boolean  @default(true)
@@ -62,12 +71,14 @@ model ProductCategory {
 
   // Basic Info - Turkish
   nameTr        String
+  h1Tr          String?          // H1 başlık (farklı olabilir)
   descriptionTr String? @db.Text
   longDescTr    String? @db.Text
   usageAreasTr  String? @db.Text
 
   // Basic Info - English
   nameEn        String
+  h1En          String?          // H1 başlık (farklı olabilir)
   descriptionEn String? @db.Text
   longDescEn    String? @db.Text
   usageAreasEn  String? @db.Text
@@ -78,20 +89,30 @@ model ProductCategory {
   // SEO - Turkish
   metaTitleTr       String?
   metaDescriptionTr String? @db.Text
+  ogTitleTr         String?
+  ogDescriptionTr   String? @db.Text
 
   // SEO - English
   metaTitleEn       String?
   metaDescriptionEn String? @db.Text
+  ogTitleEn         String?
+  ogDescriptionEn   String? @db.Text
 
   // SEO - General
   canonical     String?
   isIndexed     Boolean @default(true)
+  isFollowed    Boolean @default(true)
   schemaEnabled Boolean @default(true)
   ogImage       String?
 
   // Media
-  image      String?
-  gallery    String? @db.Text // JSON array of image URLs
+  image        String?
+  imageAltTr   String?
+  imageAltEn   String?
+  gallery      String? @db.Text // JSON array of image URLs
+
+  // Internal Linking
+  relatedIndustries String? @db.Text // JSON array of industry slugs
 
   // Relations
   faqs FAQ[]
@@ -110,12 +131,14 @@ model Industry {
 
   // Basic Info - Turkish
   nameTr        String
+  h1Tr          String?
   descriptionTr String? @db.Text
   contentTr     String? @db.Text
   solutionsTr   String? @db.Text
 
   // Basic Info - English
   nameEn        String
+  h1En          String?
   descriptionEn String? @db.Text
   contentEn     String? @db.Text
   solutionsEn   String? @db.Text
@@ -123,20 +146,30 @@ model Industry {
   // SEO - Turkish
   metaTitleTr       String?
   metaDescriptionTr String? @db.Text
+  ogTitleTr         String?
+  ogDescriptionTr   String? @db.Text
 
   // SEO - English
   metaTitleEn       String?
   metaDescriptionEn String? @db.Text
+  ogTitleEn         String?
+  ogDescriptionEn   String? @db.Text
 
   // SEO - General
   canonical     String?
   isIndexed     Boolean @default(true)
+  isFollowed    Boolean @default(true)
   schemaEnabled Boolean @default(true)
   ogImage       String?
 
   // Media
-  image   String?
-  icon    String?
+  image       String?
+  imageAltTr  String?
+  imageAltEn  String?
+  icon        String?
+
+  // Internal Linking
+  relatedProducts String? @db.Text // JSON array of product slugs
 
   // Relations
   faqs FAQ[]
@@ -225,13 +258,27 @@ model Setting {
 
 // ==================== MEDIA LIBRARY ====================
 model Media {
-  id       String  @id @default(cuid())
-  filename String
-  url      String
-  altTr    String?
-  altEn    String?
-  type     String  @default("image") // image, document
-  size     Int?
+  id        String  @id @default(cuid())
+  filename  String
+  url       String
+  altTr     String?
+  altEn     String?
+  titleTr   String?
+  titleEn   String?
+  type      String  @default("image") // image, document
+  size      Int?
 
   createdAt DateTime @default(now())
+}
+
+// ==================== 301 REDIRECTS ====================
+model Redirect {
+  id        String   @id @default(cuid())
+  fromPath  String   @unique
+  toPath    String
+  isPermanent Boolean @default(true) // true = 301, false = 302
+  isActive  Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

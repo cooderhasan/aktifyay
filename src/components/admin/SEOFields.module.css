@@ -1,0 +1,148 @@
+.seoFields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 2px solid var(--color-gray-200);
+    margin-bottom: 1rem;
+}
+
+.tab {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-gray-500);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.tab:hover {
+    color: var(--color-gray-700);
+}
+
+.tab.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+}
+
+.tabContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.field label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+    color: var(--color-gray-700);
+    font-size: 0.9375rem;
+}
+
+.field input,
+.field textarea,
+.field select {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-gray-300);
+    border-radius: 0.5rem;
+    font-size: 0.9375rem;
+    transition: border-color 0.2s;
+    font-family: inherit;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.field small {
+    color: var(--color-gray-400);
+    font-size: 0.8125rem;
+}
+
+.charCount {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.charCount[data-status="empty"] {
+    color: var(--color-gray-400);
+    background: var(--color-gray-100);
+}
+
+.charCount[data-status="good"] {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.charCount[data-status="warning"] {
+    color: #9a3412;
+    background: #fef3c7;
+}
+
+.fieldGroup {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .fieldGroup {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.section {
+    background: var(--color-gray-50);
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    margin-top: 1rem;
+}
+
+.section h3 {
+    font-size: 1rem;
+    color: var(--color-gray-800);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.checkboxGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9375rem;
+    color: var(--color-gray-700);
+}
+
+.checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-primary);
+}
