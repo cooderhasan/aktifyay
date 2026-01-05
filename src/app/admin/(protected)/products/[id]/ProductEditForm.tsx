@@ -92,7 +92,7 @@ export default function ProductEditForm({ product, industries, isNew }: ProductE
         imageAltTr: product?.imageAltTr || "Yay Ürün Görseli",
         imageAltEn: product?.imageAltEn || "Spring Product Image",
         relatedIndustries: product?.relatedIndustries || "[]",
-        gallery: product?.gallery ? JSON.parse(product.gallery as unknown as string) : [],
+        gallery: product?.gallery || [],
         isActive: product?.isActive ?? true,
         order: product?.order ?? 0,
         faqs: product?.faqs?.map(f => ({

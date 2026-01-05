@@ -38,7 +38,7 @@ export default async function ProductEditPage({ params }: ProductEditPageProps) 
     const transformedProduct = product ? {
         ...product,
         gallery: product.gallery ? JSON.parse(product.gallery) : undefined,
-        relatedIndustries: product.relatedIndustries ? JSON.parse(product.relatedIndustries) : undefined,
+        relatedIndustries: product.relatedIndustries || "[]",
     } as any : null;
 
     return (
