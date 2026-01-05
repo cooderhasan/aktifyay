@@ -103,16 +103,54 @@
 }
 
 .bottom {
-    margin-top: 3rem;
-    padding: 1.5rem 0;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
     text-align: center;
 }
 
-.bottom p {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.875rem;
+@media (min-width: 768px) {
+    .bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
 }
+
+.copyright {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.copyright p {
+    color: var(--color-gray-400);
+    font-size: 0.9rem;
+}
+
+.signature {
+    font-size: 0.8rem;
+    color: var(--color-gray-500);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.signature a {
+    color: var(--color-gray-400);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.signature a:hover {
+    color: white;
+}
+
+
 
 /* Social Media Icons */
 .socialIcons {
@@ -139,7 +177,45 @@
     transform: translateY(-3px);
 }
 
+
 .socialLink svg {
     width: 20px;
     height: 20px;
+}
+
+.legalLinks {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.legalLinks a {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    transition: color 0.2s;
+}
+
+.legalLinks a:hover {
+    color: white;
+}
+
+.legalSeparator {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.8rem;
+}
+
+@media (min-width: 768px) {
+    .bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .legalLinks {
+        margin-top: 0;
+    }
 }

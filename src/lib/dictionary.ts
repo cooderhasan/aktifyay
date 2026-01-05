@@ -14,6 +14,7 @@ export interface Dictionary {
         contact: string;
         quote: string;
         careers: string;
+        references: string;
     };
 
     // Products
@@ -82,6 +83,10 @@ export interface Dictionary {
         followUs: string;
         rights: string;
         careers: string;
+        privacyPolicy: string;
+        cookiePolicy: string;
+        termsOfUse: string;
+        kvkk: string;
     };
 
     // Careers
@@ -111,6 +116,7 @@ const dictionaries: Record<Locale, Dictionary> = {
             contact: "İletişim",
             quote: "Teklif Al",
             careers: "Kariyer",
+            references: "Referanslar",
         },
 
         products: {
@@ -174,6 +180,10 @@ const dictionaries: Record<Locale, Dictionary> = {
             followUs: "Bizi Takip Edin",
             rights: "Tüm hakları saklıdır.",
             careers: "Kariyer",
+            privacyPolicy: "Gizlilik Politikası",
+            cookiePolicy: "Çerez Politikası",
+            termsOfUse: "Kullanım Koşulları",
+            kvkk: "KVKK Aydınlatma Metni",
         },
 
         careers: {
@@ -200,6 +210,7 @@ const dictionaries: Record<Locale, Dictionary> = {
             contact: "Contact",
             quote: "Get Quote",
             careers: "Careers",
+            references: "References",
         },
 
         products: {
@@ -263,6 +274,10 @@ const dictionaries: Record<Locale, Dictionary> = {
             followUs: "Follow Us",
             rights: "All rights reserved.",
             careers: "Careers",
+            privacyPolicy: "Privacy Policy",
+            cookiePolicy: "Cookie Policy",
+            termsOfUse: "Terms of Use",
+            kvkk: "KVKK Clarification Text",
         },
 
         careers: {

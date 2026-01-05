@@ -66,6 +66,7 @@ export default async function HomePage({ params }: HomePageProps) {
                 descriptionEn: true,
                 publishedAt: true,
                 createdAt: true,
+                image: true,
             }
         }),
         prisma.catalog.findMany({
@@ -326,13 +327,27 @@ export default async function HomePage({ params }: HomePageProps) {
                                             href={`/${lang}/blog/${post.slug}`}
                                             className={styles.blogItem}
                                         >
-                                            <div className={styles.blogDate}>
-                                                <span>{day}</span>
-                                                {month}
+                                            <div className={styles.blogImageWrapper}>
+                                                <Image
+                                                    src={post.image || "/defaults/blog-default.jpg"}
+                                                    alt={lang === "tr" ? post.titleTr : post.titleEn}
+                                                    fill
+                                                    className={styles.blogImage}
+                                                />
+                                                <div className={styles.blogDateOverlay}>
+                                                    <span className={styles.blogDateDay}>{day}</span>
+                                                    <span className={styles.blogDateMonth}>{month}</span>
+                                                </div>
                                             </div>
                                             <div className={styles.blogContent}>
                                                 <h3>{lang === "tr" ? post.titleTr : post.titleEn}</h3>
-                                                <p>{lang === "tr" ? post.descriptionTr : post.descriptionEn}</p>
+                                                <p className={styles.blogExcerpt}>
+                                                    {lang === "tr" ? post.descriptionTr : post.descriptionEn}
+                                                </p>
+                                                <span className={styles.readMoreLink}>
+                                                    {lang === "tr" ? "Devamını Oku" : "Read More"}
+                                                    <ArrowRight size={14} />
+                                                </span>
                                             </div>
                                         </Link>
                                     )

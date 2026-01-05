@@ -149,9 +149,23 @@ export default function Footer({ locale, dict, settings, products = [] }: Footer
                 </div>
 
                 <div className={styles.bottom}>
-                    <p>
-                        &copy; {new Date().getFullYear()} Aktif Yay. {dict.footer.rights}.
-                    </p>
+                    <div className={styles.copyright}>
+                        <p>
+                            &copy; {new Date().getFullYear()} Aktif Yay. {dict.footer.rights}.
+                        </p>
+                        <div className={styles.signature}>
+                            Coded by <a href="https://hasandurmus.com" target="_blank" rel="noopener noreferrer">Hasan Durmus</a>
+                        </div>
+                    </div>
+                    <div className={styles.legalLinks}>
+                        <Link href={`/${locale}/gizlilik-politikasi`}>{dict.footer.privacyPolicy}</Link>
+                        <span className={styles.legalSeparator}>|</span>
+                        <Link href={`/${locale}/cerez-politikasi`}>{dict.footer.cookiePolicy}</Link>
+                        <span className={styles.legalSeparator}>|</span>
+                        <Link href={`/${locale}/kullanim-kosullari`}>{dict.footer.termsOfUse}</Link>
+                        <span className={styles.legalSeparator}>|</span>
+                        <Link href={`/${locale}/kvkk`}>{dict.footer.kvkk}</Link>
+                    </div>
                 </div>
             </div>
         </footer>
