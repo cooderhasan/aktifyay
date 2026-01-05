@@ -1,8 +1,9 @@
 import { MetadataRoute } from "next";
+import { prisma } from "@/lib/prisma";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://aktifyay.com.tr";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const locales = ["tr", "en"];
     const now = new Date();
 
@@ -13,26 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { path: "/iletisim", altPath: "/contact", priority: 0.7, changeFrequency: "monthly" as const },
         { path: "/teklif-al", altPath: "/request-quote", priority: 0.8, changeFrequency: "monthly" as const },
         { path: "/kariyer", altPath: "/careers", priority: 0.6, changeFrequency: "monthly" as const },
-    ];
-
-    // Product categories
-    const products = [
-        { slugTr: "basma-yaylar", slugEn: "compression-springs" },
-        { slugTr: "cekme-yaylar", slugEn: "extension-springs" },
-        { slugTr: "tel-form", slugEn: "wire-forms" },
-        { slugTr: "kurma-yaylar", slugEn: "torsion-springs" },
-    ];
-
-    // Industries
-    const industries = [
-        { slugTr: "otomotiv", slugEn: "automotive" },
-        { slugTr: "savunma-sanayi", slugEn: "defense-industry" },
-        { slugTr: "tarim-ziraat", slugEn: "agriculture" },
-        { slugTr: "mobilya", slugEn: "furniture" },
-        { slugTr: "beyaz-esya", slugEn: "home-appliances" },
-        { slugTr: "medikal", slugEn: "medical" },
-        { slugTr: "havacilik", slugEn: "aviation" },
-        { slugTr: "elektrik-elektronik", slugEn: "electronics" },
+        { path: "/e-katalog", altPath: "/e-catalog", priority: 0.7, changeFrequency: "monthly" as const },
     ];
 
     const urls: MetadataRoute.Sitemap = [];
@@ -56,59 +38,82 @@ export default function sitemap(): MetadataRoute.Sitemap {
         });
     });
 
+    // Fetch dynamic data from database
+    const [products, industries, blogPosts, blogCategories] = await Promise.all([
+        prisma.productCategory.findMany({
+            where: { isActive: true },
+            select: { slug: true, updatedAt: true },
+        }),
+        prisma.industry.findMany({
+            where: { isActive: true },
+            select: { slug: true, updatedAt: true },
+        }),
+        prisma.blogPost.findMany({
+            where: { isPublished: true },
+            select: { slug: true, updatedAt: true },
+        }),
+        prisma.blogCategory.findMany({
+            select: { slug: true, updatedAt: true },
+        }),
+    ]);
+
     // Generate product URLs
     products.forEach((product) => {
-        urls.push({
-            url: `${SITE_URL}/tr/urunler/${product.slugTr}`,
-            lastModified: now,
-            changeFrequency: "weekly",
-            priority: 0.9,
-            alternates: {
-                languages: {
-                    tr: `${SITE_URL}/tr/urunler/${product.slugTr}`,
-                    en: `${SITE_URL}/en/products/${product.slugEn}`,
-                },
-            },
-        });
-        urls.push({
-            url: `${SITE_URL}/en/products/${product.slugEn}`,
-            lastModified: now,
-            changeFrequency: "weekly",
-            priority: 0.9,
-            alternates: {
-                languages: {
-                    tr: `${SITE_URL}/tr/urunler/${product.slugTr}`,
-                    en: `${SITE_URL}/en/products/${product.slugEn}`,
-                },
-            },
+        locales.forEach((locale) => {
+            const pathSegment = locale === "tr" ? "urunler" : "products";
+            urls.push({
+                url: `${SITE_URL}/${locale}/${pathSegment}/${product.slug}`,
+                lastModified: product.updatedAt,
+                changeFrequency: "weekly",
+                priority: 0.9,
+            });
         });
     });
 
     // Generate industry URLs
     industries.forEach((industry) => {
-        urls.push({
-            url: `${SITE_URL}/tr/sektorler/${industry.slugTr}`,
-            lastModified: now,
-            changeFrequency: "monthly",
-            priority: 0.8,
-            alternates: {
-                languages: {
-                    tr: `${SITE_URL}/tr/sektorler/${industry.slugTr}`,
-                    en: `${SITE_URL}/en/industries/${industry.slugEn}`,
-                },
-            },
+        locales.forEach((locale) => {
+            const pathSegment = locale === "tr" ? "sektorler" : "industries";
+            urls.push({
+                url: `${SITE_URL}/${locale}/${pathSegment}/${industry.slug}`,
+                lastModified: industry.updatedAt,
+                changeFrequency: "monthly",
+                priority: 0.8,
+            });
         });
+    });
+
+    // Generate blog post URLs
+    blogPosts.forEach((post) => {
+        locales.forEach((locale) => {
+            urls.push({
+                url: `${SITE_URL}/${locale}/blog/${post.slug}`,
+                lastModified: post.updatedAt,
+                changeFrequency: "weekly",
+                priority: 0.7,
+            });
+        });
+    });
+
+    // Generate blog category URLs
+    blogCategories.forEach((category) => {
+        locales.forEach((locale) => {
+            urls.push({
+                url: `${SITE_URL}/${locale}/blog/kategori/${category.slug}`,
+                lastModified: category.updatedAt,
+                changeFrequency: "weekly",
+                priority: 0.6,
+            });
+        });
+    });
+
+    // Blog listing page
+    locales.forEach((locale) => {
         urls.push({
-            url: `${SITE_URL}/en/industries/${industry.slugEn}`,
+            url: `${SITE_URL}/${locale}/blog`,
             lastModified: now,
-            changeFrequency: "monthly",
+            changeFrequency: "daily",
             priority: 0.8,
-            alternates: {
-                languages: {
-                    tr: `${SITE_URL}/tr/sektorler/${industry.slugTr}`,
-                    en: `${SITE_URL}/en/industries/${industry.slugEn}`,
-                },
-            },
         });
     });
 
