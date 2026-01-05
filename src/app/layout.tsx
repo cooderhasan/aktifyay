@@ -9,8 +9,14 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+import { headers } from "next/headers";
+
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
+  const headersList = await headers();
+  const host = headersList.get("host");
+  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+  const baseUrl = host ? `${protocol}://${host}` : (process.env.NEXT_PUBLIC_SITE_URL || "https://aktifyay.com.tr");
 
   return {
     title: {
@@ -18,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${settings?.siteName || "Aktif Yay"}`,
     },
     description: settings?.homeDescTr || "Konya'da 30 yıllık tecrübe ile endüstriyel yay üretimi. Basma yaylar, çekme yaylar, kurma yaylar ve tel form yaylar.",
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://aktifyay.com.tr"),
+    metadataBase: new URL(baseUrl),
     robots: {
       index: true,
       follow: true,
