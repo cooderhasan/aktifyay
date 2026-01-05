@@ -6,6 +6,10 @@ import Footer from "@/components/layout/Footer";
 import { getSettings } from "@/actions/settings";
 import { prisma } from "@/lib/prisma";
 
+// Force dynamic rendering for all lang pages to prevent build-time database queries
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export function generateStaticParams() {
     return locales.map((locale) => ({ lang: locale }));
 }

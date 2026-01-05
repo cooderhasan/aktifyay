@@ -11,6 +11,10 @@ import HeroSlider from "@/components/sections/HeroSlider";
 import { getSliders } from "@/actions/slider";
 import { getSettings } from "@/actions/settings";
 
+// Force dynamic rendering to prevent build-time database queries
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 interface HomePageProps {
     params: Promise<{ lang: Locale }>;
 }
