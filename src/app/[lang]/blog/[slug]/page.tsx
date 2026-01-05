@@ -225,6 +225,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     );
 }
 
-export function generateStaticParams() {
+export function generateStaticParams(): { lang: Locale }[] {
     return locales.map((lang) => ({ lang }));
 }

@@ -16,7 +16,8 @@ interface LangLayoutProps {
 }
 
 export default async function LangLayout({ children, params }: LangLayoutProps) {
-    const { lang } = await params;
+    const resolvedParams = await params;
+    const lang = resolvedParams.lang as Locale;
     const dict = getDictionary(lang);
     const settings = await getSettings();
     const products = await prisma.productCategory.findMany({
