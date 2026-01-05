@@ -34,9 +34,16 @@ export default async function ProductEditPage({ params }: ProductEditPageProps) 
         orderBy: { order: "asc" },
     });
 
+    // Transform product data to match component expectations
+    const transformedProduct = product ? {
+        ...product,
+        gallery: product.gallery ? JSON.parse(product.gallery) : undefined,
+        relatedIndustries: product.relatedIndustries ? JSON.parse(product.relatedIndustries) : undefined,
+    } as any : null;
+
     return (
         <ProductEditForm
-            product={product}
+            product={transformedProduct}
             industries={industries.map((i) => ({ slug: i.slug, name: i.nameTr }))}
             isNew={isNew}
         />
