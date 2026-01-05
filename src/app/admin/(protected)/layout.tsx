@@ -44,6 +44,7 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
         { href: "/admin/blog", icon: Newspaper, label: "Blog Yazıları" },
         { href: "/admin/blog/categories", icon: Tags, label: "Blog Kategorileri" },
         { href: "/admin/catalog", icon: BookOpen, label: "E-Kataloglar" },
+        { href: "/admin/references", icon: Images, label: "Referanslar" },
         { href: "/admin/settings", icon: Settings, label: "Ayarlar" },
     ];
 

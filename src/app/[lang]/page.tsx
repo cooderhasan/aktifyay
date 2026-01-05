@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Settings, Shield, Truck, Award } from "lucide-react";
+import { ArrowRight, Settings, Shield, Truck, Award, BookOpen } from "lucide-react";
 import { Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionary";
 import { generateSEOMetadata, generateLocalBusinessSchema } from "@/lib/seo";
@@ -9,12 +9,11 @@ import { prisma } from "@/lib/prisma";
 import styles from "./page.module.css";
 import HeroSlider from "@/components/sections/HeroSlider";
 import { getSliders } from "@/actions/slider";
+import { getSettings } from "@/actions/settings";
 
 interface HomePageProps {
     params: Promise<{ lang: Locale }>;
 }
-
-import { getSettings } from "@/actions/settings";
 
 export async function generateMetadata({ params }: HomePageProps): Promise<Metadata> {
     const { lang } = await params;
@@ -23,7 +22,7 @@ export async function generateMetadata({ params }: HomePageProps): Promise<Metad
 
     const title = lang === "tr"
         ? (settings?.homeTitleTr || dict.seo.homeTitle)
-        : (settings?.homeTitleEn || dict.seo.homeTitle); // Fallback to TR/Default if EN missing but ideally dict has EN
+        : (settings?.homeTitleEn || dict.seo.homeTitle);
 
     const description = lang === "tr"
         ? (settings?.homeDescTr || dict.seo.homeDescription)
@@ -43,13 +42,38 @@ export default async function HomePage({ params }: HomePageProps) {
     const settings = await getSettings();
 
     // Fetch dynamic content
-    const [slides, dbProducts, dbIndustries] = await Promise.all([
+    // @ts-ignore - Prisma client outdated for Reference model
+    const [slides, dbProducts, dbIndustries, latestBlogs, catalogs, references] = await Promise.all([
         getSliders(),
         prisma.productCategory.findMany({
             where: { isActive: true },
             orderBy: { order: 'asc' }
         }),
         prisma.industry.findMany({
+            where: { isActive: true },
+            orderBy: { order: 'asc' }
+        }),
+        prisma.blogPost.findMany({
+            where: { isPublished: true },
+            orderBy: { createdAt: 'desc' },
+            take: 3,
+            select: {
+                id: true,
+                slug: true,
+                titleTr: true,
+                titleEn: true,
+                descriptionTr: true,
+                descriptionEn: true,
+                publishedAt: true,
+                createdAt: true,
+            }
+        }),
+        prisma.catalog.findMany({
+            where: { isActive: true },
+            orderBy: { order: 'asc' },
+            take: 4
+        }),
+        prisma.reference.findMany({
             where: { isActive: true },
             orderBy: { order: 'asc' }
         })
@@ -249,6 +273,101 @@ export default async function HomePage({ params }: HomePageProps) {
                     </div>
                 </div>
             </section>
+
+            {/* Split Section: E-Catalogs & Latest Blogs */}
+            <section className={styles.splitSection}>
+                <div className="container">
+                    <div className={styles.splitGrid}>
+
+                        {/* Left: E-Catalogs */}
+                        <div className={styles.splitColumn}>
+                            <h2>{lang === "tr" ? "E-Kataloglar" : "E-Catalogs"}</h2>
+                            <div className={styles.catalogGrid}>
+                                {catalogs.map((catalog) => (
+                                    <a
+                                        key={catalog.id}
+                                        href={catalog.pdfUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={styles.catalogCard}
+                                    >
+                                        <div className={styles.catalogImageWrapper}>
+                                            <Image
+                                                src={catalog.coverImage || "/defaults/catalog-default.jpg"}
+                                                alt={lang === "tr" ? catalog.nameTr : catalog.nameEn}
+                                                fill
+                                                className={styles.catalogImage}
+                                            />
+                                        </div>
+                                        <span className={styles.catalogTitle}>
+                                            {lang === "tr" ? catalog.nameTr : catalog.nameEn}
+                                        </span>
+                                        <span className={styles.catalogLink}>
+                                            <BookOpen size={16} />
+                                            {lang === "tr" ? "İncele" : "View"}
+                                        </span>
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Right: Latest Blogs */}
+                        <div className={styles.splitColumn}>
+                            <h2>{lang === "tr" ? "Son Blog Yazıları" : "Latest Blog Posts"}</h2>
+                            <div className={styles.blogList}>
+                                {latestBlogs.map((post) => {
+                                    const date = new Date(post.publishedAt || post.createdAt);
+                                    const day = date.getDate();
+                                    const month = date.toLocaleString(lang === 'tr' ? 'tr-TR' : 'en-US', { month: 'short' });
+
+                                    return (
+                                        <Link
+                                            key={post.id}
+                                            href={`/${lang}/blog/${post.slug}`}
+                                            className={styles.blogItem}
+                                        >
+                                            <div className={styles.blogDate}>
+                                                <span>{day}</span>
+                                                {month}
+                                            </div>
+                                            <div className={styles.blogContent}>
+                                                <h3>{lang === "tr" ? post.titleTr : post.titleEn}</h3>
+                                                <p>{lang === "tr" ? post.descriptionTr : post.descriptionEn}</p>
+                                            </div>
+                                        </Link>
+                                    )
+                                })}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            {/* References Section */}
+            {references.length > 0 && (
+                <section className={styles.referencesSection}>
+                    <div className="container">
+                        <div className={styles.sectionTitleCenter}>
+                            <h2>{lang === "tr" ? "Referanslarımız" : "Our References"}</h2>
+                        </div>
+                        <div className={styles.referencesGrid}>
+                            {references.map((ref: any) => (
+                                <div key={ref.id} className={styles.referenceItem}>
+                                    <Image
+                                        src={ref.image}
+                                        alt={ref.name}
+                                        width={160}
+                                        height={90}
+                                        className={styles.referenceImage}
+                                        style={{ objectFit: 'contain' }}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
 
             {/* CTA Section */}
             <section className={styles.cta}>

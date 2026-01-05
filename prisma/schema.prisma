@@ -436,3 +436,16 @@ model SiteSettings {
   
   updatedAt DateTime @updatedAt
 }
+
+// ==================== REFERENCES ====================
+model Reference {
+  id        String   @id @default(cuid())
+  name      String   // Company name
+  image     String   // Logo URL
+  
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

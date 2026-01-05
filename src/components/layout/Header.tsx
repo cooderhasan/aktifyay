@@ -206,12 +206,7 @@ export default function Header({ locale, dict, settings, products = [] }: Header
                                 </Link>
                             </div>
 
-                            <div className={styles.navItem}>
-                                <Link href={`/${locale}/e-katalog`} className={styles.navLink}>
-                                    <BookOpen strokeWidth={1.5} />
-                                    <span>{locale === "tr" ? "E-Katalog" : "E-Catalogs"}</span>
-                                </Link>
-                            </div>
+
 
                             <div className={styles.navItem}>
                                 <Link href={`/${locale}/${paths.contact}`} className={styles.navLink}>
