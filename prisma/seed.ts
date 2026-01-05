@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient({
-    datasourceUrl: "postgresql://postgres:123456@localhost:5432/yay?schema=public"
+    datasourceUrl: process.env.DATABASE_URL || "postgresql://postgres:123456@localhost:5432/yay?schema=public"
 });
 
 async function main() {
