@@ -6,16 +6,16 @@ import Footer from "@/components/layout/Footer";
 import { getSettings } from "@/actions/settings";
 import { prisma } from "@/lib/prisma";
 
-export function generateStaticParams(): { lang: Locale }[] {
+export function generateStaticParams() {
     return locales.map((locale) => ({ lang: locale }));
 }
 
-interface LangLayoutProps {
+type PageProps = {
     children: React.ReactNode;
-    params: Promise<{ lang: Locale }>;
-}
+    params: any; // Bypass Next.js 16 strict type inference
+};
 
-export default async function LangLayout({ children, params }: LangLayoutProps) {
+export default async function LangLayout({ children, params }: PageProps) {
     const resolvedParams = await params;
     const lang = resolvedParams.lang as Locale;
     const dict = getDictionary(lang);
