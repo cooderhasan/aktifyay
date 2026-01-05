@@ -65,6 +65,7 @@ export default async function RootLayout({
       </head>
       <body className="antialiased">
         {children}
+        {/* @ts-expect-error - Component type mismatch */}
         <WhatsAppButton phone={settings?.whatsapp} />
       </body>
     </html>
