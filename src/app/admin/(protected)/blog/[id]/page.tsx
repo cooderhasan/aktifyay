@@ -13,9 +13,10 @@ export default async function AdminBlogEditPage({ params }: PageProps) {
     // Fetch categories for dropdown
     const categoriesResult = await getBlogCategories();
     const categories = categoriesResult.success ? categoriesResult.data : [];
+    const safeCategories = categories || [];
 
     if (id === "new") {
-        return <BlogPostForm post={null} isNew={true} categories={categories} />; // @ts-ignore
+        return <BlogPostForm post={null} isNew={true} categories={safeCategories} />;
     }
 
     const { success, data } = await getBlogPost(id);
@@ -24,5 +25,5 @@ export default async function AdminBlogEditPage({ params }: PageProps) {
         notFound();
     }
 
-    return <BlogPostForm post={data} isNew={false} categories={categories} />; // @ts-ignore
+    return <BlogPostForm post={data} isNew={false} categories={safeCategories} />;
 }
