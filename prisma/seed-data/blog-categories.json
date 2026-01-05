@@ -1,0 +1,30 @@
+[
+  {
+    "id": "cmjy5nx4g0000or3c6cjfjrxt",
+    "slug": "teknik-bilgiler",
+    "nameTr": "Teknik Bilgiler",
+    "nameEn": "Technical Information",
+    "descriptionTr": "Yay üretimi, malzeme bilimi ve teknik detaylar hakkında uzman makaleleri.",
+    "descriptionEn": "Expert articles about spring manufacturing, material science and technical details.",
+    "metaTitleTr": "Teknik Bilgiler - Yay Üretimi Blogu",
+    "metaDescriptionTr": "Yay seçimi, üretim standartları ve teknik rehberler.",
+    "metaTitleEn": "Technical Information - Spring Manufacturing Blog",
+    "metaDescriptionEn": "Spring selection, manufacturing standards and technical guides.",
+    "createdAt": "2026-01-03T10:23:58.576Z",
+    "updatedAt": "2026-01-03T10:23:58.576Z"
+  },
+  {
+    "id": "cmjy5nx4j0001or3compidg9q",
+    "slug": "sektorel-haberler",
+    "nameTr": "Sektörel Haberler",
+    "nameEn": "Industry News",
+    "descriptionTr": "Aktif Yay ve sektörden güncel haberler, duyurular.",
+    "descriptionEn": "Latest news and announcements from Aktif Yay and the industry.",
+    "metaTitleTr": "Sektörel Haberler - Aktif Yay",
+    "metaDescriptionTr": "Yay sektöründeki son gelişmeler ve firma haberleri.",
+    "metaTitleEn": null,
+    "metaDescriptionEn": null,
+    "createdAt": "2026-01-03T10:23:58.580Z",
+    "updatedAt": "2026-01-03T10:23:58.580Z"
+  }
+]
