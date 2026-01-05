@@ -43,12 +43,13 @@ export async function POST(request: Request) {
             });
         }
 
+
         await sendMail({
             to: process.env.SMTP_USER || "info@aktifyay.com.tr",
             subject: `İş Başvurusu: ${name} - ${position}`,
             html,
             attachments
-        });
+        } as any);
 
         return NextResponse.json({ success: true });
     } catch (error) {
