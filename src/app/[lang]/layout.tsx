@@ -6,7 +6,7 @@ import Footer from "@/components/layout/Footer";
 import { getSettings } from "@/actions/settings";
 import { prisma } from "@/lib/prisma";
 
-export function generateStaticParams() {
+export function generateStaticParams(): { lang: Locale }[] {
     return locales.map((locale) => ({ lang: locale }));
 }
 

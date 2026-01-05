@@ -115,6 +115,6 @@ export default async function BlogPage({ params }: BlogPageProps) {
     );
 }
 
-export function generateStaticParams() {
+export function generateStaticParams(): { lang: Locale }[] {
     return locales.map((lang) => ({ lang }));
 }

@@ -95,6 +95,6 @@ export default async function CatalogPage({ params }: CatalogPageProps) {
     );
 }
 
-export function generateStaticParams() {
+export function generateStaticParams(): { lang: Locale }[] {
     return locales.map((lang) => ({ lang }));
 }
