@@ -1,4 +1,4 @@
-import { NextResponse } from "next/next";
+import { NextResponse } from "next/server";
 import { sendMail } from "@/lib/mail";
 
 export async function POST(request: Request) {
