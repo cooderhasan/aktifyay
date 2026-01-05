@@ -9,12 +9,12 @@ async function main() {
     console.log("🌱 Seeding database...");
 
     // Create admin user
-    const hashedPassword = await bcrypt.hash("admin123", 10);
+    const hashedPassword = await bcrypt.hash("W@8m4rPxN6#fZvQh3Y9KT5jL", 10);
     const admin = await prisma.user.upsert({
-        where: { email: "admin@aktifyay.com.tr" },
+        where: { email: "admin@aktifyay.com" },
         update: {},
         create: {
-            email: "admin@aktifyay.com.tr",
+            email: "admin@aktifyay.com",
             password: hashedPassword,
             name: "Admin",
             role: "admin",
