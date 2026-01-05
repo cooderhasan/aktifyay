@@ -113,3 +113,33 @@
     color: rgba(255, 255, 255, 0.5);
     font-size: 0.875rem;
 }
+
+/* Social Media Icons */
+.socialIcons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.socialLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.socialLink:hover {
+    background: var(--color-secondary);
+    color: white;
+    transform: translateY(-3px);
+}
+
+.socialLink svg {
+    width: 20px;
+    height: 20px;
+}

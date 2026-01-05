@@ -42,11 +42,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+import WhatsAppButton from "@/components/layout/WhatsAppButton";
+
+import { getSettings } from "@/actions/settings";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getSettings();
+
   return (
     <html lang="tr" className={inter.variable}>
       <head>
@@ -57,7 +63,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+        <WhatsAppButton phone={settings?.whatsapp} />
+      </body>
     </html>
   );
 }

@@ -50,8 +50,18 @@ export async function POST(request: Request) {
                 imageAltTr: data.imageAltTr || null,
                 imageAltEn: data.imageAltEn || null,
                 relatedIndustries: data.relatedIndustries || null,
+                gallery: data.gallery || null,
                 isActive: data.isActive ?? true,
                 order: data.order ?? 0,
+                faqs: {
+                    create: data.faqs?.map((faq: any) => ({
+                        questionTr: faq.questionTr,
+                        questionEn: faq.questionEn,
+                        answerTr: faq.answerTr,
+                        answerEn: faq.answerEn,
+                        isActive: true
+                    })) || []
+                }
             },
         });
 

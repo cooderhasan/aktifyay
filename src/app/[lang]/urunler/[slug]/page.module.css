@@ -94,6 +94,18 @@
 }
 
 /* Main Content */
+.productImage {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;
+    background-color: white;
+    margin-bottom: 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-200);
+}
+
 .mainContent h2 {
     font-size: 1.5rem;
     color: var(--color-primary);
@@ -290,4 +302,92 @@
 
 .contactCard p strong {
     color: var(--color-gray-700);
+}
+
+/* Related Products */
+.relatedSection {
+    background-color: var(--color-gray-50);
+    padding: 4rem 0;
+    border-top: 1px solid var(--color-gray-200);
+}
+
+.relatedGrid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+@media (min-width: 640px) {
+    .relatedGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .relatedGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.relatedCard {
+    background: white;
+    border: 1px solid var(--color-gray-200);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.relatedCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: var(--color-primary-light);
+}
+
+.relatedImage {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background-color: var(--color-gray-50);
+}
+
+.relatedImg {
+    object-fit: cover;
+}
+
+.relatedContent {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.relatedContent h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin-bottom: 0.5rem;
+}
+
+.relatedContent p {
+    font-size: 0.875rem;
+    color: var(--color-gray-600);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.relatedLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-primary);
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.relatedCard:hover .relatedLink {
+    color: var(--color-primary-dark);
 }

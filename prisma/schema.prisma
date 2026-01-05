@@ -245,7 +245,7 @@ model ContactMessage {
   createdAt DateTime @default(now())
 }
 
-// ==================== SITE SETTINGS ====================
+// ==================== SITE SETTINGS (Legacy) ====================
 model Setting {
   id      String @id @default(cuid())
   key     String @unique
@@ -280,5 +280,159 @@ model Redirect {
   isActive  Boolean  @default(true)
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==================== BLOG CATEGORIES ====================
+model BlogCategory {
+  id   String @id @default(cuid())
+  slug String @unique
+
+  // Content
+  nameTr        String
+  nameEn        String
+  descriptionTr String? @db.Text
+  descriptionEn String? @db.Text
+
+  // SEO
+  metaTitleTr       String?
+  metaDescriptionTr String? @db.Text
+  metaTitleEn       String?
+  metaDescriptionEn String? @db.Text
+
+  // Relations
+  posts BlogPost[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==================== BLOG POSTS ====================
+model BlogPost {
+  id   String @id @default(cuid())
+  slug String @unique
+
+  // Relation: Category
+  categoryId String?
+  category   BlogCategory? @relation(fields: [categoryId], references: [id])
+
+  // Content - Turkish
+  titleTr       String
+  descriptionTr String? @db.Text
+  contentTr     String? @db.Text
+
+  // Content - English
+  titleEn       String
+  descriptionEn String? @db.Text
+  contentEn     String? @db.Text
+
+  // Advanced SEO
+  keywordsTr        String? // Virgülle ayrılmış
+  keywordsEn        String?
+  canonicalUrl      String?
+  robots            String? @default("index, follow") // index, noindex, follow, nofollow
+
+  // Meta Tags
+  metaTitleTr       String?
+  metaDescriptionTr String? @db.Text
+  metaTitleEn       String?
+  metaDescriptionEn String? @db.Text
+  
+  // Open Graph & Social
+  ogTitleTr       String?
+  ogDescriptionTr String?
+  ogTitleEn       String?
+  ogDescriptionEn String?
+  ogImage         String? // Özel sosyal medya görseli
+  
+  // Media & Author
+  image       String?   // Featured Image
+  imageAltTr  String?
+  imageAltEn  String?
+  authorName  String?   // Opsiyonel yazar adı (yoksa varsayılan)
+
+  // System
+  readingTime Int      @default(0) // Dakika cinsinden okuma süresi
+  isPublished Boolean  @default(false)
+  viewCount   Int      @default(0)
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ==================== E-CATALOGS ====================
+model Catalog {
+  id        String   @id @default(cuid())
+  
+  // Info
+  nameTr    String
+  nameEn    String
+  
+  // Files
+  coverImage String   // Thumbnail image
+  pdfUrl     String   // PDF file link
+  
+  // Status
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==================== HERO SLIDER ====================
+model HeroSlide {
+  id        String   @id @default(cuid())
+  
+  image     String   // Background image URL
+  
+  titleTr   String
+  titleEn   String
+  descTr    String?  @db.Text
+  descEn    String?  @db.Text
+  
+  btnTextTr String?
+  btnTextEn String?
+  btnLink   String?
+  
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==================== SITE SETTINGS ====================
+model SiteSettings {
+  id String @id @default("settings")
+  
+  // General
+  siteName   String?
+  phone      String?
+  email      String?
+  address    String?
+  
+  // Brand
+  logo       String?
+  favicon    String?
+
+  // SEO
+  googleVerification String?
+  bingVerification   String?
+  yandexVerification String?
+
+  // Social
+  facebook   String?
+  instagram  String?
+  linkedin   String?
+  twitter    String?
+  youtube    String?
+  // Home Page SEO
+  homeTitleTr   String?
+  homeTitleEn   String?
+  homeDescTr    String?
+  homeDescEn    String?
+
+  whatsapp   String?
+  
   updatedAt DateTime @updatedAt
 }

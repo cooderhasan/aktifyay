@@ -1,0 +1,15 @@
+.editor .ql-container {
+    min-height: 200px;
+    font-size: 1rem;
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+}
+
+.editor .ql-toolbar {
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+}
+
+.editor .ql-editor {
+    min-height: 200px;
+}

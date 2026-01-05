@@ -6,6 +6,7 @@ import { ArrowLeft, Save, Trash2 } from "lucide-react";
 import Link from "next/link";
 import SEOFields from "@/components/admin/SEOFields";
 import InternalLinking from "@/components/admin/InternalLinking";
+import ImageUpload from "@/components/admin/ImageUpload";
 import styles from "../../products/[id]/ProductEditForm.module.css";
 
 interface IndustryData {
@@ -78,9 +79,9 @@ export default function IndustryEditForm({ industry, products, isNew }: Industry
         isIndexed: industry?.isIndexed ?? true,
         isFollowed: industry?.isFollowed ?? true,
         schemaEnabled: industry?.schemaEnabled ?? true,
-        image: industry?.image || "",
-        imageAltTr: industry?.imageAltTr || "",
-        imageAltEn: industry?.imageAltEn || "",
+        image: industry?.image || "/defaults/industry-default.png",
+        imageAltTr: industry?.imageAltTr || "Sektör Görseli",
+        imageAltEn: industry?.imageAltEn || "Industry Image",
         relatedProducts: industry?.relatedProducts || "[]",
         isActive: industry?.isActive ?? true,
         order: industry?.order ?? 0,
@@ -245,8 +246,34 @@ export default function IndustryEditForm({ industry, products, isNew }: Industry
                         </div>
 
                         <div className={styles.field}>
-                            <label>Görsel URL</label>
-                            <input type="text" value={formData.image || ""} onChange={(e) => handleChange("image", e.target.value)} placeholder="https://..." />
+                            <label>Sektör Görseli</label>
+                            <ImageUpload
+                                value={formData.image || ""}
+                                onChange={(url) => handleChange("image", url)}
+                                label="Sektör Görseli Yükle"
+                                description="Önerilen boyut: 800x600px, Maks: 2MB"
+                            />
+                        </div>
+
+                        <div className={styles.grid}>
+                            <div className={styles.field}>
+                                <label>Görsel Alt Metni (TR)</label>
+                                <input
+                                    type="text"
+                                    value={formData.imageAltTr || ""}
+                                    onChange={(e) => handleChange("imageAltTr", e.target.value)}
+                                    placeholder="Görseli anlatan kısa açıklama (SEO)"
+                                />
+                            </div>
+                            <div className={styles.field}>
+                                <label>Image Alt Text (EN)</label>
+                                <input
+                                    type="text"
+                                    value={formData.imageAltEn || ""}
+                                    onChange={(e) => handleChange("imageAltEn", e.target.value)}
+                                    placeholder="Brief description of image (SEO)"
+                                />
+                            </div>
                         </div>
                     </div>
                 )}
@@ -274,6 +301,7 @@ export default function IndustryEditForm({ industry, products, isNew }: Industry
                                 imageAltEn: formData.imageAltEn || undefined,
                             }}
                             onChange={handleSEOChange}
+                            showImageAlt={false}
                         />
                     </div>
                 )}

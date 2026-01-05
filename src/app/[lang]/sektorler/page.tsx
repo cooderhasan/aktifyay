@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Locale, pathMappings } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionary";
 import { generateSEOMetadata, generateBreadcrumbSchema } from "@/lib/seo";
+import { prisma } from "@/lib/prisma";
 import styles from "./page.module.css";
 
 interface IndustriesPageProps {
@@ -30,16 +31,17 @@ export default async function IndustriesPage({ params }: IndustriesPageProps) {
     const dict = getDictionary(lang);
     const paths = pathMappings[lang];
 
-    const industries = [
-        { name: dict.industries.automotive, slug: lang === "tr" ? "otomotiv" : "automotive" },
-        { name: dict.industries.defense, slug: lang === "tr" ? "savunma-sanayi" : "defense-industry" },
-        { name: dict.industries.agriculture, slug: lang === "tr" ? "tarim-ziraat" : "agriculture" },
-        { name: dict.industries.furniture, slug: lang === "tr" ? "mobilya" : "furniture" },
-        { name: dict.industries.appliances, slug: lang === "tr" ? "beyaz-esya" : "home-appliances" },
-        { name: dict.industries.medical, slug: lang === "tr" ? "medikal" : "medical" },
-        { name: dict.industries.aviation, slug: lang === "tr" ? "havacilik" : "aviation" },
-        { name: dict.industries.electronics, slug: lang === "tr" ? "elektrik-elektronik" : "electronics" },
-    ];
+    const industriesData = await prisma.industry.findMany({
+        where: { isActive: true },
+        orderBy: { order: "asc" }
+    });
+
+    const industries = industriesData.map(industry => ({
+        name: lang === "tr" ? industry.nameTr : industry.nameEn,
+        slug: industry.slug,
+        image: industry.image || "/defaults/industry-default.png",
+        imageAlt: lang === "tr" ? (industry.imageAltTr || industry.nameTr) : (industry.imageAltEn || industry.nameEn),
+    }));
 
     const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://aktifyay.com.tr";
 
@@ -83,16 +85,31 @@ export default async function IndustriesPage({ params }: IndustriesPageProps) {
             <section className="section">
                 <div className="container">
                     <div className={styles.grid}>
-                        {industries.map((industry) => (
-                            <Link
-                                key={industry.slug}
-                                href={`/${lang}/${paths.industries}/${industry.slug}`}
-                                className={styles.card}
-                            >
-                                <h2>{industry.name}</h2>
-                                <ArrowRight size={24} />
-                            </Link>
-                        ))}
+                        {industries.length > 0 ? (
+                            industries.map((industry) => (
+                                <Link
+                                    key={industry.slug}
+                                    href={`/${lang}/${paths.industries}/${industry.slug}`}
+                                    className={styles.card}
+                                >
+                                    <div className={styles.cardImage}>
+                                        <img
+                                            src={industry.image}
+                                            alt={industry.imageAlt}
+                                            className={styles.image}
+                                        />
+                                    </div>
+                                    <div className={styles.cardContent}>
+                                        <h2>{industry.name}</h2>
+                                        <ArrowRight size={24} />
+                                    </div>
+                                </Link>
+                            ))
+                        ) : (
+                            <div className="col-span-full text-center py-10 text-gray-500">
+                                {lang === "tr" ? "Henüz sektör eklenmemiş." : "No industries added yet."}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>

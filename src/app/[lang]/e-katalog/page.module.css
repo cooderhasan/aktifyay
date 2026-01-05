@@ -1,0 +1,122 @@
+.page {
+    padding: 4rem 0;
+    min-height: 60vh;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin-bottom: 1rem;
+}
+
+.header p {
+    font-size: 1.125rem;
+    color: var(--color-gray-600);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    justify-content: center;
+}
+
+.card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid var(--color-gray-100);
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.coverWrapper {
+    position: relative;
+    padding-top: 140%;
+    /* A4 aspect ratio approx */
+    background: var(--color-gray-100);
+}
+
+.cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-gray-50);
+    color: var(--color-gray-400);
+}
+
+.content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin-bottom: 1.5rem;
+}
+
+.downloadBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--color-primary);
+    color: white;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    width: 100%;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.downloadBtn:hover {
+    background: var(--color-primary-dark);
+}
+
+.downloadBtn.disabled {
+    background: var(--color-gray-300);
+    cursor: not-allowed;
+}
+
+.empty {
+    text-align: center;
+    padding: 4rem;
+    background: var(--color-gray-50);
+    border-radius: 1rem;
+    color: var(--color-gray-600);
+}

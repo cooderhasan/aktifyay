@@ -4,6 +4,7 @@ import { Award, Users, Factory, Target } from "lucide-react";
 import { Locale, pathMappings } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionary";
 import { generateSEOMetadata, generateBreadcrumbSchema } from "@/lib/seo";
+import { prisma } from "@/lib/prisma"; // Import prisma
 import styles from "./page.module.css";
 
 interface AboutPageProps {
@@ -12,6 +13,20 @@ interface AboutPageProps {
 
 export async function generateMetadata({ params }: AboutPageProps): Promise<Metadata> {
     const { lang } = await params;
+
+    // Fetch page data for metadata
+    const page = await prisma.page.findUnique({
+        where: { slug: "hakkimizda" }
+    });
+
+    if (page) {
+        return generateSEOMetadata({
+            title: (lang === "tr" ? page.metaTitleTr : page.metaTitleEn) || "",
+            description: (lang === "tr" ? page.metaDescriptionTr : page.metaDescriptionEn) || "",
+            locale: lang,
+            path: `/${lang === "tr" ? "hakkimizda" : "about-us"}`,
+        });
+    }
 
     return generateSEOMetadata({
         title: lang === "tr"
@@ -31,6 +46,11 @@ export default async function AboutPage({ params }: AboutPageProps) {
     const paths = pathMappings[lang];
 
     const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://aktifyay.com.tr";
+
+    // Fetch page data
+    const page = await prisma.page.findUnique({
+        where: { slug: "hakkimizda" }
+    });
 
     const breadcrumbItems = [
         { name: lang === "tr" ? "Ana Sayfa" : "Home", url: `${SITE_URL}/${lang}` },
@@ -75,6 +95,15 @@ export default async function AboutPage({ params }: AboutPageProps) {
         },
     ];
 
+    // Use DB content if available, fallback to hardcoded
+    const contentTitle = page ? (lang === "tr" ? page.h1Tr : page.h1En) : dict.nav.about;
+    const contentDescription = page ? (lang === "tr" ? page.descriptionTr : page.descriptionEn) : (
+        lang === "tr"
+            ? "1994'ten bu yana Konya'da endüstriyel yay üretiminde öncü"
+            : "Pioneer in industrial spring manufacturing in Konya since 1994"
+    );
+    const storyContent = page ? (lang === "tr" ? page.contentTr : page.contentEn) : null;
+
     return (
         <>
             <script
@@ -97,12 +126,8 @@ export default async function AboutPage({ params }: AboutPageProps) {
             {/* Hero */}
             <section className={styles.hero}>
                 <div className="container">
-                    <h1>{dict.nav.about}</h1>
-                    <p>
-                        {lang === "tr"
-                            ? "1994'ten bu yana Konya'da endüstriyel yay üretiminde öncü"
-                            : "Pioneer in industrial spring manufacturing in Konya since 1994"}
-                    </p>
+                    <h1>{contentTitle}</h1>
+                    <p>{contentDescription}</p>
                 </div>
             </section>
 
@@ -111,17 +136,23 @@ export default async function AboutPage({ params }: AboutPageProps) {
                 <div className="container">
                     <div className={styles.story}>
                         <div className={styles.storyContent}>
-                            <h2>{lang === "tr" ? "Hikayemiz" : "Our Story"}</h2>
-                            <p>
-                                {lang === "tr"
-                                    ? "Aktif Yay, 1994 yılında Konya'da kurulmuş ve o günden bu yana Türkiye'nin önde gelen yay üreticilerinden biri haline gelmiştir. 30 yılı aşkın tecrübemizle, otomotiv, savunma sanayi, beyaz eşya, medikal ve daha birçok sektöre hizmet vermekteyiz."
-                                    : "Aktif Yay was founded in Konya in 1994 and has since become one of Turkey's leading spring manufacturers. With over 30 years of experience, we serve the automotive, defense, appliances, medical, and many other industries."}
-                            </p>
-                            <p>
-                                {lang === "tr"
-                                    ? "Modern CNC makineleri ve uzman kadromuzla, müşterilerimizin özel ihtiyaçlarına uygun yay çözümleri üretiyoruz. Kalite, güvenilirlik ve müşteri memnuniyeti her zaman önceliğimizdir."
-                                    : "With our modern CNC machines and expert team, we produce spring solutions tailored to our customers' specific needs. Quality, reliability, and customer satisfaction are always our priority."}
-                            </p>
+                            {storyContent ? (
+                                <div dangerouslySetInnerHTML={{ __html: storyContent }} />
+                            ) : (
+                                <>
+                                    <h2>{lang === "tr" ? "Hikayemiz" : "Our Story"}</h2>
+                                    <p>
+                                        {lang === "tr"
+                                            ? "Aktif Yay, 1994 yılında Konya'da kurulmuş ve o günden bu yana Türkiye'nin önde gelen yay üreticilerinden biri haline gelmiştir. 30 yılı aşkın tecrübemizle, otomotiv, savunma sanayi, beyaz eşya, medikal ve daha birçok sektöre hizmet vermekteyiz."
+                                            : "Aktif Yay was founded in Konya in 1994 and has since become one of Turkey's leading spring manufacturers. With over 30 years of experience, we serve the automotive, defense, appliances, medical, and many other industries."}
+                                    </p>
+                                    <p>
+                                        {lang === "tr"
+                                            ? "Modern CNC makineleri ve uzman kadromuzla, müşterilerimizin özel ihtiyaçlarına uygun yay çözümleri üretiyoruz. Kalite, güvenilirlik ve müşteri memnuniyeti her zaman önceliğimizdir."
+                                            : "With our modern CNC machines and expert team, we produce spring solutions tailored to our customers' specific needs. Quality, reliability, and customer satisfaction are always our priority."}
+                                    </p>
+                                </>
+                            )}
                         </div>
                         <div className={styles.storyImage}>
                             <div className={styles.imagePlaceholder}>

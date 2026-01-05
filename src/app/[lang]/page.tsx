@@ -1,22 +1,37 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Settings, Shield, Truck, Award } from "lucide-react";
 import { Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionary";
-import { generateSEOMetadata } from "@/lib/seo";
+import { generateSEOMetadata, generateLocalBusinessSchema } from "@/lib/seo";
+import { prisma } from "@/lib/prisma";
 import styles from "./page.module.css";
+import HeroSlider from "@/components/sections/HeroSlider";
+import { getSliders } from "@/actions/slider";
 
 interface HomePageProps {
     params: Promise<{ lang: Locale }>;
 }
 
+import { getSettings } from "@/actions/settings";
+
 export async function generateMetadata({ params }: HomePageProps): Promise<Metadata> {
     const { lang } = await params;
     const dict = getDictionary(lang);
+    const settings = await getSettings();
+
+    const title = lang === "tr"
+        ? (settings?.homeTitleTr || dict.seo.homeTitle)
+        : (settings?.homeTitleEn || dict.seo.homeTitle); // Fallback to TR/Default if EN missing but ideally dict has EN
+
+    const description = lang === "tr"
+        ? (settings?.homeDescTr || dict.seo.homeDescription)
+        : (settings?.homeDescEn || dict.seo.homeDescription);
 
     return generateSEOMetadata({
-        title: dict.seo.homeTitle,
-        description: dict.seo.homeDescription,
+        title: title,
+        description: description,
         locale: lang,
         path: "",
     });
@@ -25,48 +40,39 @@ export async function generateMetadata({ params }: HomePageProps): Promise<Metad
 export default async function HomePage({ params }: HomePageProps) {
     const { lang } = await params;
     const dict = getDictionary(lang);
+    const settings = await getSettings();
 
-    const products = [
-        {
-            name: dict.products.compressionSprings,
-            slug: lang === "tr" ? "basma-yaylar" : "compression-springs",
-            description: lang === "tr"
-                ? "Mekanik kuvvetlerin kontrolü ve enerji depolama için tasarlanmış yaylar"
-                : "Springs designed for mechanical force control and energy storage",
-        },
-        {
-            name: dict.products.extensionSprings,
-            slug: lang === "tr" ? "cekme-yaylar" : "extension-springs",
-            description: lang === "tr"
-                ? "Çekme kuvveti yaratarak enerji depolayan kritik yay türü"
-                : "Critical spring type that stores energy by creating pulling force",
-        },
-        {
-            name: dict.products.wireForms,
-            slug: lang === "tr" ? "tel-form" : "wire-forms",
-            description: lang === "tr"
-                ? "Sabitleme ve bağlantı amaçlı özel geometrik tel ürünleri"
-                : "Custom geometric wire products for fastening and connection",
-        },
-        {
-            name: dict.products.torsionSprings,
-            slug: lang === "tr" ? "kurma-yaylar" : "torsion-springs",
-            description: lang === "tr"
-                ? "Dönme kuvvetine dayanacak şekilde tasarlanmış yaylar"
-                : "Springs designed to withstand rotational force",
-        },
-    ];
+    // Fetch dynamic content
+    const [slides, dbProducts, dbIndustries] = await Promise.all([
+        getSliders(),
+        prisma.productCategory.findMany({
+            where: { isActive: true },
+            orderBy: { order: 'asc' }
+        }),
+        prisma.industry.findMany({
+            where: { isActive: true },
+            orderBy: { order: 'asc' }
+        })
+    ]);
 
-    const industries = [
-        { name: dict.industries.automotive, slug: lang === "tr" ? "otomotiv" : "automotive" },
-        { name: dict.industries.defense, slug: lang === "tr" ? "savunma-sanayi" : "defense-industry" },
-        { name: dict.industries.agriculture, slug: lang === "tr" ? "tarim-ziraat" : "agriculture" },
-        { name: dict.industries.furniture, slug: lang === "tr" ? "mobilya" : "furniture" },
-        { name: dict.industries.appliances, slug: lang === "tr" ? "beyaz-esya" : "home-appliances" },
-        { name: dict.industries.medical, slug: lang === "tr" ? "medikal" : "medical" },
-        { name: dict.industries.aviation, slug: lang === "tr" ? "havacilik" : "aviation" },
-        { name: dict.industries.electronics, slug: lang === "tr" ? "elektrik-elektronik" : "electronics" },
-    ];
+    const activeSlides = slides.filter((s: any) => s.isActive);
+
+    // Map DB products to UI format
+    const products = dbProducts.map(p => ({
+        name: lang === "tr" ? p.nameTr : p.nameEn,
+        slug: p.slug,
+        description: lang === "tr" ? p.descriptionTr : p.descriptionEn,
+        image: p.image || "/defaults/product-default.png",
+        imageAlt: lang === "tr" ? (p.imageAltTr || p.nameTr) : (p.imageAltEn || p.nameEn)
+    }));
+
+    // Map DB industries to UI format
+    const industries = dbIndustries.map(i => ({
+        name: lang === "tr" ? i.nameTr : i.nameEn,
+        slug: i.slug,
+        image: i.image || "/defaults/industry-default.png",
+        imageAlt: lang === "tr" ? (i.imageAltTr || i.nameTr) : (i.imageAltEn || i.nameEn)
+    }));
 
     const features = [
         {
@@ -99,44 +105,54 @@ export default async function HomePage({ params }: HomePageProps) {
         },
     ];
 
+    const jsonLd = generateLocalBusinessSchema();
+
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             {/* Hero Section */}
-            <section className={styles.hero}>
-                <div className="container">
-                    <div className={styles.heroContent}>
-                        <h1 className={styles.heroTitle}>
-                            {lang === "tr" ? (
-                                <>
-                                    Endüstriyel <span>Yay Üretiminde</span> 30 Yıllık Tecrübe
-                                </>
-                            ) : (
-                                <>
-                                    30 Years of Experience in <span>Industrial Spring</span> Manufacturing
-                                </>
-                            )}
-                        </h1>
-                        <p className={styles.heroDescription}>
-                            {dict.siteDescription}
-                        </p>
-                        <div className={styles.heroButtons}>
-                            <Link
-                                href={`/${lang}/${lang === "tr" ? "teklif-al" : "request-quote"}`}
-                                className="btn btn-secondary"
-                            >
-                                {dict.nav.quote}
-                            </Link>
-                            <Link
-                                href={`/${lang}/${lang === "tr" ? "urunler" : "products"}`}
-                                className="btn btn-outline"
-                            >
-                                {dict.products.viewAll}
-                            </Link>
+            {activeSlides.length > 0 ? (
+                <HeroSlider slides={activeSlides} lang={lang} />
+            ) : (
+                <section className={styles.hero}>
+                    <div className="container">
+                        <div className={styles.heroContent}>
+                            <h1 className={styles.heroTitle}>
+                                {lang === "tr" ? (
+                                    <>
+                                        Endüstriyel <span>Yay Üretiminde</span> 30 Yıllık Tecrübe
+                                    </>
+                                ) : (
+                                    <>
+                                        30 Years of Experience in <span>Industrial Spring</span> Manufacturing
+                                    </>
+                                )}
+                            </h1>
+                            <p className={styles.heroDescription}>
+                                {dict.siteDescription}
+                            </p>
+                            <div className={styles.heroButtons}>
+                                <Link
+                                    href={`/${lang}/${lang === "tr" ? "teklif-al" : "request-quote"}`}
+                                    className="btn btn-secondary"
+                                >
+                                    {dict.nav.quote}
+                                </Link>
+                                <Link
+                                    href={`/${lang}/${lang === "tr" ? "urunler" : "products"}`}
+                                    className="btn btn-outline"
+                                >
+                                    {dict.products.viewAll}
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className={styles.heroOverlay}></div>
-            </section>
+                    <div className={styles.heroOverlay}></div>
+                </section>
+            )}
 
             {/* Features Section */}
             <section className={`section ${styles.features}`}>
@@ -173,6 +189,15 @@ export default async function HomePage({ params }: HomePageProps) {
                                 href={`/${lang}/${lang === "tr" ? "urunler" : "products"}/${product.slug}`}
                                 className={styles.productCard}
                             >
+                                <div className={styles.productImageWrapper}>
+                                    <Image
+                                        src={product.image}
+                                        alt={product.imageAlt}
+                                        fill
+                                        className={styles.productImage}
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    />
+                                </div>
                                 <div className={styles.productContent}>
                                     <h3>{product.name}</h3>
                                     <p>{product.description}</p>
@@ -205,8 +230,20 @@ export default async function HomePage({ params }: HomePageProps) {
                                 href={`/${lang}/${lang === "tr" ? "sektorler" : "industries"}/${industry.slug}`}
                                 className={styles.industryCard}
                             >
-                                <span>{industry.name}</span>
-                                <ArrowRight size={18} />
+                                <div className={styles.industryImageWrapper}>
+                                    <Image
+                                        src={industry.image}
+                                        alt={industry.imageAlt}
+                                        fill
+                                        className={styles.industryImage}
+                                        sizes="(max-width: 768px) 100vw, 25vw"
+                                    />
+                                    <div className={styles.industryOverlay}></div>
+                                </div>
+                                <div className={styles.industryContent}>
+                                    <span>{industry.name}</span>
+                                    <ArrowRight size={18} />
+                                </div>
                             </Link>
                         ))}
                     </div>

@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Locale, pathMappings } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionary";
 import { generateSEOMetadata, generateBreadcrumbSchema } from "@/lib/seo";
+import { prisma } from "@/lib/prisma";
 import styles from "./page.module.css";
 
 interface ProductsPageProps {
@@ -30,36 +31,18 @@ export default async function ProductsPage({ params }: ProductsPageProps) {
     const dict = getDictionary(lang);
     const paths = pathMappings[lang];
 
-    const products = [
-        {
-            name: dict.products.compressionSprings,
-            slug: lang === "tr" ? "basma-yaylar" : "compression-springs",
-            description: lang === "tr"
-                ? "Mekanik kuvvetlerin kontrolü ve enerji depolama için tasarlanmış yaylar. Silindirik, konik veya varil şeklinde üretilebilir."
-                : "Springs designed for mechanical force control and energy storage. Can be manufactured in cylindrical, conical, or barrel shapes.",
-        },
-        {
-            name: dict.products.extensionSprings,
-            slug: lang === "tr" ? "cekme-yaylar" : "extension-springs",
-            description: lang === "tr"
-                ? "Çekme kuvveti yaratarak enerji depolayan kritik yay türü. Farklı kanca tiplerinde üretim yapılır."
-                : "Critical spring type that stores energy by creating pulling force. Manufactured with different hook types.",
-        },
-        {
-            name: dict.products.wireForms,
-            slug: lang === "tr" ? "tel-form" : "wire-forms",
-            description: lang === "tr"
-                ? "Özel geometrik şekillere sahip endüstriyel tel bileşenleri. Klipsler, bağlantı elemanları ve özel tasarımlar."
-                : "Industrial wire components with custom geometric shapes. Clips, connectors, and custom designs.",
-        },
-        {
-            name: dict.products.torsionSprings,
-            slug: lang === "tr" ? "kurma-yaylar" : "torsion-springs",
-            description: lang === "tr"
-                ? "Dönme kuvvetine dayanarak enerji depolayan yay türü. Menteşe, motor valfi ve mekanizma uygulamaları için."
-                : "Spring type that stores energy by resisting rotational force. For hinge, engine valve, and mechanism applications.",
-        },
-    ];
+    const productsData = await prisma.productCategory.findMany({
+        where: { isActive: true },
+        orderBy: { order: "asc" }
+    });
+
+    const products = productsData.map(product => ({
+        name: lang === "tr" ? product.nameTr : product.nameEn,
+        slug: product.slug,
+        description: lang === "tr" ? product.descriptionTr : product.descriptionEn,
+        image: product.image || "/defaults/product-default.png",
+        imageAlt: lang === "tr" ? (product.imageAltTr || product.nameTr) : (product.imageAltEn || product.nameEn),
+    }));
 
     const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://aktifyay.com.tr";
 
@@ -103,25 +86,35 @@ export default async function ProductsPage({ params }: ProductsPageProps) {
             <section className="section">
                 <div className="container">
                     <div className={styles.grid}>
-                        {products.map((product) => (
-                            <Link
-                                key={product.slug}
-                                href={`/${lang}/${paths.products}/${product.slug}`}
-                                className={styles.card}
-                            >
-                                <div className={styles.cardImage}>
-                                    <span>{product.name}</span>
-                                </div>
-                                <div className={styles.cardContent}>
-                                    <h2>{product.name}</h2>
-                                    <p>{product.description}</p>
-                                    <span className={styles.cardLink}>
-                                        {dict.common.readMore}
-                                        <ArrowRight size={18} />
-                                    </span>
-                                </div>
-                            </Link>
-                        ))}
+                        {products.length > 0 ? (
+                            products.map((product) => (
+                                <Link
+                                    key={product.slug}
+                                    href={`/${lang}/${paths.products}/${product.slug}`}
+                                    className={styles.card}
+                                >
+                                    <div className={styles.cardImage}>
+                                        <img
+                                            src={product.image}
+                                            alt={product.imageAlt}
+                                            className={styles.image}
+                                        />
+                                    </div>
+                                    <div className={styles.cardContent}>
+                                        <h2>{product.name}</h2>
+                                        <p>{product.description}</p>
+                                        <span className={styles.cardLink}>
+                                            {dict.common.readMore}
+                                            <ArrowRight size={18} />
+                                        </span>
+                                    </div>
+                                </Link>
+                            ))
+                        ) : (
+                            <div className="col-span-full text-center py-10 text-gray-500">
+                                {lang === "tr" ? "Henüz ürün eklenmemiş." : "No products added yet."}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
