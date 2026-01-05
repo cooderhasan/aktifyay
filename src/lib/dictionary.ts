@@ -81,6 +81,14 @@ export interface Dictionary {
         contact: string;
         followUs: string;
         rights: string;
+        careers: string;
+    };
+
+    // Careers
+    careers: {
+        title: string;
+        description: string;
+        formTitle: string;
     };
 
     // SEO
@@ -165,6 +173,13 @@ const dictionaries: Record<Locale, Dictionary> = {
             contact: "İletişim Bilgileri",
             followUs: "Bizi Takip Edin",
             rights: "Tüm hakları saklıdır.",
+            careers: "Kariyer",
+        },
+
+        careers: {
+            title: "Kariyer",
+            description: "Aktif Yay ailesine katılmak için aşağıdaki formu doldurarak başvurunuzu bize iletebilirsiniz.",
+            formTitle: "İş Başvuru Formu",
         },
 
         seo: {
@@ -247,6 +262,13 @@ const dictionaries: Record<Locale, Dictionary> = {
             contact: "Contact Information",
             followUs: "Follow Us",
             rights: "All rights reserved.",
+            careers: "Careers",
+        },
+
+        careers: {
+            title: "Careers",
+            description: "To join the Aktif Yay family, you can submit your application by filling out the form below.",
+            formTitle: "Job Application Form",
         },
 
         seo: {

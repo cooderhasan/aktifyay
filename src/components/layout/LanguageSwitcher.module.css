@@ -14,11 +14,19 @@
     color: rgba(255, 255, 255, 0.7);
     border-radius: 0.25rem;
     transition: color 0.2s, background-color 0.2s;
+    gap: 0.35rem;
 }
 
 .link:hover {
     color: white;
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+.flag {
+    width: 18px;
+    height: auto;
+    border-radius: 2px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
 }
 
 .active {

@@ -65,7 +65,7 @@ export default function Footer({ locale, dict, settings, products = [] }: Footer
                     <div className={styles.column}>
                         <Link href={`/${locale}`} className={styles.logo}>
                             {settings?.logo ? (
-                                <img src={settings.logo} alt="Aktif Yay" className={styles.logoImg} style={{ height: '40px', width: 'auto' }} />
+                                <img src={settings.logo} alt="Aktif Yay" className={styles.logoImg} style={{ height: '60px', width: 'auto' }} />
                             ) : (
                                 <>
                                     <span className={styles.logoText}>AKTİF</span>
@@ -101,6 +101,7 @@ export default function Footer({ locale, dict, settings, products = [] }: Footer
                             <li><Link href={`/${locale}`}>{dict.nav.home}</Link></li>
                             <li><Link href={`/${locale}/${paths.about}`}>{dict.nav.about}</Link></li>
                             <li><Link href={`/${locale}/${paths.products}`}>{dict.nav.products}</Link></li>
+                            <li><Link href={`/${locale}/${paths.careers}`}>{dict.nav.careers}</Link></li>
                             <li><Link href={`/${locale}/${paths.contact}`}>{dict.nav.contact}</Link></li>
                         </ul>
                     </div>
