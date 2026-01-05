@@ -66,6 +66,7 @@ export default async function AdminReferencesPage() {
                                         <Link href={`/admin/references/${ref.id}`} className={styles.editBtn}>
                                             <Edit size={16} />
                                         </Link>
+                                        {/* @ts-expect-error - Server action type mismatch */}
                                         <form action={deleteReference.bind(null, ref.id)}>
                                             <button type="submit" className={styles.deleteBtn}>
                                                 <Trash2 size={16} />
