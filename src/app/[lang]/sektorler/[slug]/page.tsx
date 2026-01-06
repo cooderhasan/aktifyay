@@ -173,7 +173,7 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
             </section>
 
             {/* Content */}
-            <section className="section">
+            <section className={styles.detailSection}>
                 <div className="container">
                     <div className={styles.content}>
                         {/* Main Content */}
@@ -234,12 +234,12 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
                         <aside className={styles.sidebar}>
                             {/* Related Products */}
                             {relatedProducts.length > 0 && (
-                                <div className={styles.productsCard}>
+                                <div className={styles.productsListCard}>
                                     <h3>{lang === "tr" ? "İlgili Ürünler" : "Related Products"}</h3>
-                                    <ul>
+                                    <ul className={styles.productsList}>
                                         {relatedProducts.map((product, i) => (
-                                            <li key={i}>
-                                                <Link href={`/${lang}/${paths.products}/${product.slug}`}>
+                                            <li key={i} className={styles.productItem}>
+                                                <Link href={`/${lang}/${paths.products}/${product.slug}`} className={styles.productLink}>
                                                     {product.name}
                                                     <ArrowRight size={16} />
                                                 </Link>
