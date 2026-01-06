@@ -81,7 +81,7 @@ export default function HeroSlider({ slides, lang }: HeroSliderProps) {
                                 <div className={styles.buttons}>
                                     <Link
                                         href={slide.btnLink || "#"}
-                                        className={styles.btnPrimary}
+                                        className={`${styles.btn} ${styles.btnPrimary}`}
                                     >
                                         {lang === "tr" ? slide.btnTextTr : slide.btnTextEn}
                                     </Link>
