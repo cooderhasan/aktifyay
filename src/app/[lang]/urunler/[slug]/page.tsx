@@ -140,13 +140,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
         { name, url: `${process.env.NEXT_PUBLIC_SITE_URL}/${lang}/${paths.products}/${slug}` },
     ];
 
-    {/* Schema.org JSON-LD */ }
-    <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbItems)),
-        }}
-    />
 
     {/* Breadcrumb */ }
     <nav className={styles.breadcrumb} aria-label="Breadcrumb">
