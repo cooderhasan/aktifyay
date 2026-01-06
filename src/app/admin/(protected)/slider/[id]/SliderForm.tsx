@@ -7,6 +7,7 @@ import Link from "next/link";
 import styles from "./SliderForm.module.css";
 import ImageUpload from "@/components/admin/ImageUpload";
 import { createSlider, updateSlider, deleteSlider } from "@/actions/slider";
+import toast from "react-hot-toast";
 
 interface SliderFormProps {
     slider: any;
@@ -41,6 +42,7 @@ export default function SliderForm({ slider, isNew }: SliderFormProps) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSaving(true);
+        const toastId = toast.loading("Kaydediliyor...");
 
         try {
             let result;
@@ -51,13 +53,14 @@ export default function SliderForm({ slider, isNew }: SliderFormProps) {
             }
 
             if (result.success) {
+                toast.success("Başarıyla kaydedildi", { id: toastId });
                 router.push("/admin/slider");
                 router.refresh();
             } else {
-                alert(result.error || "İşlem başarısız");
+                toast.error(result.error || "İşlem başarısız", { id: toastId });
             }
         } catch (error) {
-            alert("Bir hata oluştu");
+            toast.error("Bir hata oluştu", { id: toastId });
         } finally {
             setSaving(false);
         }
@@ -66,12 +69,15 @@ export default function SliderForm({ slider, isNew }: SliderFormProps) {
     const handleDelete = async () => {
         if (!confirm("Bu slaytı silmek istediğinize emin misiniz?")) return;
 
+        const toastId = toast.loading("Siliniyor...");
         const result = await deleteSlider(slider.id);
+
         if (result.success) {
+            toast.success("Başarıyla silindi", { id: toastId });
             router.push("/admin/slider");
             router.refresh();
         } else {
-            alert(result.error || "Silme başarısız");
+            toast.error(result.error || "Silme başarısız", { id: toastId });
         }
     };
 

@@ -4,10 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, Trash2, Plus } from "lucide-react";
 import Link from "next/link";
+import DeleteButton from "@/components/admin/DeleteButton";
 import SEOFields from "@/components/admin/SEOFields";
 import InternalLinking from "@/components/admin/InternalLinking";
 import ImageUpload from "@/components/admin/ImageUpload";
 import styles from "./ProductEditForm.module.css";
+import toast from "react-hot-toast";
 
 interface ProductData {
     id?: string;
@@ -121,6 +123,7 @@ export default function ProductEditForm({ product, industries, isNew }: ProductE
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSaving(true);
+        const toastId = toast.loading("Kaydediliyor...");
 
         try {
             const payload = {
@@ -135,13 +138,14 @@ export default function ProductEditForm({ product, industries, isNew }: ProductE
             });
 
             if (response.ok) {
+                toast.success("Başarıyla kaydedildi", { id: toastId });
                 router.push("/admin/products");
                 router.refresh();
             } else {
-                alert("Kaydetme başarısız!");
+                toast.error("Kaydetme başarısız!", { id: toastId });
             }
         } catch {
-            alert("Bir hata oluştu!");
+            toast.error("Bir hata oluştu!", { id: toastId });
         } finally {
             setSaving(false);
         }
@@ -151,7 +155,36 @@ export default function ProductEditForm({ product, industries, isNew }: ProductE
 
     return (
         <div className={styles.page}>
-            {/* ... (Header) */}
+            <header className={styles.header}>
+                <div className={styles.headerLeft}>
+                    <Link href="/admin/products" className={styles.backBtn}>
+                        <ArrowLeft size={20} />
+                    </Link>
+                    <div>
+                        <h1>{isNew ? "Yeni Ürün" : "Ürün Düzenle"}</h1>
+                        <p>{isNew ? "Yeni ürün kategorisi oluştur" : formData.nameTr}</p>
+                    </div>
+                </div>
+                <div className={styles.headerActions}>
+                    <label className={styles.activeToggle}>
+                        <input
+                            type="checkbox"
+                            checked={formData.isActive}
+                            onChange={(e) => handleChange("isActive", e.target.checked)}
+                        />
+                        <span>Aktif</span>
+                    </label>
+                    {!isNew && product?.id && (
+                        <DeleteButton
+                            id={product.id}
+                            endpoint="/api/admin/products"
+                            className={styles.deleteBtn}
+                            iconSize={18}
+                            redirectUrl="/admin/products"
+                        />
+                    )}
+                </div>
+            </header>
 
             <div className={styles.tabs}>
                 <button

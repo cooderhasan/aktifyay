@@ -5,6 +5,7 @@ import { Save } from "lucide-react";
 import styles from "./page.module.css";
 import ImageUpload from "@/components/admin/ImageUpload";
 import { updateSettings } from "@/actions/settings";
+import toast from "react-hot-toast";
 
 interface SettingsFormProps {
     initialData: any;
@@ -21,14 +22,15 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSaving(true);
+        const toastId = toast.loading("Güncelleniyor...");
         const res = await updateSettings(formData);
-        setSaving(false);
 
         if (res.success) {
-            alert("Ayarlar güncellendi!");
+            toast.success("Ayarlar güncellendi!", { id: toastId });
         } else {
-            alert(res.error || "Hata oluştu");
+            toast.error(res.error || "Hata oluştu", { id: toastId });
         }
+        setSaving(false);
     };
 
     return (

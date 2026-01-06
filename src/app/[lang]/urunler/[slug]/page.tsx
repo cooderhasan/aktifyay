@@ -180,14 +180,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
             </section>
 
-            <section className="py-12">
+            <section className={styles.detailSection}>
                 <div className="container">
                     <div className={styles.content}>
                         <div className={styles.mainContent}>
-                            <ProductGallery
-                                images={allImages}
-                                alt={lang === "tr" ? (product.imageAltTr || name) : (product.imageAltEn || name)}
-                            />
+                            <div className={styles.galleryWrapper}>
+                                <ProductGallery
+                                    images={allImages}
+                                    alt={lang === "tr" ? (product.imageAltTr || name) : (product.imageAltEn || name)}
+                                />
+                            </div>
                             <h2>{lang === "tr" ? `${name} Nedir?` : `What is ${name}?`}</h2>
                             <div className={styles.longDesc}>
                                 {(longDesc || "").split("\n\n").map((paragraph, i) => (
@@ -244,12 +246,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
                         <aside className={styles.sidebar}>
                             {/* Related Industries Sidebar */}
                             {relatedIndustries.length > 0 && (
-                                <div className={styles.ctaCard} style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}>
-                                    <h3 style={{ color: '#1a202c' }}>{lang === "tr" ? "Kullanım Alanları" : "Used In Industries"}</h3>
-                                    <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                                <div className={styles.industryListCard}>
+                                    <h3>{lang === "tr" ? "Kullanım Alanları" : "Used In Industries"}</h3>
+                                    <ul className={styles.industryList}>
                                         {relatedIndustries.map((ind, i) => (
-                                            <li key={i} style={{ marginBottom: '0.75rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.75rem' }}>
-                                                <Link href={`/${lang}/${paths.industries}/${ind.slug}`} style={{ color: '#2d3748', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontWeight: 500 }}>
+                                            <li key={i} className={styles.industryItem}>
+                                                <Link href={`/${lang}/sektorler/${ind.slug}`} className={styles.industryLink}>
                                                     {ind.name}
                                                     <ArrowRight size={16} color="#ed8936" />
                                                 </Link>

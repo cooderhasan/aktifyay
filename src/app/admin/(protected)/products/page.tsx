@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit } from "lucide-react";
 import styles from "./page.module.css";
+import DeleteButton from "@/components/admin/DeleteButton";
 
 export const metadata = {
     title: "Ürün Kategorileri | Admin",
@@ -60,9 +61,12 @@ export default async function AdminProductsPage() {
                                         <Link href={`/admin/products/${product.id}`} className={styles.editBtn}>
                                             <Edit size={16} />
                                         </Link>
-                                        <button className={styles.deleteBtn}>
-                                            <Trash2 size={16} />
-                                        </button>
+                                        <DeleteButton
+                                            id={product.id}
+                                            endpoint="/api/admin/products"
+                                            className={styles.deleteBtn}
+                                            confirmMessage={`${product.nameTr} kategorisini silmek istediğinizden emin misiniz?`}
+                                        />
                                     </td>
                                 </tr>
                             ))

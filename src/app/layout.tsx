@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { generateOrganizationSchema } from "@/lib/seo";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -76,6 +77,7 @@ export default async function RootLayout({
         {children}
         {/* @ts-expect-error - Component type mismatch */}
         <WhatsAppButton phone={settings?.whatsapp} />
+        <Toaster position="top-right" />
       </body>
     </html>
   );

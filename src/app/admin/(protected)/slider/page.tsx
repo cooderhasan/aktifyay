@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Plus, Edit2, ImageIcon } from "lucide-react";
 import styles from "./page.module.css";
 import { getSliders } from "@/actions/slider";
+import DeleteButton from "@/components/admin/DeleteButton";
 
 export const metadata = {
     title: "Slider Yönetimi | Admin",
@@ -53,6 +54,13 @@ export default async function AdminSliderPage() {
                                     <Edit2 size={16} />
                                     Düzenle
                                 </Link>
+                                <DeleteButton
+                                    id={slider.id}
+                                    endpoint="/api/admin/slider"
+                                    className={styles.editBtn}
+                                    confirmMessage="Bu slaytı silmek istediğinize emin misiniz?"
+                                    style={{ backgroundColor: '#ef4444', color: 'white', border: 'none' }}
+                                />
                             </div>
                         </div>
                     </div>

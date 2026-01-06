@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit } from "lucide-react";
 import styles from "../products/page.module.css";
+import DeleteButton from "@/components/admin/DeleteButton";
 
 export const metadata = {
     title: "Sektörler | Admin",
@@ -60,9 +61,12 @@ export default async function AdminIndustriesPage() {
                                         <Link href={`/admin/industries/${industry.id}`} className={styles.editBtn}>
                                             <Edit size={16} />
                                         </Link>
-                                        <button className={styles.deleteBtn}>
-                                            <Trash2 size={16} />
-                                        </button>
+                                        <DeleteButton
+                                            id={industry.id}
+                                            endpoint="/api/admin/industries"
+                                            className={styles.deleteBtn}
+                                            confirmMessage={`${industry.nameTr} sektörünü silmek istediğinizden emin misiniz?`}
+                                        />
                                     </td>
                                 </tr>
                             ))

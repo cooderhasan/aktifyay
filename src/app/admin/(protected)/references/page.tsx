@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import styles from "../products/page.module.css"; // Reuse existing styles
 import { deleteReference } from "@/actions/reference";
+import DeleteButton from "@/components/admin/DeleteButton";
 
 export const metadata = {
     title: "Referanslar | Admin",
@@ -66,12 +67,12 @@ export default async function AdminReferencesPage() {
                                         <Link href={`/admin/references/${ref.id}`} className={styles.editBtn}>
                                             <Edit size={16} />
                                         </Link>
-                                        {/* @ts-expect-error - Server action type mismatch */}
-                                        <form action={deleteReference.bind(null, ref.id)}>
-                                            <button type="submit" className={styles.deleteBtn}>
-                                                <Trash2 size={16} />
-                                            </button>
-                                        </form>
+                                        <DeleteButton
+                                            id={ref.id}
+                                            endpoint="/api/admin/references"
+                                            className={styles.deleteBtn}
+                                            confirmMessage={`${ref.name} referansını silmek istediğinizden emin misiniz?`}
+                                        />
                                     </td>
                                 </tr>
                             ))

@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { createReference, updateReference } from "@/actions/reference";
 import { ArrowLeft, Save, Upload } from "lucide-react";
 import Link from "next/link";
-import styles from "../products/page.module.css"; // Reuse general admin styles
+import styles from "../products/page.module.css";
+import toast from "react-hot-toast"; // Reuse general admin styles
 // We'll use inline styles for the form specific parts to save time creating a new module
 
 interface ReferenceFormProps {
@@ -29,15 +30,17 @@ export default function ReferenceForm({ reference }: ReferenceFormProps) {
 
     async function onSubmit(formData: FormData) {
         setLoading(true);
+        const toastId = toast.loading("İşleniyor...");
         const res = reference
             ? await updateReference(reference.id, formData)
             : await createReference(formData);
 
         if (res.success) {
+            toast.success(reference ? "Referans güncellendi" : "Referans oluşturuldu", { id: toastId });
             router.push("/admin/references");
             router.refresh();
         } else {
-            alert(res.error);
+            toast.error(res.error || "İşlem başarısız", { id: toastId });
             setLoading(false);
         }
     }

@@ -4,10 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, Trash2 } from "lucide-react";
 import Link from "next/link";
+import DeleteButton from "@/components/admin/DeleteButton";
 import SEOFields from "@/components/admin/SEOFields";
 import InternalLinking from "@/components/admin/InternalLinking";
 import ImageUpload from "@/components/admin/ImageUpload";
 import styles from "../../products/[id]/ProductEditForm.module.css";
+import toast from "react-hot-toast";
 
 interface IndustryData {
     id?: string;
@@ -102,6 +104,7 @@ export default function IndustryEditForm({ industry, products, isNew }: Industry
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSaving(true);
+        const toastId = toast.loading("Kaydediliyor...");
 
         try {
             const response = await fetch(`/api/admin/industries${isNew ? "" : `/${industry?.id}`}`, {
@@ -111,13 +114,14 @@ export default function IndustryEditForm({ industry, products, isNew }: Industry
             });
 
             if (response.ok) {
+                toast.success("Başarıyla kaydedildi", { id: toastId });
                 router.push("/admin/industries");
                 router.refresh();
             } else {
-                alert("Kaydetme başarısız!");
+                toast.error("Kaydetme başarısız!", { id: toastId });
             }
         } catch {
-            alert("Bir hata oluştu!");
+            toast.error("Bir hata oluştu!", { id: toastId });
         } finally {
             setSaving(false);
         }
@@ -152,10 +156,14 @@ export default function IndustryEditForm({ industry, products, isNew }: Industry
                         />
                         <span>Aktif</span>
                     </label>
-                    {!isNew && (
-                        <button type="button" className={styles.deleteBtn}>
-                            <Trash2 size={18} />
-                        </button>
+                    {!isNew && industry?.id && (
+                        <DeleteButton
+                            id={industry.id}
+                            endpoint="/api/admin/industries"
+                            className={styles.deleteBtn}
+                            iconSize={18}
+                            redirectUrl="/admin/industries"
+                        />
                     )}
                 </div>
             </header>
