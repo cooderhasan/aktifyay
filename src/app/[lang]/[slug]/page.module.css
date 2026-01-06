@@ -22,6 +22,9 @@
     font-size: 1.1rem;
     line-height: 1.8;
     color: var(--color-gray-700);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .content h2 {
