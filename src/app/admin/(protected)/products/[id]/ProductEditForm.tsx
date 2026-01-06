@@ -324,7 +324,7 @@ export default function ProductEditForm({ product, industries, isNew }: ProductE
                             <label>Ürün Görseli</label>
                             <ImageUpload
                                 label="Ürün Görseli"
-                                value={formData.image}
+                                value={formData.image || ""}
                                 onChange={(val) => handleChange("image", val)}
                                 description="Önerilen: Kare veya Yatay (4:3), Max 2MB. Arka planı temizlenmiş (transparan) PNG önerilir."
                             />
