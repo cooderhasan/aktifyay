@@ -433,6 +433,7 @@ model SiteSettings {
   homeDescEn    String?
 
   whatsapp   String?
+  contactMapUrl String? @db.Text
   
   updatedAt DateTime @updatedAt
 }

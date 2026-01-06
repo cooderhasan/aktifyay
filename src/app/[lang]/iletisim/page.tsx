@@ -137,7 +137,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
                             {/* Map */}
                             <div className={styles.map}>
                                 <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3148.123456789!2d32.4943!3d37.9337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDU2JzAxLjMiTiAzMsKwMjknMzkuNSJF!5e0!3m2!1str!2str!4v1234567890"
+                                    src={settings?.contactMapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3148.123456789!2d32.4943!3d37.9337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDU2JzAxLjMiTiAzMsKwMjknMzkuNSJF!5e0!3m2!1str!2str!4v1234567890"}
                                     width="100%"
                                     height="300"
                                     style={{ border: 0, borderRadius: "0.75rem" }}

@@ -91,6 +91,16 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
                             rows={3}
                         />
                     </div>
+                    <div className={styles.field} style={{ gridColumn: "1 / -1" }}>
+                        <label>Google Harita Embed URL (src)</label>
+                        <input
+                            type="text"
+                            value={formData.contactMapUrl || ""}
+                            onChange={(e) => handleChange("contactMapUrl", e.target.value)}
+                            placeholder="https://www.google.com/maps/embed?..."
+                        />
+                        <small className={styles.hint}>Google Maps'ten 'Haritayı yerleştir' diyerek aldığınız iframe kodunun içindeki 'src' kısmını yapıştırın.</small>
+                    </div>
                 </div>
             </section>
 
