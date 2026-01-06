@@ -257,7 +257,7 @@ export default function IndustryEditForm({ industry, products, isNew }: Industry
                             <label>Sektör Görseli</label>
                             <ImageUpload
                                 label="Görsel"
-                                value={formData.image}
+                                value={formData.image || ""}
                                 onChange={(val) => handleChange("image", val)}
                                 description="Önerilen: Yatay (16:9) veya (4:3) oranında, Max 2MB. JPG/WEBP formatı uygundur."
                             />
