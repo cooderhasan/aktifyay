@@ -109,9 +109,30 @@ export default async function ProductPage({ params }: ProductPageProps) {
             NOT: { id: product.id },
             isActive: true
         },
-        take: 4,
         orderBy: { order: 'asc' }
     });
+
+    // Fetch related Industries for sidebar
+    let relatedIndustriesSlugs: string[] = [];
+    try {
+        if (product.relatedIndustries) {
+            relatedIndustriesSlugs = JSON.parse(product.relatedIndustries);
+        }
+    } catch (e) {
+        console.error("Failed to parse relatedIndustries", e);
+    }
+
+    const relatedIndustriesData = relatedIndustriesSlugs.length > 0
+        ? await prisma.industry.findMany({
+            where: { slug: { in: relatedIndustriesSlugs }, isActive: true },
+            select: { slug: true, nameTr: true, nameEn: true }
+        })
+        : [];
+
+    const relatedIndustries = relatedIndustriesData.map(ind => ({
+        name: lang === "tr" ? ind.nameTr : ind.nameEn,
+        slug: ind.slug
+    }));
 
     return (
         <>
@@ -195,6 +216,23 @@ export default async function ProductPage({ params }: ProductPageProps) {
                                 <p><strong>{lang === "tr" ? "Telefon" : "Phone"}:</strong> +90 532 676 34 88</p>
                                 <p><strong>Email:</strong> info@aktifyay.com.tr</p>
                             </div>
+
+                            {/* Related Industries Sidebar */}
+                            {relatedIndustries.length > 0 && (
+                                <div className={styles.ctaCard} style={{ marginTop: '1.5rem', background: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                                    <h3>{lang === "tr" ? "Kullanım Alanları" : "Used In Industries"}</h3>
+                                    <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                                        {relatedIndustries.map((ind, i) => (
+                                            <li key={i} style={{ marginBottom: '0.75rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.75rem' }}>
+                                                <Link href={`/${lang}/${paths.industries}/${ind.slug}`} style={{ color: '#2d3748', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontWeight: 500 }}>
+                                                    {ind.name}
+                                                    <ArrowRight size={16} color="#ed8936" />
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                         </aside>
                     </div >
                 </div >

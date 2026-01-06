@@ -64,27 +64,56 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
     const image = industry.image || "/defaults/industry-default.png";
     const imageAlt = lang === "tr" ? (industry.imageAltTr || name) : (industry.imageAltEn || name);
 
-    // Fetch Related Products
-    let relatedProductSlugs: string[] = [];
+    // 1. Manually added related products (from Industry side)
+    let manualRelatedSlugs: string[] = [];
     try {
         if (industry.relatedProducts) {
-            relatedProductSlugs = JSON.parse(industry.relatedProducts);
+            manualRelatedSlugs = JSON.parse(industry.relatedProducts);
         }
     } catch (e) {
         console.error("Failed to parse relatedProducts", e);
     }
 
-    const relatedProductsData = relatedProductSlugs.length > 0
-        ? await prisma.productCategory.findMany({
-            where: { slug: { in: relatedProductSlugs }, isActive: true },
-            select: { slug: true, nameTr: true, nameEn: true }
-        })
-        : [];
+    // 2. Reverse lookup: Products that selected this Industry (from Product side)
+    // We fetch all active products to safely check the JSON string in memory
+    // (Prisma contains filter on JSON arrays stored as strings is risky for substrings)
+    const allProducts = await prisma.productCategory.findMany({
+        where: { isActive: true },
+        select: {
+            slug: true,
+            nameTr: true,
+            nameEn: true,
+            image: true,
+            relatedIndustries: true
+        }
+    });
 
-    const relatedProducts = relatedProductsData.map(p => ({
-        name: lang === "tr" ? p.nameTr : p.nameEn,
-        slug: p.slug
-    }));
+    const reverseRelatedProducts = allProducts.filter(p => {
+        if (!p.relatedIndustries) return false;
+        try {
+            const industries = JSON.parse(p.relatedIndustries);
+            return Array.isArray(industries) && industries.includes(slug);
+        } catch {
+            return false;
+        }
+    });
+
+    // 3. Combine and Deduplicate
+    const combinedProductsMap = new Map();
+
+    // Add manual ones first (maintaining order if possible, though we fetch fresh data for them)
+    // We need to find the product details for manual slugs since we only have slugs initially
+    const manualProductsDetails = allProducts.filter(p => manualRelatedSlugs.includes(p.slug));
+
+    [...manualProductsDetails, ...reverseRelatedProducts].forEach(p => {
+        combinedProductsMap.set(p.slug, {
+            name: lang === "tr" ? p.nameTr : p.nameEn,
+            slug: p.slug,
+            // You can add image here if needed for sidebar
+        });
+    });
+
+    const relatedProducts = Array.from(combinedProductsMap.values());
 
     const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://aktifyay.com.tr";
 
