@@ -141,18 +141,28 @@ export default async function ProductPage({ params }: ProductPageProps) {
     ];
 
 
-    {/* Breadcrumb */ }
-    <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-        <div className="container">
-            <ol>
-                <li><Link href={`/${lang}`}>{lang === "tr" ? "Ana Sayfa" : "Home"}</Link></li>
-                <li><Link href={`/${lang}/${paths.products}`}>{lang === "tr" ? "Ürünler" : "Products"}</Link></li>
-                <li aria-current="page">{name}</li>
-            </ol>
-        </div>
-    </nav>
+    return (
+        <>
+            {/* Schema.org JSON-LD */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbItems)),
+                }}
+            />
 
-    {/* Hero */ }
+            {/* Breadcrumb */}
+            <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+                <div className="container">
+                    <ol>
+                        <li><Link href={`/${lang}`}>{lang === "tr" ? "Ana Sayfa" : "Home"}</Link></li>
+                        <li><Link href={`/${lang}/${paths.products}`}>{lang === "tr" ? "Ürünler" : "Products"}</Link></li>
+                        <li aria-current="page">{name}</li>
+                    </ol>
+                </div>
+            </nav>
+
+            {/* Hero */}
             <section className={styles.hero} style={{
                 backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${product.image || "/defaults/product-default.png"})`,
                 backgroundSize: 'cover',
@@ -272,49 +282,49 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div >
             </section >
 
-    {/* Related Products Section */ }
-    {
-        relatedProducts.length > 0 && (
-            <section className={styles.relatedSection}>
-                <div className="container">
-                    <div className="section-title">
-                        <h2>{lang === "tr" ? "Diğer Ürünlerimiz" : "Other Products"}</h2>
-                        <p>
-                            {lang === "tr"
-                                ? "İlginizi çekebilecek diğer endüstriyel yay çözümlerimiz"
-                                : "Other industrial spring solutions you might be interested in"}
-                        </p>
-                    </div>
-                    <div className={styles.relatedGrid}>
-                        {relatedProducts.map((p) => (
-                            <Link
-                                key={p.slug}
-                                href={`/${lang}/${lang === "tr" ? "urunler" : "products"}/${p.slug}`}
-                                className={styles.relatedCard}
-                            >
-                                <div className={styles.relatedImage}>
-                                    <Image
-                                        src={p.image || "/defaults/product-default.png"}
-                                        alt={lang === "tr" ? (p.imageAltTr || p.nameTr) : (p.imageAltEn || p.nameEn)}
-                                        fill
-                                        className={styles.relatedImg}
-                                    />
-                                </div>
-                                <div className={styles.relatedContent}>
-                                    <h3>{lang === "tr" ? p.nameTr : p.nameEn}</h3>
-                                    <p>{lang === "tr" ? p.descriptionTr : p.descriptionEn}</p>
-                                    <span className={styles.relatedLink}>
-                                        {lang === "tr" ? "Detayları Gör" : "View Details"}
-                                        <ArrowRight size={16} />
-                                    </span>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-            </section>
-        )
-    }
+            {/* Related Products Section */}
+            {
+                relatedProducts.length > 0 && (
+                    <section className={styles.relatedSection}>
+                        <div className="container">
+                            <div className="section-title">
+                                <h2>{lang === "tr" ? "Diğer Ürünlerimiz" : "Other Products"}</h2>
+                                <p>
+                                    {lang === "tr"
+                                        ? "İlginizi çekebilecek diğer endüstriyel yay çözümlerimiz"
+                                        : "Other industrial spring solutions you might be interested in"}
+                                </p>
+                            </div>
+                            <div className={styles.relatedGrid}>
+                                {relatedProducts.map((p) => (
+                                    <Link
+                                        key={p.slug}
+                                        href={`/${lang}/${lang === "tr" ? "urunler" : "products"}/${p.slug}`}
+                                        className={styles.relatedCard}
+                                    >
+                                        <div className={styles.relatedImage}>
+                                            <Image
+                                                src={p.image || "/defaults/product-default.png"}
+                                                alt={lang === "tr" ? (p.imageAltTr || p.nameTr) : (p.imageAltEn || p.nameEn)}
+                                                fill
+                                                className={styles.relatedImg}
+                                            />
+                                        </div>
+                                        <div className={styles.relatedContent}>
+                                            <h3>{lang === "tr" ? p.nameTr : p.nameEn}</h3>
+                                            <p>{lang === "tr" ? p.descriptionTr : p.descriptionEn}</p>
+                                            <span className={styles.relatedLink}>
+                                                {lang === "tr" ? "Detayları Gör" : "View Details"}
+                                                <ArrowRight size={16} />
+                                            </span>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )
+            }
         </>
     );
 }
