@@ -127,9 +127,17 @@ export default function Footer({ locale, dict, settings, products = [] }: Footer
                             <div className={styles.contactItem}>
                                 <MapPin size={20} />
                                 <span>
-                                    {settings?.address || (locale === "tr"
-                                        ? "Konya Organize Sanayi Bölgesi, Konya, Türkiye"
-                                        : "Konya Organized Industrial Zone, Konya, Turkey")}
+                                    {settings?.address ? (
+                                        settings.address.split('\n').map((line: string, i: number) => (
+                                            <span key={i} style={{ display: 'block' }}>
+                                                {line}
+                                            </span>
+                                        ))
+                                    ) : (
+                                        locale === "tr"
+                                            ? "Konya Organize Sanayi Bölgesi, Konya, Türkiye"
+                                            : "Konya Organized Industrial Zone, Konya, Turkey"
+                                    )}
                                 </span>
                             </div>
                             <div className={styles.contactItem}>

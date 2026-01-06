@@ -4,6 +4,7 @@ import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { Locale, pathMappings } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionary";
 import { generateSEOMetadata, generateBreadcrumbSchema } from "@/lib/seo";
+import { getSettings } from "@/actions/settings";
 import ContactForm from "@/components/forms/ContactForm";
 import styles from "./page.module.css";
 
@@ -30,6 +31,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
     const { lang } = await params;
     const dict = getDictionary(lang);
     const paths = pathMappings[lang];
+    const settings = await getSettings();
 
     const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://aktifyay.com.tr";
 
@@ -37,6 +39,15 @@ export default async function ContactPage({ params }: ContactPageProps) {
         { name: lang === "tr" ? "Ana Sayfa" : "Home", url: `${SITE_URL}/${lang}` },
         { name: dict.nav.contact, url: `${SITE_URL}/${lang}/${paths.contact}` },
     ];
+
+    const formattedAddress = settings?.address ? settings.address.split('\n').map((line: string, i: number) => (
+        <span key={i}>
+            {line}
+            {i < settings.address!.split('\n').length - 1 && <br />}
+        </span>
+    )) : (
+        <>Horozluhan Mah. Yazırhan Sok. No:14<br />Selçuklu / Konya, Türkiye</>
+    );
 
     return (
         <>
@@ -84,7 +95,9 @@ export default async function ContactPage({ params }: ContactPageProps) {
                                     </div>
                                     <div>
                                         <h3>{dict.common.phone}</h3>
-                                        <a href="tel:+905326763488">+90 532 676 34 88</a>
+                                        <a href={`tel:${settings?.phone || "+903323456789"}`}>
+                                            {settings?.phone || "+90 332 345 67 89"}
+                                        </a>
                                     </div>
                                 </div>
 
@@ -94,7 +107,9 @@ export default async function ContactPage({ params }: ContactPageProps) {
                                     </div>
                                     <div>
                                         <h3>{dict.common.email}</h3>
-                                        <a href="mailto:info@aktifyay.com.tr">info@aktifyay.com.tr</a>
+                                        <a href={`mailto:${settings?.email || "info@aktifyay.com.tr"}`}>
+                                            {settings?.email || "info@aktifyay.com.tr"}
+                                        </a>
                                     </div>
                                 </div>
 
@@ -104,7 +119,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
                                     </div>
                                     <div>
                                         <h3>{dict.common.address}</h3>
-                                        <p>Horozluhan Mah. Yazırhan Sok. No:14<br />Selçuklu / Konya, Türkiye</p>
+                                        <p>{formattedAddress}</p>
                                     </div>
                                 </div>
 

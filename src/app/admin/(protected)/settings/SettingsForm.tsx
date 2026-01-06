@@ -85,10 +85,10 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
                     </div>
                     <div className={styles.field}>
                         <label>Adres</label>
-                        <input
-                            type="text"
+                        <textarea
                             value={formData.address || ""}
                             onChange={(e) => handleChange("address", e.target.value)}
+                            rows={3}
                         />
                     </div>
                 </div>
