@@ -1,13 +1,13 @@
 import { prisma } from "@/lib/prisma";
 import styles from "../products/page.module.css";
-import QuoteActions from "@/components/admin/QuoteActions";
+import MessageActions from "@/components/admin/MessageActions";
 
 export const metadata = {
-    title: "Teklif Talepleri | Admin",
+    title: "İletişim Mesajları | Admin",
 };
 
-export default async function AdminQuotesPage() {
-    const quotes = await prisma.quoteRequest.findMany({
+export default async function AdminMessagesPage() {
+    const messages = await prisma.contactMessage.findMany({
         orderBy: { createdAt: "desc" },
     });
 
@@ -15,8 +15,8 @@ export default async function AdminQuotesPage() {
         <div className={styles.page}>
             <header className={styles.header}>
                 <div>
-                    <h1>Teklif Talepleri</h1>
-                    <p>Gelen teklif taleplerini yönetin</p>
+                    <h1>İletişim Mesajları</h1>
+                    <p>Web sitesinden gelen iletişim formlarını yönetin</p>
                 </div>
             </header>
 
@@ -27,34 +27,32 @@ export default async function AdminQuotesPage() {
                             <th>Tarih</th>
                             <th>Ad Soyad</th>
                             <th>E-posta</th>
-                            <th>Firma</th>
-                            <th>Ürün</th>
+                            <th>Konu</th>
                             <th>Durum</th>
                             <th>İşlemler</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {quotes.length === 0 ? (
+                        {messages.length === 0 ? (
                             <tr>
-                                <td colSpan={7} className={styles.empty}>
-                                    Henüz teklif talebi yok
+                                <td colSpan={6} className={styles.empty}>
+                                    Henüz mesaj yok
                                 </td>
                             </tr>
                         ) : (
-                            quotes.map((quote) => (
-                                <tr key={quote.id}>
-                                    <td>{new Date(quote.createdAt).toLocaleDateString("tr-TR")}</td>
-                                    <td>{quote.name}</td>
-                                    <td>{quote.email}</td>
-                                    <td>{quote.company || "-"}</td>
-                                    <td>{quote.product || "-"}</td>
+                            messages.map((message) => (
+                                <tr key={message.id}>
+                                    <td>{new Date(message.createdAt).toLocaleDateString("tr-TR")}</td>
+                                    <td>{message.name}</td>
+                                    <td>{message.email}</td>
+                                    <td>{message.subject || "-"}</td>
                                     <td>
-                                        <span className={quote.isRead ? styles.inactive : styles.active}>
-                                            {quote.isRead ? "Okundu" : "Yeni"}
+                                        <span className={message.isRead ? styles.inactive : styles.active}>
+                                            {message.isRead ? "Okundu" : "Yeni"}
                                         </span>
                                     </td>
                                     <td className={styles.actions}>
-                                        <QuoteActions quote={quote} />
+                                        <MessageActions message={message} />
                                     </td>
                                 </tr>
                             ))
