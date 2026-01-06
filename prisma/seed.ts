@@ -195,6 +195,42 @@ async function main() {
             contentTr: "<p>Referanslarımız...</p>",
             contentEn: "<p>Our references...</p>",
             isActive: true
+        },
+        {
+            slug: "kvkk",
+            type: "static",
+            titleTr: "KVKK Aydınlatma Metni",
+            titleEn: "KVKK Clarification Text",
+            contentTr: "<p>Kişisel Verilerin Korunması Kanunu ile ilgili metin buraya gelecek.</p>",
+            contentEn: "<p>Text regarding the Personal Data Protection Law will be here.</p>",
+            isActive: true
+        },
+        {
+            slug: "gizlilik-politikasi",
+            type: "static",
+            titleTr: "Gizlilik Politikası",
+            titleEn: "Privacy Policy",
+            contentTr: "<p>Gizlilik politikası metni buraya gelecek.</p>",
+            contentEn: "<p>Privacy policy text will be here.</p>",
+            isActive: true
+        },
+        {
+            slug: "cerez-politikasi",
+            type: "static",
+            titleTr: "Çerez Politikası",
+            titleEn: "Cookie Policy",
+            contentTr: "<p>Çerez kullanım politikası metni buraya gelecek.</p>",
+            contentEn: "<p>Cookie usage policy text will be here.</p>",
+            isActive: true
+        },
+        {
+            slug: "kullanim-kosullari",
+            type: "static",
+            titleTr: "Kullanım Koşulları",
+            titleEn: "Terms of Use",
+            contentTr: "<p>Site kullanım koşulları metni buraya gelecek.</p>",
+            contentEn: "<p>Website terms of use text will be here.</p>",
+            isActive: true
         }
     ];
 
