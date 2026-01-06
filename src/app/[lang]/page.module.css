@@ -136,10 +136,39 @@
     animation: fadeInUp 0.8s ease-out 0.4s backwards;
 }
 
+/* Hero Buttons */
+.heroPrimaryBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: white;
+    background-color: var(--color-secondary);
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(234, 170, 0, 0.3);
+    border: 2px solid var(--color-secondary);
+}
+
+.heroPrimaryBtn:hover {
+    background-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(234, 170, 0, 0.4);
+}
+
 .heroButtons .btn-outline {
     border-color: rgba(255, 255, 255, 0.8);
     color: white;
     backdrop-filter: blur(4px);
+    padding: 1rem 2.5rem;
+    /* Match size */
+    font-size: 1.1rem;
+    /* Match size */
 }
 
 .heroButtons .btn-outline:hover {

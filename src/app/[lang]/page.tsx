@@ -166,7 +166,7 @@ export default async function HomePage({ params }: HomePageProps) {
                             <div className={styles.heroButtons}>
                                 <Link
                                     href={`/${lang}/${lang === "tr" ? "teklif-al" : "request-quote"}`}
-                                    className="btn btn-secondary"
+                                    className={styles.heroPrimaryBtn}
                                 >
                                     {dict.nav.quote}
                                 </Link>
