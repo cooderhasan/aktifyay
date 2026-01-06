@@ -141,24 +141,24 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem 2.5rem;
+    padding: 1rem 3rem;
     font-size: 1.1rem;
-    font-weight: 700;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: white;
-    background-color: var(--color-secondary);
-    border-radius: 0.5rem;
+    background: linear-gradient(135deg, var(--color-secondary) 0%, #e67e22 100%);
+    border-radius: 50px;
     text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(234, 170, 0, 0.3);
-    border: 2px solid var(--color-secondary);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 15px rgba(234, 170, 0, 0.4);
+    border: none;
 }
 
 .heroPrimaryBtn:hover {
-    background-color: transparent;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(234, 170, 0, 0.4);
+    background: linear-gradient(135deg, #e67e22 0%, var(--color-secondary) 100%);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(234, 170, 0, 0.5);
 }
 
 .heroButtons .btn-outline {
