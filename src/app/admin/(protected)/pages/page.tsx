@@ -19,10 +19,21 @@ export default async function AdminPagesPage() {
                     <h1>Sayfalar</h1>
                     <p>Statik sayfaları yönetin</p>
                 </div>
-                <Link href="/admin/pages/new" className={styles.addBtn}>
-                    <Plus size={20} />
-                    Yeni Ekle
-                </Link>
+                <div style={{ display: "flex", gap: "1rem" }}>
+                    <form action={async () => {
+                        "use server";
+                        const { seedDefaultPages } = await import("@/actions/admin-pages");
+                        await seedDefaultPages();
+                    }}>
+                        <button type="submit" className={styles.addBtn} style={{ background: "#4b5563" }}>
+                            Eksikleri Yükle
+                        </button>
+                    </form>
+                    <Link href="/admin/pages/new" className={styles.addBtn}>
+                        <Plus size={20} />
+                        Yeni Ekle
+                    </Link>
+                </div>
             </header>
 
             <div className={styles.table}>

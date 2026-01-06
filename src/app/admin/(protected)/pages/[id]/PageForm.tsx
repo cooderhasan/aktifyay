@@ -6,11 +6,13 @@ import { ArrowLeft, Save, Trash2 } from "lucide-react";
 import Link from "next/link";
 import SEOFields from "@/components/admin/SEOFields";
 import RichTextEditor from "@/components/admin/RichTextEditor";
+import ImageUpload from "@/components/admin/ImageUpload";
 import styles from "./PageForm.module.css";
 
 interface PageData {
     id?: string;
     slug: string;
+    image?: string | null;
     type: string;
     titleTr: string;
     titleEn: string;
@@ -51,6 +53,7 @@ export default function PageForm({ page, isNew }: PageFormProps) {
 
     const [formData, setFormData] = useState<PageData>({
         slug: page?.slug || "",
+        image: page?.image || "",
         type: page?.type || "static",
         titleTr: page?.titleTr || "",
         titleEn: page?.titleEn || "",
@@ -159,6 +162,14 @@ export default function PageForm({ page, isNew }: PageFormProps) {
                 {/* Content Tab */}
                 {activeTab === "content" && (
                     <div className={styles.section}>
+                        <div className={styles.field} style={{ marginBottom: "2rem" }}>
+                            <label>Sayfa Görseli (Opsiyonel)</label>
+                            <ImageUpload
+                                value={formData.image || ""}
+                                onChange={(url) => handleChange("image", url)}
+                            />
+                        </div>
+
                         <div className={styles.grid}>
                             <div className={styles.field}>
                                 <label>Slug (URL)</label>

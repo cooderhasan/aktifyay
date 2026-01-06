@@ -57,6 +57,9 @@ model Page {
   imageAltTr    String?
   imageAltEn    String?
 
+  // Media
+  image         String?
+
   // Status
   isActive  Boolean  @default(true)
   order     Int      @default(0)
