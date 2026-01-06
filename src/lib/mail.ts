@@ -17,9 +17,10 @@ interface MailOptions {
     subject: string;
     html: string;
     replyTo?: string;
+    attachments?: any[];
 }
 
-export const sendMail = async ({ to, subject, html, replyTo }: MailOptions) => {
+export const sendMail = async ({ to, subject, html, replyTo, attachments }: MailOptions) => {
     try {
         const info = await transporter.sendMail({
             from: process.env.SMTP_FROM || `"Aktif Yay" <${process.env.SMTP_USER}>`,
@@ -27,6 +28,7 @@ export const sendMail = async ({ to, subject, html, replyTo }: MailOptions) => {
             replyTo,
             subject,
             html,
+            attachments,
         });
         console.log("Email sent: %s", info.messageId);
         return true;
