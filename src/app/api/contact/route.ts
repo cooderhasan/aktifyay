@@ -26,7 +26,8 @@ export async function POST(request: Request) {
 
         // Send Email Notification
         if (adminEmail) {
-            await sendMail({
+            // Send Email Notification (Fire and forget)
+            sendMail({
                 to: adminEmail,
                 replyTo: data.email,
                 subject: `Yeni İletişim Formu Mesajı: ${data.subject || "Konusuz"} - ${data.name}`,
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
                     <hr/>
                     <p><small>Bu mesaj Aktif Yay web sitesinden gönderilmiştir.</small></p>
                 `
-            });
+            }).catch(err => console.error("Background email error:", err));
         }
 
         return NextResponse.json({ success: true, id: message.id });

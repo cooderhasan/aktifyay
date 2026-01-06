@@ -88,13 +88,13 @@ export async function POST(request: Request) {
             ${cv ? `<p><strong>CV:</strong> Dosya ektedir (${cv.name})</p>` : "<p><strong>CV:</strong> Yüklenmedi</p>"}
         `;
 
-        // Send Email
-        await sendMail({
+        // Send Email (Fire and forget - don't await)
+        sendMail({
             to: process.env.SMTP_USER || "info@aktifyay.com.tr",
             subject: `İş Başvurusu: ${name} - ${position}`,
             html,
             attachments
-        } as any);
+        }).catch(err => console.error("Background email error:", err));
 
         return NextResponse.json({ success: true });
     } catch (error) {

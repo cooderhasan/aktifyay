@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
-import { Eye, Trash2, Mail, Download } from "lucide-react";
+import { Download } from "lucide-react";
 import styles from "../products/page.module.css";
+import JobApplicationActions from "@/components/admin/JobApplicationActions";
 
 export const metadata = {
     title: "İş Başvuruları | Admin",
@@ -62,15 +63,7 @@ export default async function AdminApplicationsPage() {
                                         </span>
                                     </td>
                                     <td className={styles.actions}>
-                                        <button className={styles.editBtn} title="Görüntüle">
-                                            <Eye size={16} />
-                                        </button>
-                                        <a href={`mailto:${app.email}`} className={styles.editBtn} title="E-posta Gönder">
-                                            <Mail size={16} />
-                                        </a>
-                                        <button className={styles.deleteBtn} title="Sil">
-                                            <Trash2 size={16} />
-                                        </button>
+                                        <JobApplicationActions application={app} />
                                     </td>
                                 </tr>
                             ))
