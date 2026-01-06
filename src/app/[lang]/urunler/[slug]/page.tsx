@@ -220,7 +220,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                             {/* Related Industries Sidebar */}
                             {relatedIndustries.length > 0 && (
                                 <div className={styles.ctaCard} style={{ marginTop: '1.5rem', background: '#f8fafc', border: '1px solid #e2e8f0' }}>
-                                    <h3>{lang === "tr" ? "Kullanım Alanları" : "Used In Industries"}</h3>
+                                    <h3 style={{ color: '#1a202c' }}>{lang === "tr" ? "Kullanım Alanları" : "Used In Industries"}</h3>
                                     <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                                         {relatedIndustries.map((ind, i) => (
                                             <li key={i} style={{ marginBottom: '0.75rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.75rem' }}>
