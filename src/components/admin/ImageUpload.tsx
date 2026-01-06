@@ -103,10 +103,10 @@ export default function ImageUpload({ value, onChange, label = "Görsel Yükle",
                             <ImageIcon size={16} />
                             {uploading ? "Yükleniyor..." : "Görseli Değiştir"}
                         </button>
-                        {description && <p className={styles.description}>{description}</p>}
                     </div>
                 )}
             </div>
+            {description && <p className={styles.description} style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: '#6b7280' }}>{description}</p>}
 
             <input
                 ref={fileInputRef}

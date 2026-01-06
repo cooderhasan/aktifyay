@@ -109,7 +109,7 @@ export default function SliderForm({ slider, isNew }: SliderFormProps) {
                         label="Arkaplan Görseli *"
                         value={formData.image}
                         onChange={(val) => handleChange("image", val)}
-                        description="Yüksek çözünürlüklü (1920x1080) görsel yükleyin."
+                        description="Önerilen Boyut: 1920x1080px (veya 16:9 oranı). Format: JPG, PNG veya WEBP. Maksimum: 5MB"
                     />
                 </div>
                 <div className={styles.grid}>

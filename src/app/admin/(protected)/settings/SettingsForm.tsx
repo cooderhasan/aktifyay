@@ -42,7 +42,7 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
                     <div className={styles.field}>
                         <ImageUpload
                             label="Site Logosu"
-                            description="Header'da görünecek logo (PNG formatı önerilir)"
+                            description="Header'da görünecek logo. Yükseklik 60-80px, Şeffaf PNG formatı önerilir."
                             value={formData.logo || ""}
                             onChange={(val) => handleChange("logo", val)}
                         />
@@ -50,7 +50,7 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
                     <div className={styles.field}>
                         <ImageUpload
                             label="Favicon"
-                            description="Tarayıcı sekmesinde görünecek ikon (32x32px)"
+                            description="Tarayıcı sekme ikonu. Önerilen: 32x32px veya 64x64px PNG/ICO."
                             value={formData.favicon || ""}
                             onChange={(val) => handleChange("favicon", val)}
                         />

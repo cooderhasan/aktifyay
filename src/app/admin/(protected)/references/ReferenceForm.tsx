@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createReference, updateReference } from "@/actions/reference";
-import { ArrowLeft, Save, Upload } from "lucide-react";
+import { ArrowLeft, Save } from "lucide-react";
 import Link from "next/link";
 import styles from "../products/page.module.css";
-import toast from "react-hot-toast"; // Reuse general admin styles
-// We'll use inline styles for the form specific parts to save time creating a new module
+import toast from "react-hot-toast";
+import ImageUpload from "@/components/admin/ImageUpload";
 
 interface ReferenceFormProps {
     reference?: {
@@ -22,6 +22,7 @@ interface ReferenceFormProps {
 export default function ReferenceForm({ reference }: ReferenceFormProps) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [image, setImage] = useState(reference?.image || "");
 
     // We can use a simple state for image preview if we want, 
     // but for now let's just stick to URL input or simple file upload mechanism if implemented.
@@ -70,17 +71,14 @@ export default function ReferenceForm({ reference }: ReferenceFormProps) {
                     </div>
 
                     <div>
-                        <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "500", color: "#374151" }}>Logo URL</label>
-                        <input
-                            name="image"
-                            defaultValue={reference?.image}
-                            required
-                            placeholder="https://..."
-                            style={{ width: "100%", padding: "0.75rem", border: "1px solid #d1d5db", borderRadius: "0.375rem" }}
+                        <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "500", color: "#374151" }}>Logo Görseli</label>
+                        <ImageUpload
+                            value={image}
+                            onChange={setImage}
+                            label="Logo Yükle"
+                            description="Önerilen: 200x100px civarı, şeffaf PNG veya beyaz zeminli JPG/WEBP."
                         />
-                        <p style={{ fontSize: "0.875rem", color: "#6b7280", marginTop: "0.25rem" }}>
-                            Admin panelinden medya kütüphanesine yükleyip linki buraya yapıştırabilirsiniz.
-                        </p>
+                        <input type="hidden" name="image" value={image} />
                     </div>
 
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>

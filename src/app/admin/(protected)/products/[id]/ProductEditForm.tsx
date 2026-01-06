@@ -323,10 +323,10 @@ export default function ProductEditForm({ product, industries, isNew }: ProductE
                         <div className={styles.field}>
                             <label>Ürün Görseli</label>
                             <ImageUpload
-                                value={formData.image || ""}
-                                onChange={(url) => handleChange("image", url)}
-                                label="Ürün Görseli Yükle"
-                                description="Önerilen boyut: 800x600px, Maks: 2MB"
+                                label="Ürün Görseli"
+                                value={formData.image}
+                                onChange={(val) => handleChange("image", val)}
+                                description="Önerilen: Kare veya Yatay (4:3), Max 2MB. Arka planı temizlenmiş (transparan) PNG önerilir."
                             />
                             <p style={{ fontSize: '0.85rem', color: '#718096', marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                                 💡 Birden fazla görsel eklemek için

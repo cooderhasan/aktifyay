@@ -256,10 +256,10 @@ export default function IndustryEditForm({ industry, products, isNew }: Industry
                         <div className={styles.field}>
                             <label>Sektör Görseli</label>
                             <ImageUpload
-                                value={formData.image || ""}
-                                onChange={(url) => handleChange("image", url)}
-                                label="Sektör Görseli Yükle"
-                                description="Önerilen boyut: 800x600px, Maks: 2MB"
+                                label="Görsel"
+                                value={formData.image}
+                                onChange={(val) => handleChange("image", val)}
+                                description="Önerilen: Yatay (16:9) veya (4:3) oranında, Max 2MB. JPG/WEBP formatı uygundur."
                             />
                         </div>
 
