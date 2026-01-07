@@ -5,7 +5,8 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
 
   // Use standalone output for production
-  output: 'standalone',
+  // Output standalone removed for stability check
+  // output: 'standalone',
 
   images: {
     remotePatterns: [
