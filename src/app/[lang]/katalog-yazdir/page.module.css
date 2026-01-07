@@ -1,0 +1,226 @@
+/* Main container */
+.container {
+    width: 210mm;
+    margin: 0 auto;
+    background: white;
+}
+
+/* Print specific adjustments */
+@media print {
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: white;
+    }
+
+    /* Hide web interface elements */
+    .noPrint {
+        display: none !important;
+    }
+}
+
+/* Page base style */
+.page {
+    position: relative;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 20mm;
+    background: white;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    overflow: hidden;
+}
+
+@media print {
+    .page {
+        margin-bottom: 0;
+        box-shadow: none;
+        page-break-after: always;
+        height: 297mm;
+    }
+
+    .page:last-child {
+        page-break-after: auto;
+    }
+}
+
+/* Cover Page */
+.coverPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+}
+
+.coverLogo {
+    width: 200px;
+    height: auto;
+    margin-bottom: 4rem;
+}
+
+.coverTitle {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.coverYear {
+    font-size: 2rem;
+    color: var(--color-gray-600);
+    margin-bottom: 4rem;
+}
+
+.coverFooter {
+    position: absolute;
+    bottom: 20mm;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    color: var(--color-gray-500);
+}
+
+/* Intro Page */
+.introPage {
+    display: flex;
+    flex-direction: column;
+}
+
+.pageHeader {
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.headerTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+.introContent h2 {
+    font-size: 1.8rem;
+    color: var(--color-gray-900);
+    margin-bottom: 1.5rem;
+}
+
+.introContent p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-gray-700);
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+/* Product Page */
+.productPage {
+    display: flex;
+    flex-direction: column;
+}
+
+.productImage {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.productDescription {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-gray-700);
+    margin-bottom: 2rem;
+    text-align: justify;
+}
+
+.specsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+}
+
+.specsTable th,
+.specsTable td {
+    border: 1px solid var(--color-gray-300);
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.specsTable th {
+    background-color: var(--color-gray-50);
+    color: var(--color-primary);
+    font-weight: 600;
+    width: 40%;
+}
+
+/* Back Cover */
+.backCover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: var(--color-primary);
+    color: white;
+}
+
+.contactInfo {
+    margin-top: 2rem;
+}
+
+.contactItem {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.contactLabel {
+    display: block;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Print Control Button */
+.printControl {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--color-primary);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    z-index: 1000;
+    transition: transform 0.2s;
+}
+
+.printControl:hover {
+    transform: translateY(-2px);
+    background: var(--color-primary-dark);
+}
+
+@media print {
+    .printControl {
+        display: none !important;
+    }
+}
