@@ -18,6 +18,8 @@ export async function GET() {
     }
 }
 
+import { revalidatePath } from "next/cache";
+
 export async function POST(request: Request) {
     try {
         const body = await request.json();
@@ -34,6 +36,9 @@ export async function POST(request: Request) {
                 isActive: isActive ?? true,
             },
         });
+
+        revalidatePath("/[lang]/uretim-videolari");
+        revalidatePath("/[lang]/production-videos");
 
         return NextResponse.json(video);
     } catch (error) {

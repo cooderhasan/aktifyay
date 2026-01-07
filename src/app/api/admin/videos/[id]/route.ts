@@ -1,4 +1,4 @@
-
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
@@ -25,6 +25,9 @@ export async function PUT(request: Request, { params }: Params) {
             },
         });
 
+        revalidatePath("/[lang]/uretim-videolari");
+        revalidatePath("/[lang]/production-videos");
+
         return NextResponse.json(video);
     } catch (error) {
         console.error("Error updating video:", error);
@@ -42,6 +45,9 @@ export async function DELETE(request: Request, { params }: Params) {
         await prisma.video.delete({
             where: { id },
         });
+
+        revalidatePath("/[lang]/uretim-videolari");
+        revalidatePath("/[lang]/production-videos");
 
         return NextResponse.json({ success: true });
     } catch (error) {
