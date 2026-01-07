@@ -411,6 +411,7 @@ model SiteSettings {
   // General
   siteName   String?
   phone      String?
+  gsm        String?
   email      String?
   address    String?
   

@@ -78,6 +78,15 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
                         />
                     </div>
                     <div className={styles.field}>
+                        <label>GSM / Çağrı Merkezi</label>
+                        <input
+                            type="text"
+                            value={formData.gsm || ""}
+                            onChange={(e) => handleChange("gsm", e.target.value)}
+                            placeholder="+90 532..."
+                        />
+                    </div>
+                    <div className={styles.field}>
                         <label>E-posta</label>
                         <input
                             type="email"

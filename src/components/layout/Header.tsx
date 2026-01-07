@@ -78,9 +78,9 @@ export default function Header({ locale, dict, settings, products = [] }: Header
                                 <Phone size={16} />
                                 <span>{settings?.phone || "+90 332 345 67 89"}</span>
                             </a>
-                            <a href="tel:+905326763488" className={styles.callCenter}>
+                            <a href={`tel:${settings?.gsm || "+905326763488"}`} className={styles.callCenter}>
                                 <Headphones size={16} />
-                                <span>GSM: +90 532 676 34 88</span>
+                                <span>GSM: {settings?.gsm || "+90 532 676 34 88"}</span>
                             </a>
                         </div>
                         <div className={styles.topBarRight}>
