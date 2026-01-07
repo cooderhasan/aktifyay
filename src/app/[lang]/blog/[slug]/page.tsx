@@ -75,7 +75,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     }
 
     const title = lang === "tr" ? post.titleTr : post.titleEn;
-    const content = lang === "tr" ? post.contentTr : post.contentEn;
+    const content = (lang === "tr" ? post.contentTr : post.contentEn)?.replace(/&nbsp;/g, ' ');
     const imageAlt = lang === "tr" ? post.imageAltTr : post.imageAltEn;
     const categoryName = post.category ? (lang === "tr" ? post.category.nameTr : post.category.nameEn) : null;
     const author = post.authorName || "Aktif Yay";
