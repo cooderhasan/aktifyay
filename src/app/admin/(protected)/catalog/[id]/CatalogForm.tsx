@@ -6,6 +6,7 @@ import { ArrowLeft, Save, Trash2 } from "lucide-react";
 import Link from "next/link";
 import styles from "./CatalogForm.module.css";
 import { createCatalog, updateCatalog, deleteCatalog } from "@/actions/catalog";
+import FileUpload from "@/components/admin/FileUpload";
 import { Catalog } from "@prisma/client";
 
 interface CatalogFormProps {
@@ -144,12 +145,12 @@ export default function CatalogForm({ catalog, isNew }: CatalogFormProps) {
                     </div>
 
                     <div className={styles.field}>
-                        <label>PDF Dosya URL</label>
-                        <input
-                            type="text"
+                        <label>PDF Dosyası</label>
+                        <FileUpload
                             value={formData.pdfUrl || ""}
-                            onChange={(e) => handleChange("pdfUrl", e.target.value)}
-                            placeholder="https://...file.pdf"
+                            onChange={(url) => handleChange("pdfUrl", url)}
+                            accept=".pdf"
+                            description="PDF formatında katalog dosyası yükleyin."
                         />
                     </div>
                 </div>
