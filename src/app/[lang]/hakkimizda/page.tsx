@@ -102,7 +102,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
             ? "1994'ten bu yana Konya'da endüstriyel yay üretiminde öncü"
             : "Pioneer in industrial spring manufacturing in Konya since 1994"
     );
-    const storyContent = page ? (lang === "tr" ? page.contentTr : page.contentEn) : null;
+    const storyContent = page ? (lang === "tr" ? page.contentTr?.replace(/&nbsp;/g, ' ') : page.contentEn?.replace(/&nbsp;/g, ' ')) : null;
 
     return (
         <>
