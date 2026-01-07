@@ -5,6 +5,7 @@ import { Eye, Mail, Trash2 } from "lucide-react";
 import { deleteMessage, markMessageAsRead } from "@/actions/messages";
 import styles from "@/app/admin/(protected)/products/page.module.css";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface MessageActionsProps {
     message: any;
@@ -23,8 +24,9 @@ export default function MessageActions({ message }: MessageActionsProps) {
         setIsLoading(false);
 
         if (!res.success) {
-            alert(res.error);
+            toast.error(res.error || "Mesaj silinirken bir hata oluştu");
         } else {
+            toast.success("Mesaj başarıyla silindi");
             router.refresh();
         }
     };

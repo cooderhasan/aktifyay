@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import styles from "../products/page.module.css";
+import DeleteButton from "@/components/admin/DeleteButton";
 
 export const metadata = {
     title: "Sayfalar | Admin",
@@ -73,9 +74,12 @@ export default async function AdminPagesPage() {
                                         <Link href={`/admin/pages/${page.id}`} className={styles.editBtn}>
                                             <Edit size={16} />
                                         </Link>
-                                        <button className={styles.deleteBtn}>
-                                            <Trash2 size={16} />
-                                        </button>
+                                        <DeleteButton
+                                            id={page.id}
+                                            endpoint="/api/admin/pages"
+                                            className={styles.deleteBtn}
+                                            confirmMessage={`${page.titleTr} sayfasını silmek istediğinizden emin misiniz?`}
+                                        />
                                     </td>
                                 </tr>
                             ))

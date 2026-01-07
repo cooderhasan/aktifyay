@@ -5,6 +5,7 @@ import { Eye, Mail, Trash2, Download } from "lucide-react";
 import { deleteJobApplication, markJobApplicationAsRead } from "@/actions/job-applications";
 import styles from "@/app/admin/(protected)/products/page.module.css";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface JobApplicationActionsProps {
     application: any;
@@ -23,8 +24,9 @@ export default function JobApplicationActions({ application }: JobApplicationAct
         setIsLoading(false);
 
         if (!res.success) {
-            alert(res.error);
+            toast.error(res.error || "Başvuru silinirken bir hata oluştu");
         } else {
+            toast.success("Başvuru başarıyla silindi");
             router.refresh();
         }
     };

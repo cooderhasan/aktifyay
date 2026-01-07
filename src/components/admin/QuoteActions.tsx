@@ -5,6 +5,7 @@ import { Eye, Mail, Trash2 } from "lucide-react";
 import { deleteQuote, markQuoteAsRead } from "@/actions/quotes";
 import styles from "@/app/admin/(protected)/products/page.module.css";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface QuoteActionsProps {
     quote: any;
@@ -23,8 +24,9 @@ export default function QuoteActions({ quote }: QuoteActionsProps) {
         setIsLoading(false);
 
         if (!res.success) {
-            alert(res.error);
+            toast.error(res.error || "Teklif silinirken bir hata oluştu");
         } else {
+            toast.success("Teklif başarıyla silindi");
             router.refresh();
         }
     };

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Plus, Edit, Trash2, Eye } from "lucide-react";
 import styles from "./page.module.css";
 import { deleteBlogPost } from "@/actions/blog";
+import DeleteButton from "@/components/admin/DeleteButton";
 
 export const metadata = {
     title: "Blog Yönetimi | Admin",
@@ -64,14 +65,12 @@ export default async function AdminBlogPage() {
                                         <Link href={`/admin/blog/${post.id}`} className={styles.editBtn} title="Düzenle">
                                             <Edit size={16} />
                                         </Link>
-                                        <form action={async () => {
-                                            "use server";
-                                            await deleteBlogPost(post.id);
-                                        }}>
-                                            <button type="submit" className={styles.deleteBtn} title="Sil">
-                                                <Trash2 size={16} />
-                                            </button>
-                                        </form>
+                                        <DeleteButton
+                                            id={post.id}
+                                            endpoint="/api/admin/blog"
+                                            className={styles.deleteBtn}
+                                            confirmMessage={`${post.titleTr} yazısını silmek istediğinizden emin misiniz?`}
+                                        />
                                     </td>
                                 </tr>
                             ))

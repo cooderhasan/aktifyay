@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Plus, Edit, Trash2, FileText, ImageIcon } from "lucide-react";
 import styles from "./page.module.css";
 import { deleteCatalog } from "@/actions/catalog";
+import DeleteButton from "@/components/admin/DeleteButton";
 
 export const metadata = {
     title: "E-Katalog Yönetimi | Admin",
@@ -77,14 +78,12 @@ export default async function AdminCatalogPage() {
                                         <Link href={`/admin/catalog/${catalog.id}`} className={styles.editBtn}>
                                             <Edit size={16} />
                                         </Link>
-                                        <form action={async () => {
-                                            "use server";
-                                            await deleteCatalog(catalog.id);
-                                        }}>
-                                            <button type="submit" className={styles.deleteBtn}>
-                                                <Trash2 size={16} />
-                                            </button>
-                                        </form>
+                                        <DeleteButton
+                                            id={catalog.id}
+                                            endpoint="/api/admin/catalog"
+                                            className={styles.deleteBtn}
+                                            confirmMessage={`${catalog.nameTr} kataloğunu silmek istediğinizden emin misiniz?`}
+                                        />
                                     </td>
                                 </tr>
                             ))
