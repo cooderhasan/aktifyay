@@ -7,6 +7,7 @@ import Link from "next/link";
 import styles from "./CatalogForm.module.css";
 import { createCatalog, updateCatalog, deleteCatalog } from "@/actions/catalog";
 import FileUpload from "@/components/admin/FileUpload";
+import ImageUpload from "@/components/admin/ImageUpload";
 import { Catalog } from "@prisma/client";
 
 interface CatalogFormProps {
@@ -132,16 +133,12 @@ export default function CatalogForm({ catalog, isNew }: CatalogFormProps) {
                     </div>
 
                     <div className={styles.field}>
-                        <label>Kapak Görseli URL</label>
-                        <input
-                            type="text"
+                        <ImageUpload
+                            label="Kapak Görseli"
                             value={formData.coverImage || ""}
-                            onChange={(e) => handleChange("coverImage", e.target.value)}
-                            placeholder="https://..."
+                            onChange={(url) => handleChange("coverImage", url)}
+                            description="Katalog kapağı için bir görsel yükleyin."
                         />
-                        {formData.coverImage && (
-                            <img src={formData.coverImage} alt="Önizleme" className={styles.preview} />
-                        )}
                     </div>
 
                     <div className={styles.field}>
