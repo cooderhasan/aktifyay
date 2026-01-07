@@ -15,6 +15,7 @@ export interface Dictionary {
         quote: string;
         careers: string;
         references: string;
+        videos: string;
     };
 
     // Products
