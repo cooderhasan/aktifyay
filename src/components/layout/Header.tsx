@@ -10,7 +10,8 @@ import {
     CarFront, Shield, Tractor,
     Armchair, WashingMachine, Stethoscope, Plane, Zap,
     Briefcase,
-    Film
+    Film,
+    Images
 } from "lucide-react";
 import { Locale, pathMappings } from "@/lib/i18n";
 import { Dictionary } from "@/lib/dictionary";
