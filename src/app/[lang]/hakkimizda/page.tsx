@@ -155,17 +155,19 @@ export default async function AboutPage({ params }: AboutPageProps) {
                             )}
                         </div>
                         <div className={styles.storyImage}>
-                            {page?.image ? (
-                                <img
-                                    src={page.image}
-                                    alt={lang === "tr" ? "Fabrika Görüntüsü" : "Factory Image"}
-                                    className={styles.factoryImage}
-                                />
-                            ) : (
-                                <div className={styles.imagePlaceholder}>
-                                    {lang === "tr" ? "Fabrika Görüntüsü" : "Factory Image"}
-                                </div>
-                            )}
+                            <div className={styles.imageWrapper}>
+                                {page?.image ? (
+                                    <img
+                                        src={page.image}
+                                        alt={lang === "tr" ? "Fabrika Görüntüsü" : "Factory Image"}
+                                        className={styles.factoryImage}
+                                    />
+                                ) : (
+                                    <div className={styles.imagePlaceholder}>
+                                        {lang === "tr" ? "Fabrika Görüntüsü" : "Factory Image"}
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
