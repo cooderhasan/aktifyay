@@ -102,6 +102,17 @@ export interface Dictionary {
         homeTitle: string;
         homeDescription: string;
     };
+
+    // Catalog
+    catalog: {
+        title: string;
+        print: string;
+        download: string;
+        tableOfContents: string;
+        technicalSpecs: string;
+        contactInfo: string;
+        generatedAt: string;
+    };
 }
 
 const dictionaries: Record<Locale, Dictionary> = {
@@ -198,6 +209,16 @@ const dictionaries: Record<Locale, Dictionary> = {
             homeTitle: "Aktif Yay | Konya Yay Üretimi - Basma, Çekme, Kurma Yay",
             homeDescription: "Konya'da 30 yıllık tecrübe ile endüstriyel yay üretimi. Basma yaylar, çekme yaylar, kurma yaylar ve tel form yaylar. ISO sertifikalı kaliteli üretim.",
         },
+
+        catalog: {
+            title: "Ürün Kataloğu",
+            print: "Kataloğu Yazdır",
+            download: "PDF İndir",
+            tableOfContents: "İçindekiler",
+            technicalSpecs: "Teknik Özellikler",
+            contactInfo: "İletişim Bilgileri",
+            generatedAt: "Oluşturulma Tarihi",
+        },
     },
 
     en: {
@@ -292,6 +313,16 @@ const dictionaries: Record<Locale, Dictionary> = {
         seo: {
             homeTitle: "Aktif Yay | Spring Manufacturing in Turkey - Industrial Springs",
             homeDescription: "Industrial spring manufacturing with 30 years of experience in Turkey. Compression springs, extension springs, torsion springs and wire forms. ISO certified quality production.",
+        },
+
+        catalog: {
+            title: "Product Catalog",
+            print: "Print Catalog",
+            download: "Download PDF",
+            tableOfContents: "Table of Contents",
+            technicalSpecs: "Technical Specifications",
+            contactInfo: "Contact Information",
+            generatedAt: "Generated at",
         },
     },
 };
