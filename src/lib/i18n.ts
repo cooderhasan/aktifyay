@@ -17,6 +17,7 @@ export const pathMappings: Record<Locale, Record<string, string>> = {
         quote: "teklif-al",
         careers: "kariyer",
         corporate: "kurumsal",
+        videos: "uretim-videolari",
     },
     en: {
         products: "products",
@@ -26,6 +27,7 @@ export const pathMappings: Record<Locale, Record<string, string>> = {
         quote: "request-quote",
         careers: "careers",
         corporate: "corporate",
+        videos: "production-videos",
     },
 };
 

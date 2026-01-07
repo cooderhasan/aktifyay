@@ -117,6 +117,7 @@ const dictionaries: Record<Locale, Dictionary> = {
             quote: "Teklif Al",
             careers: "Kariyer",
             references: "Referanslar",
+            videos: "Üretim Videoları",
         },
 
         products: {
@@ -211,6 +212,7 @@ const dictionaries: Record<Locale, Dictionary> = {
             quote: "Get Quote",
             careers: "Careers",
             references: "References",
+            videos: "Production Videos",
         },
 
         products: {

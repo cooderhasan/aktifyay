@@ -453,3 +453,20 @@ model Reference {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// ==================== VIDEOS ====================
+model Video {
+  id          String   @id @default(cuid())
+  youtubeUrl  String
+  
+  titleTr     String
+  titleEn     String
+  descTr      String?  @db.Text
+  descEn      String?  @db.Text
+  
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

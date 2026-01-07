@@ -9,10 +9,8 @@ import {
     Award, Newspaper, BookOpen, Headphones,
     CarFront, Shield, Tractor,
     Armchair, WashingMachine, Stethoscope, Plane, Zap,
-    ChevronDown,
-    Search,
-    Images,
-    Briefcase
+    Briefcase,
+    Film
 } from "lucide-react";
 import { Locale, pathMappings } from "@/lib/i18n";
 import { Dictionary } from "@/lib/dictionary";
@@ -210,6 +208,13 @@ export default function Header({ locale, dict, settings, products = [] }: Header
                                 </Link>
                             </div>
 
+                            <div className={styles.navItem}>
+                                <Link href={`/${locale}/${paths.videos}`} className={styles.navLink}>
+                                    <Film strokeWidth={1.5} />
+                                    <span>{dict.nav.videos}</span>
+                                </Link>
+                            </div>
+
 
 
                             <div className={styles.navItem}>
@@ -286,6 +291,10 @@ export default function Header({ locale, dict, settings, products = [] }: Header
 
                         <Link href={`/${locale}/blog`} className={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>
                             Blog
+                        </Link>
+
+                        <Link href={`/${locale}/${paths.videos}`} className={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>
+                            {dict.nav.videos}
                         </Link>
 
                         <Link href={`/${locale}/referanslar`} className={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>
