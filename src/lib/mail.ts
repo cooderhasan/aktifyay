@@ -10,6 +10,9 @@ const transporter = nodemailer.createTransport({
     },
     connectionTimeout: 10000, // 10 seconds
     socketTimeout: 10000,
+    tls: {
+        rejectUnauthorized: false
+    }
 });
 
 interface MailOptions {
