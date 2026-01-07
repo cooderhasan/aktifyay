@@ -14,6 +14,7 @@ import {
     Tags,
     BookOpen,
     Images,
+    Film,
 } from "lucide-react";
 import styles from "./layout.module.css";
 
@@ -36,6 +37,7 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
     const menuItems = [
         { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
         { href: "/admin/slider", icon: Images, label: "Slider Yönetimi" },
+        { href: "/admin/videos", icon: Film, label: "Üretim Videoları" },
         { href: "/admin/products", icon: Package, label: "Ürün Kategorileri" },
         { href: "/admin/industries", icon: Factory, label: "Sektörler" },
         { href: "/admin/pages", icon: FileText, label: "Sayfalar" },
