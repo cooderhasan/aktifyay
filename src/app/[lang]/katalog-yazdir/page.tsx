@@ -42,7 +42,7 @@ export default async function CatalogPage({ params }: CatalogPageProps) {
         return html.replace(/<[^>]*>?/gm, '');
     };
 
-    const aboutText = stripHtml(lang === "tr" ? aboutPage?.contentTr : aboutPage?.contentEn);
+    const aboutText = stripHtml((lang === "tr" ? aboutPage?.contentTr : aboutPage?.contentEn) ?? null);
     const shortAbout = aboutText.length > 800 ? aboutText.substring(0, 800) + "..." : aboutText;
 
     return (
@@ -60,7 +60,7 @@ export default async function CatalogPage({ params }: CatalogPageProps) {
                 <div className={styles.coverYear}>2026</div>
 
                 <div className={styles.coverFooter}>
-                    <p>{settings?.companyNameTr || "AKTİF YAY SAN. ve TİC. LTD. ŞTİ."}</p>
+                    <p>{settings?.siteName || "AKTİF YAY SAN. ve TİC. LTD. ŞTİ."}</p>
                     <p>{currentDate}</p>
                 </div>
             </div>
