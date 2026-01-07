@@ -58,6 +58,7 @@ export async function PUT(
                 isFollowed: data.isFollowed ?? true,
                 schemaEnabled: data.schemaEnabled ?? true,
                 ogImage: data.ogImage || null,
+                image: data.image || null,
                 imageAltTr: data.imageAltTr || null,
                 imageAltEn: data.imageAltEn || null,
                 isActive: data.isActive ?? true,
