@@ -95,6 +95,10 @@ export interface Dictionary {
         title: string;
         description: string;
         formTitle: string;
+        joinUsTitle: string;
+        joinUsText: string;
+        whyUsTitle: string;
+        whyUsItems: string[];
     };
 
     // SEO
@@ -203,6 +207,15 @@ const dictionaries: Record<Locale, Dictionary> = {
             title: "Kariyer",
             description: "Aktif Yay ailesine katılmak için aşağıdaki formu doldurarak başvurunuzu bize iletebilirsiniz.",
             formTitle: "İş Başvuru Formu",
+            joinUsTitle: "Aramıza Katılın, Geleceği Birlikte Şekillendirelim",
+            joinUsText: "Aktif Yay olarak, başarımızın en büyük anahtarının insan kaynağımız olduğuna inanıyoruz. Yenilikçi, dinamik ve gelişime açık bir çalışma ortamında, potansiyelinizi en üst düzeye çıkarmanız için sizi destekliyoruz.",
+            whyUsTitle: "Neden Aktif Yay?",
+            whyUsItems: [
+                "Kariyer ve gelişim fırsatları",
+                "Yenilikçi çalışma kültürü",
+                "Sürdürülebilirlik odaklı projeler",
+                "Güçlü takım ruhu ve dayanışma"
+            ]
         },
 
         seo: {
@@ -308,6 +321,15 @@ const dictionaries: Record<Locale, Dictionary> = {
             title: "Careers",
             description: "To join the Aktif Yay family, you can submit your application by filling out the form below.",
             formTitle: "Job Application Form",
+            joinUsTitle: "Join Us, Let's Shape the Future Together",
+            joinUsText: "At Aktif Yay, we believe that the key to our success is our human resources. We support you to maximize your potential in an innovative, dynamic and development-oriented working environment.",
+            whyUsTitle: "Why Aktif Yay?",
+            whyUsItems: [
+                "Career and development opportunities",
+                "Innovative working culture",
+                "Sustainability focused projects",
+                "Strong team spirit and solidarity"
+            ]
         },
 
         seo: {

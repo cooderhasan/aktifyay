@@ -23,6 +23,7 @@ interface FormData {
 
 export default function JobApplicationForm({ lang, dict }: JobApplicationFormProps) {
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+    const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
 
     const {
         register,
@@ -123,12 +124,23 @@ export default function JobApplicationForm({ lang, dict }: JobApplicationFormPro
                         type="file"
                         id="cv"
                         accept=".pdf,.doc,.docx"
-                        {...register("cv")}
+                        {...register("cv", {
+                            onChange: (e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    setSelectedFileName(file.name);
+                                } else {
+                                    setSelectedFileName(null);
+                                }
+                            }
+                        })}
                         className={styles.fileInput}
                     />
                     <div className={styles.fileInputPlaceholder}>
                         <UploadCloud size={20} />
-                        <span>{lang === "tr" ? "Dosya Seçiniz (PDF, DOC)" : "Choose File (PDF, DOC)"}</span>
+                        <span className={styles.fileName}>
+                            {selectedFileName || (lang === "tr" ? "Dosya Seçiniz (PDF, DOC)" : "Choose File (PDF, DOC)")}
+                        </span>
                     </div>
                 </div>
             </div>
