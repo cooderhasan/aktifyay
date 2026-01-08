@@ -134,7 +134,7 @@
 /* Hero (Minimal) */
 .hero {
     background-color: var(--color-primary-dark);
-    padding: 5rem 0 3rem;
+    padding: 3rem 0;
     color: white;
     text-align: center;
     position: relative;

@@ -46,15 +46,18 @@ export default async function BlogPage({ params }: BlogPageProps) {
 
     return (
         <main className={styles.page}>
-            <div className="container">
-                <header className={styles.header}>
+            <div className={styles.hero}>
+                <div className="container">
                     <h1>{lang === "tr" ? "Blog" : "Blog"}</h1>
                     <p>
                         {lang === "tr"
                             ? "Sektörden haberler, teknik bilgiler ve duyurular."
                             : "Industry news, technical information and announcements."}
                     </p>
-                </header>
+                </div>
+            </div>
+
+            <div className="container">
 
                 <div className={styles.layoutGrid}>
                     {/* Main Content */}
