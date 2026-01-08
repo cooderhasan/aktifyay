@@ -5,9 +5,13 @@
     position: relative;
     z-index: 50;
     margin-top: -1px;
-    /* Fix for subpixel rendering gaps in Chrome */
-    background-image: none;
-    /* Ensure no unwanted gradients */
+    /* Fox for subpixel rendering */
+    background-image: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transform: translateZ(0);
+    /* Force GPU layer */
 }
 
 .grid {
