@@ -4,6 +4,8 @@ import JobApplicationForm from "@/components/forms/JobApplicationForm";
 import styles from "./page.module.css";
 import { Metadata } from "next";
 import { Check } from "lucide-react";
+import Link from "next/link";
+import { generateBreadcrumbSchema } from "@/lib/seo";
 
 export async function generateMetadata({ params: { lang } }: { params: { lang: Locale } }): Promise<Metadata> {
     const dict = getDictionary(lang);
@@ -15,6 +17,12 @@ export async function generateMetadata({ params: { lang } }: { params: { lang: L
 
 export default function CareerPage({ params: { lang } }: { params: { lang: Locale } }) {
     const dict = getDictionary(lang);
+    const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://aktifyay.com.tr";
+
+    const breadcrumbItems = [
+        { name: lang === "tr" ? "Ana Sayfa" : "Home", url: `${SITE_URL}/${lang}` },
+        { name: dict.nav.careers, url: `${SITE_URL}/${lang}/kariyer` }, // Assuming direct path or use pathMappings if available
+    ];
 
     // Fallback for new dictionary keys if they haven't propagated yet in dev mode (safety check)
     const whyUsItems = dict.careers.whyUsItems || [
@@ -26,6 +34,23 @@ export default function CareerPage({ params: { lang } }: { params: { lang: Local
 
     return (
         <main className={styles.main}>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbItems)),
+                }}
+            />
+
+            {/* Breadcrumb */}
+            <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+                <div className="container">
+                    <ol>
+                        <li><Link href={`/${lang}`}>{lang === "tr" ? "Ana Sayfa" : "Home"}</Link></li>
+                        <li aria-current="page">{dict.nav.careers}</li>
+                    </ol>
+                </div>
+            </nav>
+
             {/* Minimal Hero */}
             <section className={styles.hero}>
                 <div className="container">

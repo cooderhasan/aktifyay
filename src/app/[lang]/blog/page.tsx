@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Calendar, ArrowRight } from "lucide-react";
 import styles from "./page.module.css";
 import BlogSidebar from "@/components/blog/BlogSidebar";
+import { generateBreadcrumbSchema } from "@/lib/seo";
 
 interface BlogPageProps {
     params: Promise<{ lang: Locale }>;
@@ -30,6 +31,7 @@ type BlogPost = any;
 export default async function BlogPage({ params }: BlogPageProps) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
+    const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://aktifyay.com.tr";
 
     const posts = await prisma.blogPost.findMany({
         where: { isPublished: true },
@@ -44,8 +46,30 @@ export default async function BlogPage({ params }: BlogPageProps) {
         }).format(date);
     };
 
+    const breadcrumbItems = [
+        { name: lang === "tr" ? "Ana Sayfa" : "Home", url: `${SITE_URL}/${lang}` },
+        { name: "Blog", url: `${SITE_URL}/${lang}/blog` },
+    ];
+
     return (
         <main className={styles.page}>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbItems)),
+                }}
+            />
+
+            {/* Breadcrumb */}
+            <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+                <div className="container">
+                    <ol>
+                        <li><Link href={`/${lang}`}>{lang === "tr" ? "Ana Sayfa" : "Home"}</Link></li>
+                        <li aria-current="page">Blog</li>
+                    </ol>
+                </div>
+            </nav>
+
             <div className={styles.hero}>
                 <div className="container">
                     <h1>{lang === "tr" ? "Blog" : "Blog"}</h1>
