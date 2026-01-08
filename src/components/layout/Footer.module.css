@@ -2,6 +2,12 @@
     background-color: var(--color-primary-dark);
     color: white;
     padding: 4rem 0 0;
+    position: relative;
+    z-index: 50;
+    margin-top: -1px;
+    /* Fix for subpixel rendering gaps in Chrome */
+    background-image: none;
+    /* Ensure no unwanted gradients */
 }
 
 .grid {
