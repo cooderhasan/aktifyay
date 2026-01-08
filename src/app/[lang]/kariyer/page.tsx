@@ -7,7 +7,8 @@ import { Check } from "lucide-react";
 import Link from "next/link";
 import { generateBreadcrumbSchema } from "@/lib/seo";
 
-export async function generateMetadata({ params: { lang } }: { params: { lang: Locale } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
+    const { lang } = await params;
     const dict = getDictionary(lang);
     return {
         title: `${dict.nav.careers} | ${dict.siteName}`,
@@ -15,7 +16,8 @@ export async function generateMetadata({ params: { lang } }: { params: { lang: L
     };
 }
 
-export default function CareerPage({ params: { lang } }: { params: { lang: Locale } }) {
+export default async function CareerPage({ params }: { params: Promise<{ lang: Locale }> }) {
+    const { lang } = await params;
     const dict = getDictionary(lang);
     const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://aktifyay.com.tr";
 
