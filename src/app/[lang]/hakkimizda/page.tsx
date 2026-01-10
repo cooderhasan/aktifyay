@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { Award, Users, Factory, Target } from "lucide-react";
+import { Award, Users, Factory, Target, Eye, Lightbulb, CheckCircle, Shield, Clock, ThumbsUp } from "lucide-react";
 import { Locale, pathMappings } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionary";
 import { generateSEOMetadata, generateBreadcrumbSchema } from "@/lib/seo";
@@ -183,6 +183,162 @@ export default async function AboutPage({ params }: AboutPageProps) {
                                 <span className={styles.statLabel}>{stat.label}</span>
                             </div>
                         ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Vision & Mission */}
+            <section className="section">
+                <div className="container">
+                    <div className={styles.visionMission}>
+                        <div className={styles.vmCard}>
+                            <div className={styles.vmIcon}>
+                                <Eye size={40} />
+                            </div>
+                            <h2>{lang === "tr" ? "Vizyonumuz" : "Our Vision"}</h2>
+                            <p>
+                                {lang === "tr"
+                                    ? "Yay üretiminde teknoloji ve yenilikçiliği öncü bir şekilde kullanarak, Türkiye'nin ve bölgenin en güvenilir, kaliteli ve çevre dostu yay üreticisi olmak. Müşterilerimize özel çözümler sunarak sektörde standartları belirleyen lider firma konumunu sürdürmek."
+                                    : "To be Turkey's and the region's most reliable, high-quality, and environmentally friendly spring manufacturer by pioneering the use of technology and innovation in spring production. To maintain our position as the industry leader that sets standards by offering customized solutions to our customers."}
+                            </p>
+                        </div>
+                        <div className={styles.vmCard}>
+                            <div className={styles.vmIcon}>
+                                <Lightbulb size={40} />
+                            </div>
+                            <h2>{lang === "tr" ? "Misyonumuz" : "Our Mission"}</h2>
+                            <p>
+                                {lang === "tr"
+                                    ? "Otomotiv, savunma sanayi, beyaz eşya ve medikal gibi kritik sektörlere ISO standartlarında, yüksek kaliteli yay çözümleri sunmak. Modern CNC teknolojisi ve uzman ekibimizle, müşteri memnuniyetini ön planda tutarak zamanında teslimat ve sürekli gelişim ilkesiyle hareket etmek."
+                                    : "To provide ISO-standard, high-quality spring solutions to critical sectors such as automotive, defense, appliances, and medical industries. To operate with modern CNC technology and our expert team, prioritizing customer satisfaction, on-time delivery, and continuous improvement."}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Why Choose Us */}
+            <section className={styles.whyChooseUs}>
+                <div className="container">
+                    <div className="section-title">
+                        <h2>{lang === "tr" ? "Neden Aktif Yay?" : "Why Aktif Yay?"}</h2>
+                        <p>
+                            {lang === "tr"
+                                ? "30 yılı aşkın tecrübemizle sektörde fark yaratan çözümler sunuyoruz"
+                                : "We provide distinctive solutions in the industry with over 30 years of experience"}
+                        </p>
+                    </div>
+                    <div className={styles.reasonsGrid}>
+                        <div className={styles.reasonItem}>
+                            <div className={styles.reasonIcon}>
+                                <CheckCircle size={28} />
+                            </div>
+                            <h3>{lang === "tr" ? "Geniş Ürün Yelpazesi" : "Wide Product Range"}</h3>
+                            <p>
+                                {lang === "tr"
+                                    ? "Basma, çekme, kurma ve tel form yaylar dahil her türlü yay çözümü"
+                                    : "All types of spring solutions including compression, tension, torsion, and wire form springs"}
+                            </p>
+                        </div>
+                        <div className={styles.reasonItem}>
+                            <div className={styles.reasonIcon}>
+                                <Shield size={28} />
+                            </div>
+                            <h3>{lang === "tr" ? "ISO Kalite Standartları" : "ISO Quality Standards"}</h3>
+                            <p>
+                                {lang === "tr"
+                                    ? "Uluslararası kalite standartlarına uygun üretim ve sıkı kalite kontrol"
+                                    : "Production compliant with international quality standards and strict quality control"}
+                            </p>
+                        </div>
+                        <div className={styles.reasonItem}>
+                            <div className={styles.reasonIcon}>
+                                <Factory size={28} />
+                            </div>
+                            <h3>{lang === "tr" ? "Modern Teknoloji" : "Modern Technology"}</h3>
+                            <p>
+                                {lang === "tr"
+                                    ? "Son teknoloji CNC makineleri ile hassas ve hızlı üretim kapasitesi"
+                                    : "Precise and fast production capacity with state-of-the-art CNC machines"}
+                            </p>
+                        </div>
+                        <div className={styles.reasonItem}>
+                            <div className={styles.reasonIcon}>
+                                <Clock size={28} />
+                            </div>
+                            <h3>{lang === "tr" ? "Zamanında Teslimat" : "On-Time Delivery"}</h3>
+                            <p>
+                                {lang === "tr"
+                                    ? "Planlanmış üretim süreçleri ile güvenilir ve zamanında teslimat"
+                                    : "Reliable and on-time delivery with planned production processes"}
+                            </p>
+                        </div>
+                        <div className={styles.reasonItem}>
+                            <div className={styles.reasonIcon}>
+                                <Users size={28} />
+                            </div>
+                            <h3>{lang === "tr" ? "Uzman Kadro" : "Expert Team"}</h3>
+                            <p>
+                                {lang === "tr"
+                                    ? "Alanında tecrübeli mühendis ve teknisyenlerden oluşan profesyonel ekip"
+                                    : "Professional team of experienced engineers and technicians in their field"}
+                            </p>
+                        </div>
+                        <div className={styles.reasonItem}>
+                            <div className={styles.reasonIcon}>
+                                <ThumbsUp size={28} />
+                            </div>
+                            <h3>{lang === "tr" ? "Müşteri Memnuniyeti" : "Customer Satisfaction"}</h3>
+                            <p>
+                                {lang === "tr"
+                                    ? "Özel ihtiyaçlara uygun çözümler ve hızlı teknik destek hizmeti"
+                                    : "Solutions tailored to specific needs and fast technical support service"}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Certifications */}
+            <section className="section">
+                <div className="container">
+                    <div className="section-title">
+                        <h2>{lang === "tr" ? "Sertifikalarımız ve Belgelerimiz" : "Our Certifications"}</h2>
+                        <p>
+                            {lang === "tr"
+                                ? "Kalite ve güvenilirliğimizi belgeleyen uluslararası standartlar"
+                                : "International standards certifying our quality and reliability"}
+                        </p>
+                    </div>
+                    <div className={styles.certificationsGrid}>
+                        <div className={styles.certCard}>
+                            <div className={styles.certIcon}>
+                                <Award size={32} />
+                            </div>
+                            <h3>ISO 9001</h3>
+                            <p>{lang === "tr" ? "Kalite Yönetim Sistemi" : "Quality Management System"}</p>
+                        </div>
+                        <div className={styles.certCard}>
+                            <div className={styles.certIcon}>
+                                <Shield size={32} />
+                            </div>
+                            <h3>ISO 14001</h3>
+                            <p>{lang === "tr" ? "Çevre Yönetim Sistemi" : "Environmental Management System"}</p>
+                        </div>
+                        <div className={styles.certCard}>
+                            <div className={styles.certIcon}>
+                                <CheckCircle size={32} />
+                            </div>
+                            <h3>CE</h3>
+                            <p>{lang === "tr" ? "Avrupa Uygunluk Belgesi" : "European Conformity Certificate"}</p>
+                        </div>
+                        <div className={styles.certCard}>
+                            <div className={styles.certIcon}>
+                                <Target size={32} />
+                            </div>
+                            <h3>TSE</h3>
+                            <p>{lang === "tr" ? "Türk Standartları Enstitüsü" : "Turkish Standards Institute"}</p>
+                        </div>
                     </div>
                 </div>
             </section>
