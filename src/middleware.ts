@@ -1,40 +1,34 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { locales, defaultLocale } from "./lib/i18n";
 
 export function middleware(request: NextRequest) {
-    const { pathname } = request.nextUrl;
+    const host = request.headers.get("host") || "";
+    const wwwRegex = /^www\./;
 
-    // Skip middleware for static files, api routes, and admin
-    if (
-        pathname.startsWith("/_next") ||
-        pathname.startsWith("/api") ||
-        pathname.startsWith("/admin") ||
-        pathname.includes(".") ||
-        pathname.startsWith("/sitemap") ||
-        pathname.startsWith("/robots")
-    ) {
+    // Localhost'ta çalışma
+    if (host.includes("localhost") || host.includes("127.0.0.1")) {
         return NextResponse.next();
     }
 
-    // Check if pathname has a locale
-    const pathnameHasLocale = locales.some(
-        (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-    );
-
-    if (pathnameHasLocale) {
-        return NextResponse.next();
+    // Eğer host www ile başlamıyorsa ve root domain ise
+    if (!wwwRegex.test(host) && host === "aktifyay.com.tr") {
+        const newUrl = new URL(request.url);
+        newUrl.host = "www.aktifyay.com.tr";
+        return NextResponse.redirect(newUrl, 301);
     }
 
-    // Redirect to default locale
-    const url = request.nextUrl.clone();
-    url.pathname = `/${defaultLocale}${pathname}`;
-    return NextResponse.redirect(url);
+    return NextResponse.next();
 }
 
 export const config = {
     matcher: [
-        // Skip all internal paths and static files
-        "/((?!_next|api|admin|.*\\..*).*)",
+        /*
+         * Match all request paths except for the ones starting with:
+         * - api (API routes)
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - favicon.ico (favicon file)
+         */
+        '/((?!api|_next/static|_next/image|favicon.ico).*)',
     ],
 };
