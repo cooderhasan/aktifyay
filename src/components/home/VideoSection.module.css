@@ -35,3 +35,14 @@
         padding: 4rem 0;
     }
 }
+
+.embeddedSection {
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+.embeddedContainer {
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+}

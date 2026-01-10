@@ -184,9 +184,6 @@ export default async function HomePage({ params }: HomePageProps) {
                 </section>
             )}
 
-            {/* Video Section */}
-            <VideoSection videoUrl={settings?.introVideoUrl || null} />
-
             {/* Features Section */}
             <section className={`section ${styles.features}`}>
                 <div className="container">
@@ -283,41 +280,20 @@ export default async function HomePage({ params }: HomePageProps) {
                 </div>
             </section>
 
-            {/* Split Section: E-Catalogs & Latest Blogs */}
+            {/* Split Section: Video (Left) & Latest Blogs (Right) */}
             <section className={styles.splitSection}>
                 <div className="container">
                     <div className={styles.splitGrid}>
 
-                        {/* Left: E-Catalogs */}
+                        {/* Left: Video */}
                         <div className={styles.splitColumn}>
-                            <h2>{lang === "tr" ? "E-Kataloglar" : "E-Catalogs"}</h2>
-                            <div className={styles.catalogGrid}>
-                                {catalogs.map((catalog) => (
-                                    <a
-                                        key={catalog.id}
-                                        href={catalog.pdfUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className={styles.catalogCard}
-                                    >
-                                        <div className={styles.catalogImageWrapper}>
-                                            <Image
-                                                src={catalog.coverImage || "/defaults/catalog-default.jpg"}
-                                                alt={lang === "tr" ? catalog.nameTr : catalog.nameEn}
-                                                fill
-                                                className={styles.catalogImage}
-                                            />
-                                        </div>
-                                        <span className={styles.catalogTitle}>
-                                            {lang === "tr" ? catalog.nameTr : catalog.nameEn}
-                                        </span>
-                                        <span className={styles.catalogLink}>
-                                            <BookOpen size={16} />
-                                            {lang === "tr" ? "İncele" : "View"}
-                                        </span>
-                                    </a>
-                                ))}
-                            </div>
+                            <h2>{lang === "tr" ? "Tanıtım Filmi" : "Intro Video"}</h2>
+                            <VideoSection videoUrl={settings?.introVideoUrl || null} embedded={true} />
+                            {!settings?.introVideoUrl && (
+                                <p style={{ color: '#666', fontStyle: 'italic' }}>
+                                    {lang === "tr" ? "Video şuan mevcut değil." : "Video not available at the moment."}
+                                </p>
+                            )}
                         </div>
 
                         {/* Right: Latest Blogs */}
@@ -392,26 +368,60 @@ export default async function HomePage({ params }: HomePageProps) {
                 </section>
             )}
 
-            {/* CTA Section */}
+            {/* CTA & Catalogs Section */}
             <section className={styles.cta}>
                 <div className="container">
-                    <div className={styles.ctaContent}>
-                        <h2>
-                            {lang === "tr"
-                                ? "Projeniz İçin Teklif Alın"
-                                : "Get a Quote for Your Project"}
-                        </h2>
-                        <p>
-                            {lang === "tr"
-                                ? "Uzman ekibimiz size en uygun yay çözümünü sunmak için hazır"
-                                : "Our expert team is ready to provide you with the best spring solution"}
-                        </p>
-                        <Link
-                            href={`/${lang}/${lang === "tr" ? "teklif-al" : "request-quote"}`}
-                            className="btn btn-secondary"
-                        >
-                            {dict.nav.quote}
-                        </Link>
+                    <div className={styles.ctaGrid}>
+                        {/* Left: CTA Text & Button */}
+                        <div className={styles.ctaContent}>
+                            <h2>
+                                {lang === "tr"
+                                    ? "Projeniz İçin Teklif Alın"
+                                    : "Get a Quote for Your Project"}
+                            </h2>
+                            <p>
+                                {lang === "tr"
+                                    ? "Uzman ekibimiz size en uygun yay çözümünü sunmak için hazır"
+                                    : "Our expert team is ready to provide you with the best spring solution"}
+                            </p>
+                            <Link
+                                href={`/${lang}/${lang === "tr" ? "teklif-al" : "request-quote"}`}
+                                className="btn btn-secondary"
+                            >
+                                {dict.nav.quote}
+                            </Link>
+                        </div>
+
+                        {/* Right: E-Catalogs */}
+                        <div className={styles.ctaCatalogs}>
+                            <div className={styles.catalogGrid}>
+                                {catalogs.map((catalog) => (
+                                    <a
+                                        key={catalog.id}
+                                        href={catalog.pdfUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={styles.catalogCard}
+                                    >
+                                        <div className={styles.catalogImageWrapper}>
+                                            <Image
+                                                src={catalog.coverImage || "/defaults/catalog-default.jpg"}
+                                                alt={lang === "tr" ? catalog.nameTr : catalog.nameEn}
+                                                fill
+                                                className={styles.catalogImage}
+                                            />
+                                        </div>
+                                        <span className={styles.catalogTitle}>
+                                            {lang === "tr" ? catalog.nameTr : catalog.nameEn}
+                                        </span>
+                                        <span className={styles.catalogLink}>
+                                            <BookOpen size={16} />
+                                            {lang === "tr" ? "İncele" : "View"}
+                                        </span>
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

@@ -606,12 +606,27 @@
     background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
-.ctaContent {
+.ctaGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
     position: relative;
     z-index: 1;
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+    .ctaGrid {
+        grid-template-columns: 1fr 1fr;
+        gap: 5rem;
+    }
+}
+
+.ctaContent {
+    text-align: left;
+    /* Changed from center to left */
+    max-width: 100%;
+    /* Reset max-width */
 }
 
 .ctaContent h2 {
@@ -650,45 +665,11 @@
     animation: none;
 }
 
-/* Split Section */
-.splitSection {
-    background-color: var(--color-gray-50);
-    padding: 6rem 0;
+.ctaCatalogs {
+    padding-left: 2rem;
 }
 
-.splitGrid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-}
-
-@media (min-width: 1024px) {
-    .splitGrid {
-        grid-template-columns: 1fr 1fr;
-        gap: 5rem;
-    }
-}
-
-.splitColumn h2 {
-    font-size: 1.75rem;
-    color: var(--color-primary);
-    margin-bottom: 2rem;
-    font-weight: 700;
-    position: relative;
-    padding-bottom: 0.75rem;
-}
-
-.splitColumn h2::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background-color: var(--color-secondary);
-}
-
-/* Catalog Cards */
+/* Catalog Cards - Modified for versatility */
 .catalogGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -699,7 +680,8 @@
     background: white;
     padding: 1rem;
     border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    /* Slightly stronger shadow for CTA context */
     text-align: center;
     transition: transform 0.2s;
     text-decoration: none;
@@ -710,7 +692,7 @@
 
 .catalogCard:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
     border-color: var(--color-primary-light);
 }
 

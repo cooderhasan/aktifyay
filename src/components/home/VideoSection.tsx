@@ -4,9 +4,10 @@ import styles from "./VideoSection.module.css";
 
 interface VideoSectionProps {
     videoUrl: string | null;
+    embedded?: boolean;
 }
 
-export default function VideoSection({ videoUrl }: VideoSectionProps) {
+export default function VideoSection({ videoUrl, embedded = false }: VideoSectionProps) {
     if (!videoUrl) return null;
 
     // Extract Video ID
@@ -20,9 +21,12 @@ export default function VideoSection({ videoUrl }: VideoSectionProps) {
 
     if (!videoId) return null;
 
+    const sectionClass = embedded ? styles.embeddedSection : styles.section;
+    const containerClass = embedded ? styles.embeddedContainer : styles.container;
+
     return (
-        <section className={styles.section}>
-            <div className={styles.container}>
+        <section className={sectionClass}>
+            <div className={containerClass}>
                 <div className={styles.videoWrapper}>
                     <iframe
                         src={`https://www.youtube.com/embed/${videoId}?rel=0`}
