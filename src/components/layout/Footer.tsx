@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Facebook, Instagram, Linkedin, Twitter, MapPin, Phone, Mail } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Twitter, MapPin, Phone, Mail, Youtube } from "lucide-react";
 import { Locale, pathMappings } from "@/lib/i18n";
 import { Dictionary } from "@/lib/dictionary";
 import styles from "./Footer.module.css";
@@ -46,6 +46,7 @@ export default function Footer({ locale, dict, settings, products = [] }: Footer
         { icon: Instagram, href: settings?.instagram || "https://instagram.com", label: "Instagram" },
         { icon: Linkedin, href: settings?.linkedin || "https://linkedin.com", label: "LinkedIn" },
         { icon: XIcon, href: settings?.twitter || "https://twitter.com", label: "X (Twitter)" },
+        { icon: Youtube, href: settings?.youtube || "https://youtube.com", label: "Youtube" },
     ].filter(link => {
         // If settings are provided, only show link if URL exists in settings
         if (settings) {
@@ -53,6 +54,7 @@ export default function Footer({ locale, dict, settings, products = [] }: Footer
             if (link.label === "Instagram") return !!settings.instagram;
             if (link.label === "LinkedIn") return !!settings.linkedin;
             if (link.label === "X (Twitter)") return !!settings.twitter;
+            if (link.label === "Youtube") return !!settings.youtube;
         }
         return true; // Default behavior if no settings
     });
