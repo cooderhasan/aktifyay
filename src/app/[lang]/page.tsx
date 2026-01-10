@@ -8,6 +8,7 @@ import { generateSEOMetadata, generateLocalBusinessSchema } from "@/lib/seo";
 import { prisma } from "@/lib/prisma";
 import styles from "./page.module.css";
 import HeroSlider from "@/components/sections/HeroSlider";
+import VideoSection from "@/components/home/VideoSection";
 import { getSliders } from "@/actions/slider";
 import { getSettings } from "@/actions/settings";
 
@@ -182,6 +183,9 @@ export default async function HomePage({ params }: HomePageProps) {
                     <div className={styles.heroOverlay}></div>
                 </section>
             )}
+
+            {/* Video Section */}
+            <VideoSection videoUrl={settings?.introVideoUrl || null} />
 
             {/* Features Section */}
             <section className={`section ${styles.features}`}>

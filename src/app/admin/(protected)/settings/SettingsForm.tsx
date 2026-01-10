@@ -176,6 +176,26 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
                 </div>
             </section>
 
+            {/* Home Page Content */}
+            <section className={styles.section}>
+                <h2>Ana Sayfa İçerik</h2>
+                <div className={styles.grid}>
+                    <div className={styles.field} style={{ gridColumn: "1 / -1" }}>
+                        <label>Tanıtım Videosu Linki (YouTube)</label>
+                        <input
+                            type="url"
+                            value={formData.introVideoUrl || ""}
+                            onChange={(e) => handleChange("introVideoUrl", e.target.value)}
+                            placeholder="https://youtube.com/watch?v=..."
+                        />
+                        <small className={styles.hint}>
+                            Buraya bir YouTube linki girerseniz, anasayfada otomatik olarak video bölümü açılır.
+                            Boş bırakırsanız video alanı gizlenir.
+                        </small>
+                    </div>
+                </div>
+            </section>
+
             {/* Home Page SEO */}
             <section className={styles.section}>
                 <h2>Ana Sayfa SEO</h2>
