@@ -427,19 +427,41 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .topBarLeft {
-        gap: 1rem;
+    .topBar {
+        padding: 0;
     }
 
-    .callCenter span {
+    .topBarContent {
+        flex-wrap: nowrap;
+        gap: 0.5rem;
+    }
+
+    .topBarLeft {
+        flex: 1;
+        /* Allow it to take available space but respect flex layout */
+        min-width: 0;
+        /* meaningful for flex items typically */
+    }
+
+    .contactPill {
+        padding: 0.25rem 0.5rem;
+        width: 100%;
+        justify-content: center;
+        background: transparent;
+        /* Remove background on mobile to make it cleaner or keep it? User said "hap şeklindeki", so keep pill shape but maybe smaller */
+        border: none;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .contactLabel {
         display: none;
     }
 
-    .callCenter::after {
-        content: "Çağrı Merkezi";
-        font-size: 0.75rem;
+    .contactNumber {
+        font-size: 0.85rem;
     }
 
+    /* Ensure icons are hidden as requested/already hidden */
     .socialIcons {
         display: none;
     }
