@@ -437,20 +437,22 @@
     }
 
     .topBarLeft {
-        flex: 1;
-        /* Allow it to take available space but respect flex layout */
+        flex: 0 1 auto;
+        /* Only take needed space */
         min-width: 0;
-        /* meaningful for flex items typically */
     }
 
     .contactPill {
-        padding: 0.25rem 0.5rem;
-        width: 100%;
-        justify-content: center;
-        background: transparent;
-        /* Remove background on mobile to make it cleaner or keep it? User said "hap şeklindeki", so keep pill shape but maybe smaller */
-        border: none;
-        background: rgba(255, 255, 255, 0.1);
+        padding: 0.25rem 0.75rem;
+        /* More horizontal padding */
+        width: auto;
+        /* Don't stretch */
+        display: inline-flex;
+        justify-content: flex-start;
+        background: rgba(255, 255, 255, 0.05);
+        /* More subtle background */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50px;
     }
 
     .contactLabel {
@@ -458,7 +460,10 @@
     }
 
     .contactNumber {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+        /* Slightly smaller for breathing room */
+        font-weight: 600;
+        white-space: nowrap;
     }
 
     /* Ensure icons are hidden as requested/already hidden */
