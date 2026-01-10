@@ -2,19 +2,25 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-    const host = request.headers.get("host") || "";
-    const wwwRegex = /^www\./;
+    // Host bilgisini al (önce x-forwarded-host, yoksa normal host)
+    const host = request.headers.get("x-forwarded-host") || request.headers.get("host") || "";
 
-    // Localhost'ta çalışma
+    // Localhost kontrolü (portlu veya portsuz)
     if (host.includes("localhost") || host.includes("127.0.0.1")) {
         return NextResponse.next();
     }
 
-    // Eğer host www ile başlamıyorsa ve root domain ise
-    if (!wwwRegex.test(host) && host === "aktifyay.com.tr") {
-        const newUrl = new URL(request.url);
-        newUrl.host = "www.aktifyay.com.tr";
-        return NextResponse.redirect(newUrl, 301);
+    // Domain kontrolü (aktifyay.com.tr)
+    // Sadece tam eşleşme arıyoruz, subdomain (www hariç) varsa dokunmuyoruz
+    if (host === "aktifyay.com.tr") {
+        const url = request.nextUrl.clone();
+        url.hostname = "www.aktifyay.com.tr";
+        // Prod ortamında port numarasını URL'den kaldırmak gerekebilir, 
+        // ama Next.js nextUrl.clone() ile genellikle doğru portu taşır veya yönetir.
+        // Eğer proxy/load balancer port 80/443 kullanıyorsa port temizlenebilir.
+        // Şimdilik sadece hostname değişimi yeterli.
+
+        return NextResponse.redirect(url, 301);
     }
 
     return NextResponse.next();
