@@ -121,7 +121,7 @@ export default function Header({ locale, dict, settings, products = [] }: Header
                     <div className={styles.navContent}>
                         <Link href={`/${locale}`} className={styles.logo}>
                             {settings?.logo ? (
-                                <img src={settings.logo} alt="Aktif Yay" className={styles.logoImg} style={{ height: '80px', width: 'auto' }} />
+                                <img src={settings.logo} alt="Aktif Yay" className={styles.logoImg} />
                             ) : (
                                 <>
                                     <span className={styles.logoText}>AKTİF</span>

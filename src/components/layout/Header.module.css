@@ -153,6 +153,18 @@
     margin-left: 0.25rem;
 }
 
+.logoImg {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+}
+
+@media (max-width: 1024px) {
+    .logoImg {
+        height: 50px;
+    }
+}
+
 /* Desktop Navigation - Icon Based */
 .desktopNav {
     display: none;
