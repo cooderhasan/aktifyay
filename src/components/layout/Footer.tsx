@@ -66,7 +66,9 @@ export default function Footer({ locale, dict, settings, products = [] }: Footer
                     {/* Company Info */}
                     <div className={styles.column}>
                         <Link href={`/${locale}`} className={styles.logo}>
-                            {settings?.logo ? (
+                            {settings?.footerLogo ? (
+                                <img src={settings.footerLogo} alt="Aktif Yay" className={styles.logoImg} style={{ height: '60px', width: 'auto' }} />
+                            ) : settings?.logo ? (
                                 <img src={settings.logo} alt="Aktif Yay" className={styles.logoImg} style={{ height: '60px', width: 'auto' }} />
                             ) : (
                                 <>

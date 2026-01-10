@@ -417,6 +417,7 @@ model SiteSettings {
   
   // Brand
   logo       String?
+  footerLogo String? // Added field for separate footer logo
   favicon    String?
 
   // SEO

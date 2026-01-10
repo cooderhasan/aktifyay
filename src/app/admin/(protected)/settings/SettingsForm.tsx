@@ -41,10 +41,18 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
                 <div className={styles.grid}>
                     <div className={styles.field}>
                         <ImageUpload
-                            label="Site Logosu"
+                            label="Header Logosu"
                             description="Header'da görünecek logo. Yükseklik 60-80px, Şeffaf PNG formatı önerilir."
                             value={formData.logo || ""}
                             onChange={(val) => handleChange("logo", val)}
+                        />
+                    </div>
+                    <div className={styles.field}>
+                        <ImageUpload
+                            label="Footer Logosu"
+                            description="Footer'da görünecek logo. Beyaz/Açık renkli ve şeffaf PNG önerilir."
+                            value={formData.footerLogo || ""}
+                            onChange={(val) => handleChange("footerLogo", val)}
                         />
                     </div>
                     <div className={styles.field}>
