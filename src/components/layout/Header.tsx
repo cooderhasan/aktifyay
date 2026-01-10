@@ -74,13 +74,12 @@ export default function Header({ locale, dict, settings, products = [] }: Header
                 <div className="container">
                     <div className={styles.topBarContent}>
                         <div className={styles.topBarLeft}>
-                            <a href={`tel:${settings?.phone || "+903323456789"}`} className={styles.phone}>
-                                <Phone size={16} />
-                                <span>{settings?.phone || "+90 332 345 67 89"}</span>
-                            </a>
-                            <a href={`tel:${settings?.gsm || "+905326763488"}`} className={styles.callCenter}>
-                                <Headphones size={16} />
-                                <span>GSM: {settings?.gsm || "+90 532 676 34 88"}</span>
+                            <a href={`tel:${settings?.phone?.replace(/\s/g, '') || "+903323456789"}`} className={styles.contactPill}>
+                                <div className={styles.iconPulse}>
+                                    <Phone size={14} />
+                                </div>
+                                <span className={styles.contactLabel}>Bizi Arayın:</span>
+                                <span className={styles.contactNumber}>{settings?.phone || "+90 332 345 67 89"}</span>
                             </a>
                         </div>
                         <div className={styles.topBarRight}>
