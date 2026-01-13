@@ -63,7 +63,7 @@ export default function HeroSlider({ slides, lang }: HeroSliderProps) {
                         fill
                         priority={index === 0}
                         sizes="100vw"
-                        quality={90}
+
                         className={styles.backgroundImage}
                     />
                     <div className={styles.overlay} />
