@@ -50,6 +50,12 @@
     cursor: pointer;
 }
 
+@media (max-width: 768px) {
+    .emailPill {
+        display: none !important;
+    }
+}
+
 .contactPill:hover {
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.3);

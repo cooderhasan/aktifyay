@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import {
     Menu, X, Phone,
-    Instagram, Facebook, Linkedin, Home,
+    Instagram, Facebook, Linkedin, Home, Mail,
     Globe, Activity, Factory, Lightbulb,
     Award, Newspaper, BookOpen, Headphones,
     CarFront, Shield, Tractor,
@@ -80,6 +80,13 @@ export default function Header({ locale, dict, settings, products = [] }: Header
                                 </div>
                                 <span className={styles.contactLabel}>Bizi Arayın:</span>
                                 <span className={styles.contactNumber}>{settings?.phone || "+90 332 345 67 89"}</span>
+                            </a>
+                            <a href={`mailto:${settings?.email || "info@aktifyay.com.tr"}`} className={`${styles.contactPill} ${styles.emailPill}`}>
+                                <div className={styles.iconPulse} style={{ animation: 'none' }}>
+                                    <Mail size={14} />
+                                </div>
+                                <span className={styles.contactLabel}>E-Posta:</span>
+                                <span className={styles.contactNumber}>{settings?.email || "info@aktifyay.com.tr"}</span>
                             </a>
                         </div>
                         <div className={styles.topBarRight}>
