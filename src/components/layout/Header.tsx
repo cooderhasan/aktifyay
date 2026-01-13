@@ -124,8 +124,8 @@ export default function Header({ locale, dict, settings, products = [] }: Header
                                 <Image
                                     src={settings.logo}
                                     alt="Aktif Yay"
-                                    width={360}
-                                    height={100}
+                                    width={280}
+                                    height={80}
                                     className={styles.logoImg}
                                     style={{ width: 'auto', height: 'auto' }}
                                 />

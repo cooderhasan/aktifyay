@@ -142,6 +142,8 @@
     font-weight: 800;
     letter-spacing: -0.02em;
     flex-shrink: 0;
+    max-width: 280px;
+    /* Constrain logo width */
 }
 
 .logoText {
@@ -154,9 +156,11 @@
 }
 
 .logoImg {
-    height: 80px;
+    height: 70px;
+    /* Slightly reduced height */
     width: auto;
     object-fit: contain;
+    max-width: 100%;
 }
 
 @media (max-width: 1024px) {
@@ -172,7 +176,8 @@
     height: 100%;
     margin-left: auto;
     /* Sağa yasla */
-    margin-right: 2rem;
+    margin-right: 1rem;
+    /* Reduced margin */
 }
 
 @media (min-width: 1024px) {
@@ -194,11 +199,13 @@
     align-items: center;
     justify-content: center;
     gap: 0.25rem;
-    padding: 0 1.25rem;
+    padding: 0 0.85rem;
+    /* Reduced padding */
     height: 100%;
     color: var(--color-gray-600);
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    /* Slightly smaller font */
     transition: all 0.2s;
     border-bottom: 3px solid transparent;
     text-decoration: none;
@@ -206,7 +213,9 @@
     background: none;
     border: none;
     border-top: 3px solid transparent;
-    /* Dengelemek için */
+    white-space: nowrap;
+    /* Prevent text wrapping */
+    text-align: center;
 }
 
 .navLink svg {
