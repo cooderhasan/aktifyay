@@ -255,7 +255,7 @@
     box-shadow: 0 15px 30px rgba(3, 70, 148, 0.3);
 }
 
-.featureCard h3 {
+.featureCard h2 {
     font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 1rem;
@@ -572,10 +572,11 @@
     color: white;
 }
 
-.industryContent span {
+.industryContent h3 {
     font-weight: 700;
     font-size: 1.1rem;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0;
 }
 
 .industryContent svg {

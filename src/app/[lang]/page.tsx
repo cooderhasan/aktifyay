@@ -193,7 +193,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                 <div className={styles.featureIcon}>
                                     <feature.icon size={32} />
                                 </div>
-                                <h3>{feature.title}</h3>
+                                <h2>{feature.title}</h2>
                                 <p>{feature.description}</p>
                             </div>
                         ))}
@@ -271,7 +271,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                     <div className={styles.industryOverlay}></div>
                                 </div>
                                 <div className={styles.industryContent}>
-                                    <span>{industry.name}</span>
+                                    <h3>{industry.name}</h3>
                                     <ArrowRight size={18} />
                                 </div>
                             </Link>
