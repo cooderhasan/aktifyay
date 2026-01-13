@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./HeroSlider.module.css";
 import { Locale } from "@/lib/i18n";
@@ -56,9 +57,13 @@ export default function HeroSlider({ slides, lang }: HeroSliderProps) {
                     key={slide.id}
                     className={`${styles.slide} ${index === current ? styles.active : ""}`}
                 >
-                    <img
+                    <Image
                         src={slide.image}
                         alt={lang === "tr" ? slide.titleTr : slide.titleEn}
+                        fill
+                        priority={index === 0}
+                        sizes="100vw"
+                        quality={90}
                         className={styles.backgroundImage}
                     />
                     <div className={styles.overlay} />

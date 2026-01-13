@@ -225,7 +225,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                         alt={product.imageAlt}
                                         fill
                                         className={styles.productImage}
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                                     />
                                 </div>
                                 <div className={styles.productContent}>
