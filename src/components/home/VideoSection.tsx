@@ -1,5 +1,6 @@
 "use client";
 
+import { YouTubeEmbed } from "@next/third-parties/google";
 import styles from "./VideoSection.module.css";
 
 interface VideoSectionProps {
@@ -28,12 +29,7 @@ export default function VideoSection({ videoUrl, embedded = false }: VideoSectio
         <section className={sectionClass}>
             <div className={containerClass}>
                 <div className={styles.videoWrapper}>
-                    <iframe
-                        src={`https://www.youtube.com/embed/${videoId}?rel=0`}
-                        title="Tanıtım Filmi"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                    />
+                    <YouTubeEmbed videoid={videoId} params="rel=0" />
                 </div>
             </div>
         </section>
