@@ -20,11 +20,17 @@ export async function generateMetadata({ params }: AboutPageProps): Promise<Meta
     });
 
     if (page) {
+        const ogTitle = lang === "tr" ? page.ogTitleTr : page.ogTitleEn;
+        const ogDescription = lang === "tr" ? page.ogDescriptionTr : page.ogDescriptionEn;
+
         return generateSEOMetadata({
             title: (lang === "tr" ? page.metaTitleTr : page.metaTitleEn) || "",
             description: (lang === "tr" ? page.metaDescriptionTr : page.metaDescriptionEn) || "",
             locale: lang,
             path: `/${lang === "tr" ? "hakkimizda" : "about-us"}`,
+            ogImage: page.ogImage || undefined,
+            ogTitle: ogTitle || undefined,
+            ogDescription: ogDescription || undefined
         });
     }
 

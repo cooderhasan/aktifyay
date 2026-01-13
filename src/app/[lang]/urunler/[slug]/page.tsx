@@ -38,6 +38,8 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     const description = lang === "tr" ? product.descriptionTr : product.descriptionEn;
     const metaTitle = lang === "tr" ? product.metaTitleTr : product.metaTitleEn;
     const metaDescription = lang === "tr" ? product.metaDescriptionTr : product.metaDescriptionEn;
+    const ogTitle = lang === "tr" ? product.ogTitleTr : product.ogTitleEn;
+    const ogDescription = lang === "tr" ? product.ogDescriptionTr : product.ogDescriptionEn;
 
     return generateSEOMetadata({
         title: metaTitle || (lang === "tr"
@@ -46,7 +48,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
         description: metaDescription || description || "",
         locale: lang,
         path: `/${lang === "tr" ? "urunler" : "products"}/${slug}`,
-        ogImage: product.ogImage || product.image || undefined
+        ogImage: product.ogImage || product.image || undefined,
+        ogTitle: ogTitle || undefined,
+        ogDescription: ogDescription || undefined
     });
 }
 
@@ -66,6 +70,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     }
 
     const name = lang === "tr" ? product.nameTr : product.nameEn;
+    const h1Title = lang === "tr" ? (product.h1Tr || product.nameTr) : (product.h1En || product.nameEn);
     const description = lang === "tr" ? product.descriptionTr : product.descriptionEn;
     const longDesc = lang === "tr" ? product.longDescTr : product.longDescEn;
 
@@ -174,7 +179,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                         {lang === "tr" ? "Tüm Ürünler" : "All Products"}
                     </Link>
                     <h1>
-                        {name}
+                        {h1Title}
                     </h1>
                     <p className={styles.heroDescription}>{description}</p>
                 </div>

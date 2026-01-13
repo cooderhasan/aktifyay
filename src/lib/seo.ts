@@ -9,6 +9,8 @@ interface SEOParams {
     locale: Locale;
     path: string;
     ogImage?: string;
+    ogTitle?: string;
+    ogDescription?: string;
     noIndex?: boolean;
 }
 
@@ -18,11 +20,17 @@ export function generateSEOMetadata({
     locale,
     path,
     ogImage,
+    ogTitle,
+    ogDescription,
     noIndex = false,
 }: SEOParams): Metadata {
     const url = `${SITE_URL}/${locale}${path}`;
     const alternateLocale = locale === "tr" ? "en" : "tr";
     const alternateUrl = `${SITE_URL}/${alternateLocale}${path}`;
+
+    // Use ogTitle/ogDescription if provided, otherwise fall back to title/description
+    const finalOgTitle = ogTitle || title;
+    const finalOgDescription = ogDescription || description;
 
     return {
         title,
@@ -37,21 +45,21 @@ export function generateSEOMetadata({
             },
         },
         openGraph: {
-            title,
-            description,
+            title: finalOgTitle,
+            description: finalOgDescription,
             url,
             siteName: "Aktif Yay",
             locale: locale === "tr" ? "tr_TR" : "en_US",
             alternateLocale: locale === "tr" ? "en_US" : "tr_TR",
             type: "website",
             images: ogImage
-                ? [{ url: ogImage, width: 1200, height: 630, alt: title }]
+                ? [{ url: ogImage, width: 1200, height: 630, alt: finalOgTitle }]
                 : undefined,
         },
         twitter: {
             card: "summary_large_image",
-            title,
-            description,
+            title: finalOgTitle,
+            description: finalOgDescription,
             images: ogImage ? [ogImage] : undefined,
         },
         robots: noIndex

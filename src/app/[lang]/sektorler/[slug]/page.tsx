@@ -27,6 +27,8 @@ export async function generateMetadata({ params }: IndustryPageProps): Promise<M
     const description = lang === "tr" ? industry.descriptionTr : industry.descriptionEn;
     const metaTitle = lang === "tr" ? industry.metaTitleTr : industry.metaTitleEn;
     const metaDescription = lang === "tr" ? industry.metaDescriptionTr : industry.metaDescriptionEn;
+    const ogTitle = lang === "tr" ? industry.ogTitleTr : industry.ogTitleEn;
+    const ogDescription = lang === "tr" ? industry.ogDescriptionTr : industry.ogDescriptionEn;
 
     return generateSEOMetadata({
         title: metaTitle || (lang === "tr"
@@ -35,7 +37,9 @@ export async function generateMetadata({ params }: IndustryPageProps): Promise<M
         description: metaDescription || description || "",
         locale: lang,
         path: `/${lang === "tr" ? "sektorler" : "industries"}/${slug}`,
-        ogImage: industry.ogImage || industry.image || undefined
+        ogImage: industry.ogImage || industry.image || undefined,
+        ogTitle: ogTitle || undefined,
+        ogDescription: ogDescription || undefined
     });
 }
 
@@ -54,6 +58,9 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
 
     // Parse localized fields
     const name = lang === "tr" ? industry.nameTr : industry.nameEn;
+    const h1Title = lang === "tr"
+        ? (industry.h1Tr || `${name} için Yay Çözümleri`)
+        : (industry.h1En || `Spring Solutions for ${name}`);
     const description = lang === "tr" ? industry.descriptionTr : industry.descriptionEn;
     const content = lang === "tr" ? industry.contentTr : industry.contentEn;
     // Solutions are newline separated in DB
@@ -166,7 +173,7 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
                         {lang === "tr" ? "Tüm Sektörler" : "All Industries"}
                     </Link>
                     <h1>
-                        {lang === "tr" ? `${name} için Yay Çözümleri` : `Spring Solutions for ${name}`}
+                        {h1Title}
                     </h1>
                     <p className={styles.heroDescription}>{description}</p>
                 </div>
