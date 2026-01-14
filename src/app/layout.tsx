@@ -56,6 +56,8 @@ import WhatsAppButton from "@/components/layout/WhatsAppButton";
 
 import { getSettings } from "@/actions/settings";
 
+import Script from "next/script";
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -66,6 +68,19 @@ export default async function RootLayout({
   return (
     <html lang="tr" className={inter.variable}>
       <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-ERL583CNLN"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-ERL583CNLN');
+          `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
