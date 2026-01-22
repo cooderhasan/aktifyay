@@ -62,11 +62,12 @@ export default function Footer({ locale, dict, settings, products = [] }: Footer
 
     useEffect(() => {
         const observer = new MutationObserver(function () {
-            if (document.body.innerText.includes("Mesajınız başarıyla gönderildi")) {
+            if (document.body.innerText.includes(dict.forms.success)) {
                 if (typeof window !== 'undefined' && (window as any).gtag) {
                     (window as any).gtag('event', 'generate_lead', {
-                        event_category: 'form',
-                        event_label: 'teklif_formu'
+                        event_category: 'lead',
+                        event_label: 'teklif_formu',
+                        value: 1
                     });
                 }
                 observer.disconnect();
