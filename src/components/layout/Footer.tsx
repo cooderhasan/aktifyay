@@ -6,7 +6,6 @@ import { Locale, pathMappings } from "@/lib/i18n";
 import { Dictionary } from "@/lib/dictionary";
 import styles from "./Footer.module.css";
 import Image from "next/image";
-import { useEffect } from "react";
 
 interface FooterProps {
     locale: Locale;
@@ -59,28 +58,6 @@ export default function Footer({ locale, dict, settings, products = [] }: Footer
         }
         return true; // Default behavior if no settings
     });
-
-    useEffect(() => {
-        const observer = new MutationObserver(function () {
-            if (document.body.innerText.includes(dict.forms.success)) {
-                if (typeof window !== 'undefined' && (window as any).gtag) {
-                    (window as any).gtag('event', 'generate_lead', {
-                        event_category: 'lead',
-                        event_label: 'teklif_formu',
-                        value: 1
-                    });
-                }
-                observer.disconnect();
-            }
-        });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-
-        return () => observer.disconnect();
-    }, []);
 
     return (
         <footer className={styles.footer}>
