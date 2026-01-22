@@ -61,7 +61,7 @@ export default async function HomePage({ params }: HomePageProps) {
         prisma.blogPost.findMany({
             where: { isPublished: true },
             orderBy: { createdAt: 'desc' },
-            take: 3,
+            take: 2,
             select: {
                 id: true,
                 slug: true,
