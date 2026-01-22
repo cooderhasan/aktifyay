@@ -17,7 +17,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
   const host = headersList.get("host");
   const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-  const baseUrl = host ? `${protocol}://${host}` : (process.env.NEXT_PUBLIC_SITE_URL || "https://aktifyay.com.tr");
+
+  // Production environment requires strict canonical URL
+  const baseUrl = process.env.NODE_ENV === "production"
+    ? "https://www.aktifyay.com.tr"
+    : (host ? `${protocol}://${host}` : (process.env.NEXT_PUBLIC_SITE_URL || "https://www.aktifyay.com.tr"));
 
   return {
     title: {
@@ -26,6 +30,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description: settings?.homeDescTr || "Konya'da 30 yıllık tecrübe ile endüstriyel yay üretimi. Basma yaylar, çekme yaylar, kurma yaylar ve tel form yaylar.",
     metadataBase: new URL(baseUrl),
+    alternates: {
+      canonical: "./",
+    },
     robots: {
       index: true,
       follow: true,
