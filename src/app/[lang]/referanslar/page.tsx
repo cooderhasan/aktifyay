@@ -1,8 +1,9 @@
-import { Locale } from "@/lib/i18n";
+import { Locale, pathMappings } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionary";
-import { generateSEOMetadata } from "@/lib/seo";
+import { generateSEOMetadata, generateBreadcrumbSchema } from "@/lib/seo";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./page.module.css";
 import { getSettings } from "@/actions/settings";
 import { Metadata } from "next";
@@ -28,6 +29,7 @@ export async function generateMetadata({ params }: ReferencesPageProps): Promise
 export default async function ReferencesPage({ params }: ReferencesPageProps) {
     const { lang } = await params;
     const dict = getDictionary(lang);
+    const paths = pathMappings[lang];
 
     // @ts-ignore - Prisma Client issue
     const references = await prisma.reference.findMany({
@@ -35,13 +37,35 @@ export default async function ReferencesPage({ params }: ReferencesPageProps) {
         orderBy: { order: "asc" },
     });
 
+    const breadcrumbItems = [
+        { name: lang === "tr" ? "Ana Sayfa" : "Home", url: `/${lang}` },
+        { name: dict.nav.references, url: `/${lang}/${paths.references}` },
+    ];
+
     return (
         <main className={styles.main}>
-            {/* Header */}
-            <section className={styles.header}>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbItems)),
+                }}
+            />
+
+            {/* Breadcrumb */}
+            <nav className={styles.breadcrumb} aria-label="Breadcrumb">
                 <div className="container">
-                    <h1 className={styles.title}>{dict.nav.references}</h1>
-                    <p className={styles.description}>
+                    <ol>
+                        <li><Link href={`/${lang}`}>{lang === "tr" ? "Ana Sayfa" : "Home"}</Link></li>
+                        <li aria-current="page">{dict.nav.references}</li>
+                    </ol>
+                </div>
+            </nav>
+
+            {/* Hero */}
+            <section className={styles.hero}>
+                <div className="container">
+                    <h1>{dict.nav.references}</h1>
+                    <p>
                         {lang === "tr"
                             ? "Kalite ve güven odaklı üretim anlayışımızla sektörün önde gelen firmalarının çözüm ortağıyız."
                             : "We are the solution partner of the leading companies in the sector with our quality and trust-oriented production approach."}
