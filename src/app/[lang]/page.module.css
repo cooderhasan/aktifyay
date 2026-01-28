@@ -798,14 +798,14 @@
 
 /* References Section */
 .referencesSection {
-    padding: 5rem 0;
+    padding: 2.5rem 0;
     background: white;
     border-top: 1px solid var(--color-gray-100);
 }
 
 .sectionTitleCenter {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
 }
 
 .sectionTitleCenter h2 {
@@ -820,7 +820,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 4rem;
+    gap: 3rem;
 }
 
 .referenceItem {
