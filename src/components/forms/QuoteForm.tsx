@@ -54,10 +54,8 @@ export default function QuoteForm({ lang, dict }: QuoteFormProps) {
 
                 // Google Ads Conversion Tracking
                 if (typeof window !== 'undefined' && (window as any).gtag) {
-                    (window as any).gtag('event', 'generate_lead', {
-                        event_category: 'lead',
-                        event_label: 'teklif_formu',
-                        value: 1
+                    (window as any).gtag('event', 'conversion', {
+                        'send_to': 'AW-17893743004/fmsgCLql-u4bEJyzs9RC'
                     });
                 }
 
