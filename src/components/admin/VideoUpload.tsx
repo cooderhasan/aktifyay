@@ -89,8 +89,8 @@ export default function VideoUpload({ value, onChange, label = "Video Yükle", d
                         ) : (
                             <>
                                 <Upload size={24} style={{ marginBottom: '0.5rem' }} />
-                                <span style={{ fontSize: '0.875rem', fontWeight: 500 }}>Video Seç</span>
-                                <span style={{ fontSize: '0.75rem', marginTop: '0.25rem' }}>Sadece MP4 (Önerilen: < 10MB)</span>
+                                <span style={{ fontSize: '0.875rem', fontWeight: 500 }}>MP4 Video Seç</span>
+                                <span style={{ fontSize: '0.75rem', marginTop: '0.25rem', color: '#dc2626', fontWeight: 600 }}>Maks: 25 Saniye / 10MB</span>
                             </>
                         )}
                     </button>

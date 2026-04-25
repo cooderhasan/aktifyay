@@ -250,7 +250,7 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
                             <div style={{ marginTop: "20px" }}>
                                 <VideoUpload
                                     label="Arka Plan Videosu"
-                                    description="Boş bırakırsanız sistem otomatik olarak projenin içindeki hero.mp4 dosyasını kullanır."
+                                    description="⚠️ Lütfen sadece MP4 formatında, döngüye uygun (başı ve sonu uyumlu) ve uzunluğu 10-25 saniyeyi geçmeyen videolar yükleyin. Yüksek boyutlu videolar sitenin açılış hızını ciddi şekilde yavaşlatır! (Önerilen boyut: 5-10 MB altı). Boş bırakırsanız sistem varsayılan videoyu kullanır."
                                     value={formData.heroVideoUrl || ""}
                                     onChange={(val) => handleChange("heroVideoUrl", val)}
                                 />
