@@ -188,6 +188,36 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
             <section className={styles.section}>
                 <h2>Ana Sayfa İçerik</h2>
                 <div className={styles.grid}>
+                    <div className={styles.field} style={{ gridColumn: "1 / -1", display: "flex", alignItems: "center", gap: "10px", padding: "10px", background: "var(--color-gray-50)", borderRadius: "8px", border: "1px solid var(--color-gray-200)" }}>
+                        <input
+                            type="checkbox"
+                            id="useHeroVideo"
+                            checked={formData.useHeroVideo || false}
+                            onChange={(e) => handleChange("useHeroVideo", e.target.checked)}
+                            style={{ width: "24px", height: "24px", cursor: "pointer", accentColor: "var(--color-primary)" }}
+                        />
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                            <label htmlFor="useHeroVideo" style={{ margin: 0, cursor: "pointer", fontWeight: "bold", fontSize: "16px", color: "var(--color-primary)" }}>
+                                Ana Sayfada Video Arka Plan Kullan (Video Hero)
+                            </label>
+                            <small style={{ color: "var(--color-gray-600)" }}>Açıkken slider (resimli banner) yerine video oynatılır.</small>
+                        </div>
+                    </div>
+                    {formData.useHeroVideo && (
+                        <div className={styles.field} style={{ gridColumn: "1 / -1", marginTop: "-10px", padding: "15px", background: "var(--color-gray-50)", borderRadius: "8px", border: "1px solid var(--color-gray-200)", borderTop: "none", borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
+                            <label>Video Bağlantısı (İsteğe Bağlı)</label>
+                            <input
+                                type="text"
+                                value={formData.heroVideoUrl || ""}
+                                onChange={(e) => handleChange("heroVideoUrl", e.target.value)}
+                                placeholder="/hero.mp4"
+                            />
+                            <small className={styles.hint}>
+                                Boş bırakırsanız sistem otomatik olarak projenin içindeki <b>hero.mp4</b> dosyasını arar. 
+                                Cloudflare vs. kullanıyorsanız tam link (https://...) yazabilirsiniz.
+                            </small>
+                        </div>
+                    )}
                     <div className={styles.field} style={{ gridColumn: "1 / -1" }}>
                         <label>Tanıtım Videosu Linki (YouTube)</label>
                         <input

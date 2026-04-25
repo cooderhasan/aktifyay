@@ -8,6 +8,7 @@ import { generateSEOMetadata, generateLocalBusinessSchema } from "@/lib/seo";
 import { prisma } from "@/lib/prisma";
 import styles from "./page.module.css";
 import HeroSlider from "@/components/sections/HeroSlider";
+import HeroVideo from "@/components/sections/HeroVideo";
 import VideoSection from "@/components/home/VideoSection";
 import { getSliders } from "@/actions/slider";
 import { getSettings } from "@/actions/settings";
@@ -144,7 +145,17 @@ export default async function HomePage({ params }: HomePageProps) {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
             {/* Hero Section */}
-            {activeSlides.length > 0 ? (
+            {settings?.useHeroVideo ? (
+                <HeroVideo 
+                    lang={lang} 
+                    dict={dict} 
+                    videoUrl={settings.heroVideoUrl || undefined}
+                    titleTr={settings.homeTitleTr || undefined}
+                    titleEn={settings.homeTitleEn || undefined}
+                    descTr={settings.homeDescTr || undefined}
+                    descEn={settings.homeDescEn || undefined}
+                />
+            ) : activeSlides.length > 0 ? (
                 <HeroSlider slides={activeSlides} lang={lang} />
             ) : (
                 <section className={styles.hero}>
