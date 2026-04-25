@@ -150,10 +150,10 @@ export default async function HomePage({ params }: HomePageProps) {
                     lang={lang} 
                     dict={dict} 
                     videoUrl={settings.heroVideoUrl || undefined}
-                    titleTr={settings.homeTitleTr || undefined}
-                    titleEn={settings.homeTitleEn || undefined}
-                    descTr={settings.homeDescTr || undefined}
-                    descEn={settings.homeDescEn || undefined}
+                    titleTr={settings.heroTitleTr || undefined}
+                    titleEn={settings.heroTitleEn || undefined}
+                    descTr={settings.heroDescTr || undefined}
+                    descEn={settings.heroDescEn || undefined}
                 />
             ) : activeSlides.length > 0 ? (
                 <HeroSlider slides={activeSlides} lang={lang} />

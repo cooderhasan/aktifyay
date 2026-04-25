@@ -444,6 +444,10 @@ model SiteSettings {
   // Hero Video
   useHeroVideo Boolean @default(false)
   heroVideoUrl String?
+  heroTitleTr  String?
+  heroTitleEn  String?
+  heroDescTr   String? @db.Text
+  heroDescEn   String? @db.Text
   
   updatedAt DateTime @updatedAt
 }

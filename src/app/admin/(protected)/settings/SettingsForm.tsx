@@ -205,6 +205,47 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
                     </div>
                     {formData.useHeroVideo && (
                         <div className={styles.field} style={{ gridColumn: "1 / -1", marginTop: "-10px", padding: "15px", background: "var(--color-gray-50)", borderRadius: "8px", border: "1px solid var(--color-gray-200)", borderTop: "none", borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
+                            <label style={{ color: "var(--color-primary)", borderBottom: "1px solid var(--color-gray-200)", paddingBottom: "5px", marginBottom: "15px", display: "block" }}>Video Ayarları ve Sloganları</label>
+                            
+                            <div className={styles.grid} style={{ marginBottom: "15px" }}>
+                                <div className={styles.field}>
+                                    <label>Kısa Video Başlığı (TR)</label>
+                                    <input
+                                        type="text"
+                                        value={formData.heroTitleTr || ""}
+                                        onChange={(e) => handleChange("heroTitleTr", e.target.value)}
+                                        placeholder="Endüstriyel Yay Üretiminde Lider"
+                                    />
+                                    <small className={styles.hint}>Videonun üzerindeki dev başlık.</small>
+                                </div>
+                                <div className={styles.field}>
+                                    <label>Kısa Video Başlığı (EN)</label>
+                                    <input
+                                        type="text"
+                                        value={formData.heroTitleEn || ""}
+                                        onChange={(e) => handleChange("heroTitleEn", e.target.value)}
+                                        placeholder="Leader in Industrial Spring Manufacturing"
+                                    />
+                                </div>
+                                <div className={styles.field}>
+                                    <label>Kısa Açıklama (TR)</label>
+                                    <textarea
+                                        value={formData.heroDescTr || ""}
+                                        onChange={(e) => handleChange("heroDescTr", e.target.value)}
+                                        rows={2}
+                                        placeholder="Konya'da 30+ yıl tecrübe ile..."
+                                    />
+                                </div>
+                                <div className={styles.field}>
+                                    <label>Kısa Açıklama (EN)</label>
+                                    <textarea
+                                        value={formData.heroDescEn || ""}
+                                        onChange={(e) => handleChange("heroDescEn", e.target.value)}
+                                        rows={2}
+                                    />
+                                </div>
+                            </div>
+
                             <label>Video Bağlantısı (İsteğe Bağlı)</label>
                             <input
                                 type="text"
@@ -214,7 +255,6 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
                             />
                             <small className={styles.hint}>
                                 Boş bırakırsanız sistem otomatik olarak projenin içindeki <b>hero.mp4</b> dosyasını arar. 
-                                Cloudflare vs. kullanıyorsanız tam link (https://...) yazabilirsiniz.
                             </small>
                         </div>
                     )}
