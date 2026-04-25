@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Save } from "lucide-react";
 import styles from "./page.module.css";
 import ImageUpload from "@/components/admin/ImageUpload";
+import VideoUpload from "@/components/admin/VideoUpload";
 import { updateSettings } from "@/actions/settings";
 import toast from "react-hot-toast";
 
@@ -246,16 +247,14 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
                                 </div>
                             </div>
 
-                            <label>Video Bağlantısı (İsteğe Bağlı)</label>
-                            <input
-                                type="text"
-                                value={formData.heroVideoUrl || ""}
-                                onChange={(e) => handleChange("heroVideoUrl", e.target.value)}
-                                placeholder="/hero.mp4"
-                            />
-                            <small className={styles.hint}>
-                                Boş bırakırsanız sistem otomatik olarak projenin içindeki <b>hero.mp4</b> dosyasını arar. 
-                            </small>
+                            <div style={{ marginTop: "20px" }}>
+                                <VideoUpload
+                                    label="Arka Plan Videosu"
+                                    description="Boş bırakırsanız sistem otomatik olarak projenin içindeki hero.mp4 dosyasını kullanır."
+                                    value={formData.heroVideoUrl || ""}
+                                    onChange={(val) => handleChange("heroVideoUrl", val)}
+                                />
+                            </div>
                         </div>
                     )}
                     <div className={styles.field} style={{ gridColumn: "1 / -1" }}>
