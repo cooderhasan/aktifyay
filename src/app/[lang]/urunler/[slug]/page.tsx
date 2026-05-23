@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import ProductGallery from "@/components/ui/ProductGallery";
-import { Locale, pathMappings } from "@/lib/i18n";
+import { Locale, pathMappings, productSlugs } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionary";
 import { generateSEOMetadata, generateProductSchema, generateFAQSchema, generateBreadcrumbSchema } from "@/lib/seo";
 import { prisma } from "@/lib/prisma";
@@ -24,6 +24,13 @@ const slugMapping: Record<string, string> = {
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
     const { lang, slug } = await params;
+
+    // Validate slug matches language
+    const validSlugs = Object.values(productSlugs[lang] || {});
+    if (!validSlugs.includes(slug)) {
+        notFound();
+    }
+
     const normalizedSlug = slugMapping[slug] || slug;
 
     const product = await prisma.productCategory.findUnique({
@@ -56,6 +63,13 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
 export default async function ProductPage({ params }: ProductPageProps) {
     const { lang, slug } = await params;
+
+    // Validate slug matches language
+    const validSlugs = Object.values(productSlugs[lang] || {});
+    if (!validSlugs.includes(slug)) {
+        notFound();
+    }
+
     const paths = pathMappings[lang];
     const normalizedSlug = slugMapping[slug] || slug;
 

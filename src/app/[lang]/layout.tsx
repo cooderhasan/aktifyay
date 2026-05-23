@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { getSettings } from "@/actions/settings";
 import { prisma } from "@/lib/prisma";
+import { notFound } from "next/navigation";
 
 // Force dynamic rendering for all lang pages to prevent build-time database queries
 export const dynamic = 'force-dynamic';
@@ -22,6 +23,12 @@ type PageProps = {
 export default async function LangLayout({ children, params }: PageProps) {
     const resolvedParams = await params;
     const lang = resolvedParams.lang as Locale;
+
+    // Validate that the language code is supported
+    if (!locales.includes(lang as any)) {
+        notFound();
+    }
+
     const dict = getDictionary(lang);
     const settings = await getSettings();
     const products = await prisma.productCategory.findMany({

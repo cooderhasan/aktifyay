@@ -18,7 +18,55 @@ export function middleware(request: NextRequest) {
     const targetHost = "www.aktifyay.com.tr";
     const targetProto = "https";
 
-    // 3. Yönlendirme Kontrolleri
+    // 3. Eski ve Yarı-Dinamik URL Yönlendirmeleri (301 Permanent Redirect)
+    const exactRedirects: Record<string, string> = {
+        "/sektorler": "/tr/sektorler",
+        "/hakkimizda": "/tr/hakkimizda",
+        "/iletisim": "/tr/iletisim",
+        "/teklif": "/tr/teklif-al",
+        "/teklif-al": "/tr/teklif-al",
+        "/kariyer": "/tr/kariyer",
+        "/e-katalog": "/tr/e-katalog",
+        "/urunler": "/tr/urunler",
+        "/blog": "/tr/blog",
+        "/about-us": "/en/about-us",
+        "/contact": "/en/contact",
+        "/request-quote": "/en/request-quote",
+        "/careers": "/en/careers",
+        "/e-catalog": "/en/e-catalog",
+        "/products": "/en/products",
+        "/industries": "/en/industries",
+    };
+
+    const normalizedPath = path.endsWith("/") && path.length > 1 ? path.slice(0, -1) : path;
+    const search = request.nextUrl.search;
+
+    if (exactRedirects[normalizedPath]) {
+        return NextResponse.redirect(
+            `${targetProto}://${targetHost}${exactRedirects[normalizedPath]}${search}`,
+            301
+        );
+    }
+
+    const prefixRedirects: Record<string, string> = {
+        "/sektorler/": "/tr/sektorler/",
+        "/urunler/": "/tr/urunler/",
+        "/products/": "/en/products/",
+        "/industries/": "/en/industries/",
+        "/blog/": "/tr/blog/",
+    };
+
+    for (const [prefix, targetPrefix] of Object.entries(prefixRedirects)) {
+        if (path.startsWith(prefix)) {
+            const rest = path.slice(prefix.length);
+            return NextResponse.redirect(
+                `${targetProto}://${targetHost}${targetPrefix}${rest}${search}`,
+                301
+            );
+        }
+    }
+
+    // 4. Yönlendirme Kontrolleri
     // a. Yanlış Host (www yoksa veya farklıysa)
     const isWrongHost = host !== targetHost;
 
@@ -34,7 +82,6 @@ export function middleware(request: NextRequest) {
     if (isWrongHost || isWrongProto || isRoot) {
         // Yeni yolu belirle (/ -> /tr, diğerleri aynı)
         const newPath = isRoot ? "/tr" : path;
-        const search = request.nextUrl.search;
 
         // Tek seferlik Kalıcı (301) Yönlendirme
         return NextResponse.redirect(
